@@ -26,7 +26,7 @@ app.get('/', function (req, res) { //route to index.pug file
   return res.render('_layout.njk');
 })
 app.get('/stats', function(req, res) {
-    return res.render('overall.njk');
+    return res.render('stats.njk');
 })
 
 app.get('/usuario', function(req, res){

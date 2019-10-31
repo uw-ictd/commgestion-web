@@ -4,12 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node bin/www.js",
-    "start-dev": "nodemon ./app.js"
+    "start dev": "nodemon bin/www.js"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "nunjucks": "^3.2.0",
-    "pug": "^2.0.4"
+    "nunjucks": "^3.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
