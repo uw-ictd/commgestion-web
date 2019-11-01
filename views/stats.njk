@@ -1,2 +1,7 @@
 {% extends "_layout.njk" %}
-{% block main %} <p> this is our page of graphs </p>{% endblock %}
+{% block main %}
+    <p> this is our page of graphs </p>
+    {% include "graphViews/graphLayout.njk" %}
+    <script src="js/data/graph1.js"> </script>
+    <script src="js/data/graph2.js"> </script>
+{% endblock %}
