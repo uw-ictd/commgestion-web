@@ -1,2 +1,14 @@
 {% extends "_layout.njk" %}
-{% block main %} this is our page for profiles {% endblock %}
+{% block main %} 
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" id="hc-gauge">
+                </div>
+            </div>
+        </div>
+        <script src="js/data/gauge.js"></script>
+{% endblock %}
