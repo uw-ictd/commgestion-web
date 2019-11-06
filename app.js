@@ -23,7 +23,7 @@ app.get('/stats', function(req, res) {
 })
 
 app.get('/usuario', function(req, res){
-    return res.render('usuario.njk');
+    return res.render('usuario_pie.njk');
 })
 
 app.get('/profile', function(req, res){
