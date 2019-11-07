@@ -11,8 +11,6 @@ nunjucks.configure(PATH_TO_TEMPLATES, {
     express: app
 });
 
-//app.set('views', './views'); //directory where template files will be located
-
 app.set('view engine', 'njk');
 
 app.get('/', function (req, res) {
