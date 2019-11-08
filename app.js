@@ -1,36 +1,29 @@
-var path = require('path');
-var express = require('express');
-var nunjucks = require('nunjucks');
-var app = express();
+let path = require('path');
+let constants = require('./constants');
+let express = require('express');
+let nunjucks = require('nunjucks');
+let app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-var PATH_TO_TEMPLATES = './views' ;
-nunjucks.configure(PATH_TO_TEMPLATES, {
+nunjucks.configure(constants.PATH_TO_TEMPLATES, {
     autoescape: true,
     express: app
 });
 
+// Application logic
+
+let indexRouter = require('./routes/index');
+let statsRouter = require('./routes/stats');
+let usersRouter = require('./routes/usuario');
+let profileRouter = require('./routes/profile');
+let publicRouter = require('./routes/public');
+
 app.set('view engine', 'njk');
 
-app.get('/', function (req, res) {
-  return res.render('_layout.njk');
-})
-app.get('/stats', function(req, res) {
-    return res.render('stats.njk');
-})
-
-app.get('/usuario', function(req, res){
-    return res.render('usuario_pie.njk');
-})
-
-app.get('/profile', function(req, res){
-    return res.render('profile.njk')
-})
-
-app.get('/public', function(req, res){
-    return res.render('public_info.njk')
-})
-
+app.use('/', indexRouter);
+app.use('/stats', statsRouter);
+app.use('/usuario', usersRouter);
+app.use('/profile', profileRouter);
+app.use('/public', publicRouter);
 
 module.exports = app; //exports as a module
