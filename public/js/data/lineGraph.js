@@ -7,7 +7,7 @@
 Highcharts.chart('thru-vs-time', {
 
     title: {
-        text: 'Throughput v. Time'
+        text: 'Uso de datos en total de comunidad'
     },
     xAxis: {
         type: 'datetime'

@@ -7,7 +7,7 @@ Highcharts.chart('graph-5', {
         type: 'pie'
     },
     title: {
-        text: 'Browser market shares in January, 2018'
+        text: 'Uso de datos comunitarios'
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -23,24 +23,22 @@ Highcharts.chart('graph-5', {
         }
     },
     series: [{
-        name: 'Brands',
+        name: 'Usuarios',
         colorByPoint: true,
         data: [{
-            name: 'Chrome',
+            name: 'Usuario 1',
             y: 61.41,
-            sliced: true,
-            selected: true
         }, {
-            name: 'Internet Explorer',
+            name: 'Usuario 2',
             y: 11.84
         }, {
-            name: 'Firefox',
+            name: 'Usuario 3',
             y: 10.85
         }, {
-            name: 'Edge',
+            name: 'Usuario 4',
             y: 4.67
         }, {
-            name: 'Safari',
+            name: 'Usuario 5',
             y: 4.18
         }, {
             name: 'Other',
