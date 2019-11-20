@@ -4,6 +4,10 @@ let express = require('express');
 let nunjucks = require('nunjucks');
 let app = express();
 
+let applicationUser = require('./temp-test/applicationUser')
+
+applicationUser()
+
 app.use(express.static(path.join(__dirname, 'public')));
 nunjucks.configure(constants.PATH_TO_TEMPLATES, {
     autoescape: true,
