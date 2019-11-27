@@ -25,7 +25,7 @@ Highcharts.chart('graph-3', {
         {
             name: "Browsers",
             colorByPoint: true,
-            data: 
+            data: dataSet
         }
     ]
 });

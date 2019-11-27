@@ -25,18 +25,7 @@ Highcharts.chart('graph-4', {
         {
             name: "Browsers",
             colorByPoint: true,
-            data: [
-                {
-                    name: "Locales",
-                    y: 62,
-                    drilldown: "Locales"
-                },
-                {
-                    name: "No Locales",
-                    y: 38,
-                    drilldown: "No Locales"
-                },
-            ]
+            data: dataSet
         }
     ],
     drilldown: {

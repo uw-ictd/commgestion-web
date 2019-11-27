@@ -73,11 +73,15 @@ router.get('/',
                 ["thru-vs-time", "thru-by-app"],
                 ["graph-3", "graph-4"]
         ];
-        let data = [
-                [dataGraph1, dataGraph2],
-                [dataGraph3, dataGraph4]
-        ];
-        res.render(constants.STATISTICS_PAGE, {title: 'Express', user: req.user, rows: rowBuilder, dataSets: data
+        let dataaaaaa = [dataGraph1, dataGraph2, dataGraph3, dataGraph4];        
+        let data = {
+                "graph1": dataGraph1,
+                "graph2": dataGraph2,
+                "graph3": dataGraph3,
+                "graph4": dataGraph4
+            };
+        res.render(constants.STATISTICS_PAGE, {title: 'Express', user: req.user, 
+            rows: rowBuilder, dataSets: data
         });
     });
 
