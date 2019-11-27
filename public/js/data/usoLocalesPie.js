@@ -25,16 +25,7 @@ Highcharts.chart('graph-3', {
         {
             name: "Browsers",
             colorByPoint: true,
-            data: [
-                {
-                    name: "Locales",
-                    y: 62,
-                },
-                {
-                    name: "Extranjeros",
-                    y: 38,
-                },
-            ]
+            data: 
         }
     ]
 });
