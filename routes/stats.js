@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let constants = require('../constants');
+let um = require('../db/UserManager');
 
 let dataGraph1 = [ 
             [Date.UTC(2019, 8, 1, 6, 20), 29.9],
@@ -69,20 +70,26 @@ let dataGraph4 = [
 /* GET stats page. */
 router.get('/',
     function(req, res, next) {
-        let rowBuilder = [
-                ["thru-vs-time", "thru-by-app"],
-                ["graph-3", "graph-4"]
-        ];
-        let dataaaaaa = [dataGraph1, dataGraph2, dataGraph3, dataGraph4];        
-        let data = JSON.stringify({
-                "graph1": JSON.stringify(dataGraph1),
-                "graph2": JSON.stringify(dataGraph2),
-                "graph3": JSON.stringify(dataGraph3),
-                "graph4": JSON.stringify(dataGraph4)
-            });
-        res.render(constants.STATISTICS_PAGE, {title: 'Express', user: req.user, 
-            rows: rowBuilder, dataSets: data
+        let totalUsers = 0;
+        um.findTotalUsers().then(r=> {
+             totalUsers = r;
+             let rowBuilder = [
+                            ["thru-vs-time", "thru-by-app"],
+                            ["graph-3", "graph-4"]
+                    ];
+                    let graphData = [dataGraph1, dataGraph2, dataGraph3, dataGraph4];
+                    let data = JSON.stringify({
+                                    "graph1": JSON.stringify(dataGraph1),
+                                    "graph2": JSON.stringify(dataGraph2),
+                                    "graph3": JSON.stringify(dataGraph3),
+                                    "graph4": JSON.stringify(dataGraph4)
+                                });
+                    res.render(constants.STATISTICS_PAGE, {title: 'Express', user: req.user,
+                        rows: rowBuilder, dataSets: data, totalUsers: totalUsers
+                    });
         });
     });
+
+
 
 module.exports = router;
