@@ -57,12 +57,12 @@ let dataGraph4 = [
                 {
                     name: "Locales",
                     y: 62,
-                    drilldown: "Locales"
+                    // drilldown: "Locales"
                 },
                 {
                     name: "No Locales",
                     y: 38,
-                    drilldown: "No Locales"
+                    // drilldown: "No Locales"
                 },
             ];
 
@@ -74,12 +74,12 @@ router.get('/',
                 ["graph-3", "graph-4"]
         ];
         let dataaaaaa = [dataGraph1, dataGraph2, dataGraph3, dataGraph4];        
-        let data = {
-                "graph1": dataGraph1,
-                "graph2": dataGraph2,
-                "graph3": dataGraph3,
-                "graph4": dataGraph4
-            };
+        let data = JSON.stringify({
+                "graph1": JSON.stringify(dataGraph1),
+                "graph2": JSON.stringify(dataGraph2),
+                "graph3": JSON.stringify(dataGraph3),
+                "graph4": JSON.stringify(dataGraph4)
+            });
         res.render(constants.STATISTICS_PAGE, {title: 'Express', user: req.user, 
             rows: rowBuilder, dataSets: data
         });

@@ -1,5 +1,4 @@
 // https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/column-drilldown/
-console.log(dataSet);
 Highcharts.chart('thru-by-app', {
     chart: {
         type: 'column'
@@ -37,7 +36,7 @@ Highcharts.chart('thru-by-app', {
         {
             name: "Applications",
             colorByPoint: true,
-            data: dataSet
+            data: lookUpData("graph2")
         }
     ],
 });
