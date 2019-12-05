@@ -5,7 +5,7 @@ let User = userFactory(db.sequelize, db.Sequelize.DataTypes);
 
 let Actions = {
     findTotalUsers: function() {
-        return User.count()
+        return User.count();
     },
     insertUser: function(name, randomness) {
         db.sequelize.sync().then(function() {
@@ -37,7 +37,12 @@ let Actions = {
                 });
             });
     },
-
+    graphTwoQuery: function() {
+            return User.findAll( {
+                attributes: [['username', 'name'], ['rateLimitKbps', 'y']]
+            });
+            //raw: true
+    }
 }
 
 module.exports = Actions;

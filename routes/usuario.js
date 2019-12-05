@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let constants = require('../constants');
+let um = require('../db/UserManager');
 
 /* GET user page. */
 router.get('/',

@@ -15,35 +15,35 @@ let dataGraph1 = [
             [Date.UTC(2019, 8, 1, 6, 28), 106.4]
         ];
 let dataGraph2 = [
-                {
-                    name: "Chrome",
-                    y: 62.74,
-                },
-                {
-                    name: "Firefox",
-                    y: 10.57,
-                },
-                {
-                    name: "Internet Explorer",
-                    y: 7.23,
-                },
-                {
-                    name: "Safari",
-                    y: 5.58,
-                },
-                {
-                    name: "Edge",
-                    y: 4.02,
-                },
-                {
-                    name: "Opera",
-                    y: 1.92,
-                },
-                {
-                    name: "Other",
-                    y: 7.62,
-                }
-            ];
+//    {
+//        name: "Chrome",
+//        y: 62.74,
+//    },
+//    {
+//        name: "Firefox",
+//        y: 10.57,
+//    },
+//    {
+//        name: "Internet Explorer",
+//        y: 7.23,
+//    },
+//    {
+//        name: "Safari",
+//        y: 5.58,
+//    },
+//    {
+//        name: "Edge",
+//        y: 4.02,
+//    },
+//    {
+//        name: "Opera",
+//        y: 1.92,
+//    },
+//    {
+//        name: "Other",
+//        y: 7.62,
+//    }
+];
 let dataGraph3 = [
                 {
                     name: "Locales",
@@ -71,6 +71,18 @@ let dataGraph4 = [
 router.get('/',
     function(req, res, next) {
         let totalUsers = 0;
+        um.graphTwoQuery().then(r=> {
+            for (let i = 0; i < r.length; i++) {
+                let temp = {
+                    "name": r[i]["dataValues"]["name"],
+                    "y": r[i]["dataValues"]["y"]
+                }
+                dataGraph2.push(temp);
+                //finalArray.push(temp);
+                //finalArray.push(JSON.parse(r[i]["dataValues"]));
+            }
+            console.log("final: " + dataGraph2);
+        });
         um.findTotalUsers().then(r=> {
              totalUsers = r;
              let rowBuilder = [
@@ -89,7 +101,4 @@ router.get('/',
                     });
         });
     });
-
-
-
 module.exports = router;

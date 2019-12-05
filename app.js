@@ -9,7 +9,10 @@ let array = ["rachel", "sudheesh", "matt", "A1", "a2", "a3", "frankie", "esther"
 
 for (let i = 0; i < array.length; i++) {
     um.insertUser(array[i], i);
+    console.log("hello");
 }
+
+console.log("graph two query :" + um.graphTwoQuery());
 
 let applicationUser = require('./temp-test/applicationUser')
 
