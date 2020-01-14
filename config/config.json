@@ -2,7 +2,7 @@
   "development": {
     "username": "commgestion",
     "password": null,
-    "database": "commgestiondev",
+    "database": "commgestionDev",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
