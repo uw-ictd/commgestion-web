@@ -1,5 +1,7 @@
-{% extends "_layout.njk" %}
+{% extends "_layout.html" %}
+{% load static %}
+
 {% block main %} this is the public access page with gauge
-    {% include "graphViews/publicLayout.njk" %}
-    <script src="js/data/gauge.js"></script>
+    {% include "graphViews/publicLayout.html" %}
+    <script src="{% static "js/data/gauge.js" %}"></script>
 {% endblock %}
