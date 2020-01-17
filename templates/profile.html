@@ -1,5 +1,7 @@
-{% extends "_layout.njk" %}
+{% extends "_layout.html" %}
+{% load static %}
+
 {% block main %}
-    {% include "graphViews/profileLayout.njk" %}
-    <script src="js/data/userConsumption.js"></script>
+    {% include "graphViews/profileLayout.html" %}
+    <script src="{% static "js/data/userConsumption.js" %}"></script>
 {% endblock %}

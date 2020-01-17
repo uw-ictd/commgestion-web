@@ -1,15 +1,17 @@
-{% extends "_layout.njk" %}
+{% extends "_layout.html" %}
+{% load static %}
+
 {% block main %}
     <p>There are {{totalUsers}} users in the database.</p>
-    {% include "graphViews/statsLayout.njk" %}
+    {% include "graphViews/statsLayout.html" %}
     <script>
         var dataFromServer = {{dataSets | safe}};
         function lookUpData(graphid) {
             return JSON.parse(dataFromServer[graphid]);
         }
     </script>
-    <script src="js/data/lineGraph.js" defer></script>
-    <script src="js/data/barChart.js"></script>
-    <script src="js/data/usoLocalesPie.js"></script>
-    <script src="js/data/localContentPie.js"></script>
+    <script src="{% static "js/data/lineGraph.js" %}" defer></script>
+    <script src="{% static "js/data/barChart.js" %}"></script>
+    <script src="{% static "js/data/usoLocalesPie.js" %}"></script>
+    <script src="{% static "js/data/localContentPie.js" %}"></script>
 {% endblock %}
