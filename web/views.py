@@ -20,4 +20,4 @@ def profile(request):
 
 
 def usuario(request):
-    return render(request, 'usuario_pie.html')
+    return render(request, 'profile.html')
