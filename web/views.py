@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from . import stats_view
 
 # Create your views here.
 def home(request):
@@ -7,9 +7,7 @@ def home(request):
 
 
 def net_stats(request):
-    context = {
-        'totalUsers': 10,
-    }
+    context = stats_view.generate_test_data()
     return render(request, 'stats.html', context=context)
 
 
