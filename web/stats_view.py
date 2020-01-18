@@ -72,7 +72,7 @@ def generate_test_data():
         },
     ]
 
-    # ToDo(frankie0) Pull in actual data from the database helpers.
+    # ToDo (when database is active) Pull in actual data from the database helpers.
     # This is the original javascript code copied over below...
     '''um.graphTwoQuery().then(r=> {
         for (let i = 0; i < r.length; i++) {

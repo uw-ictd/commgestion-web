@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from . import stats_view
+from . import usuario_view
 
 # Create your views here.
 def home(request):
@@ -20,4 +21,5 @@ def profile(request):
 
 
 def usuario(request):
-    return render(request, 'profile.html')
+    context = usuario_view.generate_test_data()
+    return render(request, 'usuario_pie.html', context=context)
