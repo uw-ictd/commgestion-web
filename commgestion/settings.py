@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from commgestion.config import DATABASE_CONFIG
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -79,6 +81,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'postgres': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DATABASE_CONFIG['NAME'],
+        'USER': DATABASE_CONFIG['USER'],
+        'PASSWORD': DATABASE_CONFIG['PASSWORD'],
+        'HOST': DATABASE_CONFIG['HOST'],
+        'PORT': DATABASE_CONFIG['PORT'],
     }
 }
 
