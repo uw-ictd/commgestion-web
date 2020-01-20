@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import stats_view
 
+
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
