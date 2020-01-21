@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from django.utils.translation import ugettext_lazy as _
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from commgestion.config import DATABASE_CONFIG
 
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -66,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -114,8 +118,28 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
+
+
+# WARNING / NOTE / READ THIS FIRST
+# --------------------------------
+# I wasted one hour on this issue here. If the languages that are listed here contain a '-' in them, the locales
+# that are generated in the locale/ directory configured for this project expects to have an '_' instead and will NOT
+# work if there is a '-'.
+#
+# Generate locale definitions: python manage.py makemessages -l <locale_> / django-admin makemessages -l <locale_>
+# Compile locale translations: python manage.py compilemessage -l <locale_> / django-admin compilemessage -l <locale_>
+#
+# Additionally you could also use `--all`. All translatable strings needs to be discovered with {% trans ... %}
+
+LANGUAGES = (
+    ('en-us', _('English')),
+    ('es-mx', _('Spanish')),
+)
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 
 TIME_ZONE = 'UTC'
 
