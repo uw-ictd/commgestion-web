@@ -1,7 +1,23 @@
 import json
 import datetime
-
-
+import random
+from django.utils import timezone
+from web.models import Application
+    # <QuerySet [<Application: Application: https://google.com/ -> 111.77213099961902>, 
+    # <Application: Application: https://facebook.com -> 145.44854735809577>, 
+    # <Application: Application: https://whatsapp.com -> 468.5439025709228>, 
+    # <Application: Application: https://santainesapp.mx -> 608.4407541905771>]>  
+def get_graph2_data():
+    query_set = Application.objects.all()
+    data = []
+    for x in query_set:
+        obj = {
+            'name': x.host,
+            'y': x.throughput
+        }
+        data.append(obj)
+    return data
+    
 def generate_test_data():
     """ Generate fake data for the network statistics page
     """
@@ -16,8 +32,9 @@ def generate_test_data():
         [datetime.datetime(2019, 8, 1, 6, 27), 71.5],
         [datetime.datetime(2019, 8, 1, 6, 28), 106.4]
     ]
-
-    data_graph2 = [
+       
+    data_graph2 = get_graph2_data()
+    """ [
         {
             'name': "Chrome",
             'y': 62.74,
@@ -46,7 +63,7 @@ def generate_test_data():
             'name': "Other",
             'y': 7.62,
         }
-    ]
+    ] """
 
     data_graph3 = [
         {
@@ -110,3 +127,12 @@ def generate_test_data():
         'dataSets': data,
         'rows': row_builder,
     }
+
+def fake_graph2_data_creation():
+        hosts = ['https://google.com/', 'https://facebook.com', 'https://whatsapp.com', 'https://santainesapp.mx']
+        for host_name in hosts:
+            Application.objects.create(
+                host=host_name,
+                throughput=1000 * random.random(),
+                timestamp=timezone.now(),
+            )
