@@ -3,5 +3,8 @@
 
 {% block main %} this is the public access page with gauge
     {% include "graphViews/publicLayout.html" %}
+    <script>
+        var dataFromServer = {{dataSets | safe}};
+    </script>
     <script src="{% static "js/data/gauge.js" %}"></script>
 {% endblock %}

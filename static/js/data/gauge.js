@@ -86,6 +86,7 @@ Highcharts.chart('hc-gauge', {
     series: [{
         name: 'Speed',
         data: {dataSets},
+        //data: [80],
         tooltip: {
             valueSuffix: ' km/h'
         }
