@@ -7,7 +7,9 @@ from . import usuario_view
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    gauge = public_view.generate_test_data()
+    print(gauge)
+    return render(request, 'home.html', context=gauge)
 
 
 def net_stats(request):

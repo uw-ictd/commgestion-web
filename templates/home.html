@@ -8,5 +8,9 @@
   <body>
     <h1>{% trans "This is home!" %}</h1>
     <p> {% include "public_info.html" %} </p>
+    <script>
+        var dataFromServer = {{data | safe}};
+    </script>
+    <script src="{% static "js/data/gauge.js" %}"></script>
   </body>
 </html>

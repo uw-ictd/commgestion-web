@@ -1,4 +1,4 @@
-Highcharts.chart('container', {
+Highcharts.chart('hc-gauge', {
 
     chart: {
         type: 'gauge',
@@ -48,7 +48,7 @@ Highcharts.chart('container', {
     // the value axis
     yAxis: {
         min: 0,
-        max: 100,
+        max: 10,
 
         minorTickInterval: 'auto',
         minorTickWidth: 1,
@@ -66,19 +66,19 @@ Highcharts.chart('container', {
             rotation: 'auto'
         },
         title: {
-            text: 'km/h'
+            text: 'megabit/sec'
         },
         plotBands: [{
             from: 0,
-            to: 50,
+            to: 5,
             color: '#55BF3B' // green
         }, {
-            from: 50,
-            to: 60,
+            from: 5,
+            to: 6,
             color: '#DDDF0D' // yellow
         }, {
-            from: 60,
-            to: 100,
+            from: 6,
+            to: 10,
             color: '#DF5353' // red
         }]
     },
@@ -87,7 +87,7 @@ Highcharts.chart('container', {
         name: 'Speed',
         data: dataFromServer,
         tooltip: {
-            valueSuffix: ' km/h'
+            valueSuffix: ' megabit/sec'
         }
     }]
 

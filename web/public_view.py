@@ -1,5 +1,5 @@
 import json
 
 def generate_test_data():
-    data =[80]
+    data =[4]
     return {"data": data}
