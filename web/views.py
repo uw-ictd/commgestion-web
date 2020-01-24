@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from web import public_view
 from . import stats_view
 from . import usuario_view
 
@@ -14,7 +16,9 @@ def net_stats(request):
 
 
 def public_info(request):
-    return render(request, 'public_info.html')
+    gauge = public_view.generate_test_data()
+    print(gauge)
+    return render(request, 'public_info.html', context=gauge)
 
 
 def profile(request):

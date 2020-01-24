@@ -1,4 +1,4 @@
-Highcharts.chart('hc-gauge', {
+Highcharts.chart('container', {
 
     chart: {
         type: 'gauge',
@@ -48,7 +48,7 @@ Highcharts.chart('hc-gauge', {
     // the value axis
     yAxis: {
         min: 0,
-        max: 200,
+        max: 100,
 
         minorTickInterval: 'auto',
         minorTickWidth: 1,
@@ -70,32 +70,30 @@ Highcharts.chart('hc-gauge', {
         },
         plotBands: [{
             from: 0,
-            to: 120,
+            to: 50,
             color: '#55BF3B' // green
         }, {
-            from: 120,
-            to: 160,
+            from: 50,
+            to: 60,
             color: '#DDDF0D' // yellow
         }, {
-            from: 160,
-            to: 200,
+            from: 60,
+            to: 100,
             color: '#DF5353' // red
         }]
     },
 
     series: [{
         name: 'Speed',
-        data: {dataSets},
-        //data: [80],
+        data: dataFromServer,
         tooltip: {
             valueSuffix: ' km/h'
         }
     }]
 
-},
-
+}
 // Add some life
-function (chart) {
+/*function (chart) {
     if (!chart.renderer.forExport) {
         setInterval(function () {
             var point = chart.series[0].points[0],
@@ -111,4 +109,5 @@ function (chart) {
 
         }, 3000);
     }
-});
+}*/
+);

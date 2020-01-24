@@ -12,6 +12,7 @@ GUTI_VALUE = 'ThisIsAGutiValue'
 
 class SubscriberModelTest(TestCase):
     def test_subscriber_creation(self):
+        #insert user into database
         User.objects.create_user(username=IMSI_VALUE, email=EMAIL_VALUE, password=PASSWORD)
 
         created_user = User.objects.get(username=IMSI_VALUE)
