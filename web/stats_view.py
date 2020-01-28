@@ -89,20 +89,6 @@ def generate_test_data():
         },
     ]
 
-    # ToDo (when database is active) Pull in actual data from the database helpers.
-    # This is the original javascript code copied over below...
-    '''um.graphTwoQuery().then(r=> {
-        for (let i = 0; i < r.length; i++) {
-            let temp = {
-                "name": r[i]["dataValues"]["name"],
-                "y": r[i]["dataValues"]["y"]
-            }
-            data_graph2.push(temp);
-            //finalArray.push(temp);
-            //finalArray.push(JSON.parse(r[i]["dataValues"]));
-        }
-        console.log("final: " + data_graph2);
-    });'''
     # ToDo Need to query for the total users:
     total_users = 1337;
 
