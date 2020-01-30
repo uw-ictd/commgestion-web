@@ -17,8 +17,9 @@ def add_applications():
 
 #  add host mapping as well as user defined hosts
 def add_hostmappings():
+        UserDefinedHost.objects.all().delete()
         captured_fb = list(['fb.cdn.com', 'dragon.cdn.com'])
-        capture_google = list(['google.com','googlehost1.com', 'googlehost2.com', 'googlehost3'])
+        captured_google = list(['google.com','googlehost1.com', 'googlehost2.com', 'googlehost3'])
         captured_youtube = list(['youtube.com', 'you1', 'youhost2'])
         captured_wikipedia = list(['wikipedia.org', 'wiki', 'wik', 'wik2'])
 
@@ -32,7 +33,8 @@ def add_hostmappings():
         UserDefinedHost.objects.create(name='wikipedia.org')
         udh_wiki = UserDefinedHost.objects.get(name='wikipedia.org')
 
-        udh_list = [(udh_fb, captured_fb), (udh_google, captured_google), 
+        
+        udh_list = [(udh_fb, captured_fb),  (udh_google, captured_google),
         (udh_youtube, captured_youtube), (udh_wiki, captured_wikipedia)]
 
         for hm in udh_list:
