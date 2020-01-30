@@ -1,4 +1,4 @@
-from web.models import Application, UserDefinedHost, HostMapping
+from web.models import Application, UserDefinedHost, HostMapping, Subscriber
 from collections import namedtuple
 import random
 from django.utils import timezone
@@ -45,14 +45,24 @@ def add_hostmappings():
 #add subscribers, which requires fake "User" info like email phone imsi
 def add_subscribers():
  """
+def add_subscribers():
+    IMSI_VALUE = '1234567890'
+    EMAIL_VALUE = 'person@ccellular.network'
+    PASSWORD = 'changethisP@ssw0rd'
+    phonenumber = ''
+    GUTI_VALUE = 'ThisIsAGutiValue'
 
-
-# IMSI_VALUE = '1234567890'
-# EMAIL_VALUE = 'person@ccellular.network'
-# PASSWORD = 'changethisP@ssw0rd'
-# GUTI_VALUE = 'ThisIsAGutiValue'
-
-
+    created_subscriber = Subscriber.objects.get(phonenumber=IMSI_VALUE)
+    subscriber_list=list()
+    i = 1;
+    while i <= 10:
+        list.append(
+            Subscriber.objects.create(
+            Subscriber.Role= 1,
+            Subscriber.connectivity_status=1,
+            Subscriber.ROLE_CHOICES=(Role.ADMIN_ROLE, u'admin'),
+            Subscriber.CONN_CHOICES =(ConnectionStatus.ONLINE, u'online')
+        )))
 """ class SubscriberModelTest(TestCase):
     def test_subscriber_creation(self):
         #insert user into database
