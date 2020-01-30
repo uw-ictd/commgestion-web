@@ -17,7 +17,7 @@ def get_graph2_data():
         }
         data.append(obj)
     return data
-    
+
 def generate_test_data():
     """ Generate fake data for the network statistics page
     """
