@@ -1,4 +1,5 @@
-from web.models import Application, UserDefinedHost, HostMapping, Subscriber
+from django.contrib.auth.models import User
+from web.models import Application, UserDefinedHost, HostMapping, Subscriber, Usage
 from collections import namedtuple
 import random
 from django.utils import timezone
@@ -46,15 +47,41 @@ def add_hostmappings():
 def add_subscribers():
  """
 def add_subscribers():
-    IMSI_VALUE = '1234567890'
-    EMAIL_VALUE = 'person@ccellular.network'
-    PASSWORD = 'changethisP@ssw0rd'
-    phonenumber = ''
-    GUTI_VALUE = 'ThisIsAGutiValue'
+    IMSI_VALUES = ['1234567890', '1234567891','1234567892','1234567893','1234567894']
+    EMAIL_VALUES = ['person@ccellular.network','person1@ccellular.network','person2@ccellular.network',
+    'person3@ccellular.network','person4@ccellular.network']
+    PASSWORDS = ['changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd']
+    GUTI_VALUES = ['GutiValue1','GutiValue2','GutiValue3','GutiValue4','GutiValue5']
+    created_users = []
+    #make users
+    for i in range(len(IMSI_VALUES)):
+        User.objects.create_user(username=IMSI_VALUES[i], email = EMAIL_VALUES[i], password=PASSWORDS[i])
+        created_user = User.objects.get(username=IMSI_VALUE)
+        created_users.append(created_user)
+        INSERT_TIMESTAMP = timezone.now()
+    
+    #make subscribers
+    for i in range(len(created_users)):
+        user = created_user[i]
+        Subscriber.objects.create(
+            user=user,
+            phonenumber=IMSI_VALUES[i],
+            display_name=EMAIL_VALUES[i].split('@')[0],
+            imsi=IMSI_VALUES[i],
+            guti=GUTI_VALUE[i],
+            is_local=True,
+            role=Subscriber.Role.USER_ROLE,
+            connectivity_status=Subscriber.ConnectionStatus.ONLINE,
+            last_time_online=INSERT_TIMESTAMP,
+            rate_limit_kbps=100,
+        )
+        
+        #add some usage for this subscirber
+        created_subscriber = Subscriber.objects.get(phonenumber=IMSI_VALUE[i])
+        Usage.objects.create(user=created_subscriber, throughput=50*random.random(), timestamp=timezone.now())
 
-    created_subscriber = Subscriber.objects.get(phonenumber=IMSI_VALUE)
     subscriber_list=list()
-    i = 1;
+    i = 1
     while i <= 10:
         list.append(
             Subscriber.objects.create(
