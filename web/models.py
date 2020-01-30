@@ -71,3 +71,6 @@ class Usage(models.Model):
     user = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
     throughput = models.FloatField()
     timestamp = models.DateTimeField()
+
+    def get_username(self):
+        return self.user.display_name

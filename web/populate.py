@@ -46,11 +46,12 @@ def add_subscribers():
 def add_subscribers():
     Subscriber.objects.all().delete()
     User.objects.all().delete()
-    IMSI_VALUES = ['1234567890', '1234567891','1234567892','1234567893','1234567894']
+    IMSI_VALUES = ['1234567890', '1234567891','1234567892','1234567893','1234567894', '423456378', '234532']
     EMAIL_VALUES = ['person@ccellular.network','person1@ccellular.network','person2@ccellular.network',
-    'person3@ccellular.network','person4@ccellular.network']
-    PASSWORDS = ['changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd']
-    GUTI_VALUES = ['GutiValue1','GutiValue2','GutiValue3','GutiValue4','GutiValue5']
+    'person3@ccellular.network','person4@ccellular.network', 'hello@gmail.com', 'person@yahoo.com']
+    PASSWORDS = ['changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd','changethisP@ssw0rd',
+                 'password1', 'password2']
+    GUTI_VALUES = ['GutiValue1','GutiValue2','GutiValue3','GutiValue4','GutiValue5', 'GutiValue6', 'GutiValue7']
     created_users = []
     #make users
     for i in range(len(IMSI_VALUES)):
