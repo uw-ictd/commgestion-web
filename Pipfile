@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 psycopg2 = "*"
 django-tables2 = "*"
+cbor2 = "*"
 tomlkit = "*"
 
 [requires]
