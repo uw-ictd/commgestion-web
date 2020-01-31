@@ -46,6 +46,8 @@ def add_subscribers():
 def add_subscribers():
     Subscriber.objects.all().delete()
     User.objects.all().delete()
+    Usage.objects.all().delete()
+
     IMSI_VALUES = ['1234567890', '1234567891','1234567892','1234567893','1234567894', '423456378', '234532']
     EMAIL_VALUES = ['person@ccellular.network','person1@ccellular.network','person2@ccellular.network',
     'person3@ccellular.network','person4@ccellular.network', 'hello@gmail.com', 'person@yahoo.com']
@@ -76,13 +78,21 @@ def add_subscribers():
             rate_limit_kbps=100,
         )
         
-        #add some usage for this subscriber
-        created_subscriber = Subscriber.objects.get(phonenumber=IMSI_VALUES[i])
-        Usage.objects.create(user=created_subscriber, throughput=50*random.random(), timestamp=timezone.now())
+    subs = Subscriber.objects.all()
+  
+    for sub in subs:
+        k = 5
+        usr = Subscriber.objects.get(phonenumber=IMSI_VALUES[i])
+        time = timezone.now()
+        while k >= 0 :
+            Usage.objects.create(user=usr, throughput=50*random.random(), timestamp=time)
+            k-=1
 
 def get_subscribers():
     total = Subscriber.objects.all()
     return total
+def get_usage():
+    return Usage.objects.all()
 
 """ class SubscriberModelTest(TestCase):
     def test_subscriber_creation(self):

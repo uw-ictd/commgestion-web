@@ -2,11 +2,9 @@ import json
 import datetime
 import random
 from django.utils import timezone
-from web.models import Application
-    # <QuerySet [<Application: Application: https://google.com/ -> 111.77213099961902>, 
-    # <Application: Application: https://facebook.com -> 145.44854735809577>, 
-    # <Application: Application: https://whatsapp.com -> 468.5439025709228>, 
-    # <Application: Application: https://santainesapp.mx -> 608.4407541905771>]>  
+from django.db.models import Sum
+from web.models import Application, Usage, User
+
 def get_graph2_data():
     query_set = Application.objects.all()
     data = []
@@ -17,11 +15,25 @@ def get_graph2_data():
         }
         data.append(obj)
     return data
-
+    
 def generate_test_data():
     """ Generate fake data for the network statistics page
     """
-    data_graph1 = [
+    qs = Usage.objects.all()
+    print(qs)
+    #Usage.objects.filter(attribute__in=attributes).values('timestamp').annotate(thrpt = Sum('throughput'))
+    
+    qs_agg = Usage.objects.values('timestamp').annotate(thrpt = Sum('throughput'))
+    print(qs_agg)
+    data = []
+    for x in qs_agg:
+        print("items in qs_agg", x)
+        time = x['timestamp'] #values returns a dictionary
+        thru = x['thrpt']
+        data.append([time,thru])
+    
+    data_graph1 =  data
+    """ [
         [datetime.datetime(2019, 8, 1, 6, 20), 29.9],
         [datetime.datetime(2019, 8, 1, 6, 21), 71.5],
         [datetime.datetime(2019, 8, 1, 6, 22), 106.4],
@@ -31,7 +43,7 @@ def generate_test_data():
         [datetime.datetime(2019, 8, 1, 6, 26), 29.9],
         [datetime.datetime(2019, 8, 1, 6, 27), 71.5],
         [datetime.datetime(2019, 8, 1, 6, 28), 106.4]
-    ]
+    ] """
        
     data_graph2 = get_graph2_data()
     """ [
@@ -113,12 +125,3 @@ def generate_test_data():
         'dataSets': data,
         'rows': row_builder,
     }
-
-def fake_graph2_data_creation():
-        hosts = ['https://google.com/', 'https://facebook.com', 'https://whatsapp.com', 'https://santainesapp.mx']
-        for host_name in hosts:
-            Application.objects.create(
-                host=host_name,
-                throughput=1000 * random.random(),
-                timestamp=timezone.now(),
-            )

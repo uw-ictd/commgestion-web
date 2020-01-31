@@ -74,3 +74,6 @@ class Usage(models.Model):
 
     def get_username(self):
         return self.user.display_name
+
+    def __str__(self):
+        return 'Usage: {} -> {}'.format(self.timestamp, self.throughput)
