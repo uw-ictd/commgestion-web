@@ -3,7 +3,7 @@ import datetime
 import random
 from django.utils import timezone
 from django.db.models import Sum
-from web.models import Application, Usage, User
+from web.models import Application, Usage, Subscriber
 
 def get_graph2_data():
     query_set = Application.objects.all()
@@ -15,7 +15,27 @@ def get_graph2_data():
         }
         data.append(obj)
     return data
-    
+
+def get_graph3_data():
+    data3 = []
+    localUsers = Subscriber.objects.filter(is_local=True).annotate(localsum=Sum(is_local=True))
+    nonLocalUsers = Subscriber.objects.filter(is_local=False).annotate(nonlocalsum=Sum(is_local=False))
+
+    data3.append(
+        {
+            'name': "Locales",
+            'y': localUsers
+        }
+    )
+
+    data3.append(
+        {
+            'name': "No Locales",
+            'y': nonLocalUsers
+        }
+    )
+    return data3
+
 def generate_test_data():
     """ Generate fake data for the network statistics page
     """
@@ -32,7 +52,7 @@ def generate_test_data():
         thru = x['thrpt']
         data.append([time,thru])
     
-    data_graph1 =  data
+    data_graph1 = data
     """ [
         [datetime.datetime(2019, 8, 1, 6, 20), 29.9],
         [datetime.datetime(2019, 8, 1, 6, 21), 71.5],
@@ -46,6 +66,7 @@ def generate_test_data():
     ] """
        
     data_graph2 = get_graph2_data()
+
     """ [
         {
             'name': "Chrome",
@@ -77,16 +98,17 @@ def generate_test_data():
         }
     ] """
 
-    data_graph3 = [
-        {
-            'name': "Locales",
-            'y': 62,
-        },
-        {
-            'name': "Extranjeros",
-            'y': 38,
-        },
-    ]
+    # data_graph3 = [
+    #     {
+    #         'name': "Locales",
+    #         'y': 62,
+    #     },
+    #     {
+    #         'name': "Extranjeros",
+    #         'y': 38,
+    #     },
+    # ]
+    data_graph3 = get_graph3_data()
 
     data_graph4 = [
         {
