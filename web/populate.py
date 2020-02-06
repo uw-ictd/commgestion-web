@@ -63,7 +63,21 @@ def add_subscribers():
         INSERT_TIMESTAMP = timezone.now()
     
     #make subscribers
-    for i in range(len(created_users)):
+    for i in range(10):
+        user = created_users[i]
+        Subscriber.objects.create(
+            user=user,
+            phonenumber=IMSI_VALUES[i],
+            display_name=EMAIL_VALUES[i].split('@')[0],
+            imsi=IMSI_VALUES[i],
+            guti=GUTI_VALUES[i],
+            is_local=False,
+            role=Subscriber.Role.USER_ROLE,
+            connectivity_status=Subscriber.ConnectionStatus.ONLINE,
+            last_time_online=INSERT_TIMESTAMP,
+            rate_limit_kbps=100,
+        )
+    for i in range(len(created_users) - 10):
         user = created_users[i]
         Subscriber.objects.create(
             user=user,
@@ -77,7 +91,6 @@ def add_subscribers():
             last_time_online=INSERT_TIMESTAMP,
             rate_limit_kbps=100,
         )
-        
     subs = Subscriber.objects.all()
   
     for sub in subs:

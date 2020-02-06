@@ -1,7 +1,5 @@
 import json
 import datetime
-import random
-from django.utils import timezone
 from django.db.models import Sum
 from web.models import Application, Usage, Subscriber
 
@@ -18,20 +16,20 @@ def get_graph2_data():
 
 def get_graph3_data():
     data3 = []
-    localUsers = Subscriber.objects.filter(is_local=True).annotate(localsum=Sum(is_local=True))
-    nonLocalUsers = Subscriber.objects.filter(is_local=False).annotate(nonlocalsum=Sum(is_local=False))
+    localUserSum = Subscriber.objects.filter(is_local=True).count()
+    nonLocalSum = Subscriber.objects.all().count() - localUserSum
 
     data3.append(
         {
             'name': "Locales",
-            'y': localUsers
+            'y': localUserSum
         }
     )
 
     data3.append(
         {
             'name': "No Locales",
-            'y': nonLocalUsers
+            'y': nonLocalSum
         }
     )
     return data3
@@ -110,18 +108,20 @@ def generate_test_data():
     # ]
     data_graph3 = get_graph3_data()
 
-    data_graph4 = [
-        {
-            'name': "Locales",
-            'y': 62,
-            #'drilldown': "Locales"
-        },
-        {
-            'name': "No Locales",
-            'y': 38,
-            #'drilldown': "No Locales"
-        },
-    ]
+    # data_graph4 = [
+    #     {
+    #         'name': "Locales",
+    #         'y': 62,
+    #         #'drilldown': "Locales"
+    #     },
+    #     {
+    #         'name': "No Locales",
+    #         'y': 38,
+    #         #'drilldown': "No Locales"
+    #     },
+    # ]
+
+    data_graph4 = get_graph3_data()
 
     # ToDo Need to query for the total users:
     total_users = 1337;

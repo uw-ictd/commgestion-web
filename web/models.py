@@ -30,6 +30,7 @@ class HostMapping(models.Model):
 
 
 class Subscriber(models.Model):
+
     class Role:
         ADMIN_ROLE = 1
         USER_ROLE = 2
