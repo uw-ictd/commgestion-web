@@ -9,7 +9,7 @@ Highcharts.chart('hc-gauge', {
     },
 
     title: {
-        text: 'Speedometer'
+        text: 'Current network usage'
     },
 
     pane: {
@@ -48,7 +48,7 @@ Highcharts.chart('hc-gauge', {
     // the value axis
     yAxis: {
         min: 0,
-        max: 10,
+        max: 1000,
 
         minorTickInterval: 'auto',
         minorTickWidth: 1,
@@ -66,28 +66,28 @@ Highcharts.chart('hc-gauge', {
             rotation: 'auto'
         },
         title: {
-            text: 'megabit/sec'
+            text: 'sum(throughput)'
         },
         plotBands: [{
             from: 0,
-            to: 5,
+            to: 400,
             color: '#55BF3B' // green
         }, {
-            from: 5,
-            to: 6,
+            from: 400,
+            to: 600,
             color: '#DDDF0D' // yellow
         }, {
-            from: 6,
-            to: 10,
+            from: 600,
+            to: 1000,
             color: '#DF5353' // red
         }]
     },
 
     series: [{
-        name: 'Speed',
+        name: 'Current network use',
         data: dataFromServer,
         tooltip: {
-            valueSuffix: ' megabit/sec'
+            valueSuffix: 'sum(throughput)'
         }
     }]
 

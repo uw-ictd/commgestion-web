@@ -45,7 +45,6 @@ def generate_test_data():
     print(qs_agg)
     data = []
     for x in qs_agg:
-        print("items in qs_agg", x)
         time = x['timestamp'] #values returns a dictionary
         thru = x['thrpt']
         data.append([time,thru])

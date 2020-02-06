@@ -6,16 +6,15 @@ from django.db.models import Sum
 
 def generate_test_data():
     
-    #make some "current usage" data (need this to run every time so that we can have some fresh numbers. 
+    #make some "current usage" data (runs every time so we have fresh numbers)
     k = 5
-    usr = Subscriber.objects.get(phonenumber='123456789' + str(random.randint(0, 5)))
+    usr = Subscriber.objects.get(phonenumber='123456789' + str(random.randint(0, 4)))
     time = timezone.now()
     while k >= 0 :
         Usage.objects.create(user=usr, throughput=50*random.random(), timestamp=time)
         k-=1
     
-    #query for the current usage:
-    qs_agg = Usage.objects.filter(timestamp=time).annotate(thru = Sum('throughput'))
-    print(qs_agg)
-    data =[4]
+    #query for the current usage
+    qs_agg = Usage.objects.filter(timestamp__exact=time).aggregate(thru = Sum('throughput'))
+    data =[round(qs_agg['thru'], 2)]
     return {"data": data}
