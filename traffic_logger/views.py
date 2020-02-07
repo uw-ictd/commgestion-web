@@ -27,25 +27,9 @@ _error_log = logging.getLogger('commgestion.traffic_logger')
 # TODO(matt9j) Ensure logging urls are only available on localhost.
 @csrf_exempt
 def log_user_throughput(request):
-    if request.method != "POST":
-        return HttpResponseNotAllowed(['POST'],
-                                      "Only POST is supported")
-
-    if request.content_type != "application/cbor":
-        return HttpResponseBadRequest(
-            'Content type must be cbor "application/cbor"')
-    try:
-        request_payload = cbor2.loads(request.body)
-    except cbor2.CBORDecodeError as e:
-        _error_log.warning("Rx malformed log_user_throughput request",
-                           exc_info=e, stack_info=True)
-        return HttpResponseBadRequest("Unable to parse request body as CBOR")
-
-    if not isinstance(request_payload, collections.Mapping):
-        # CBOR will generously parse most strings without error, ensure the
-        # payload is a key:value mapping as expected.
-        _error_log.warning("Malformed cbor payload received", exc_info=True)
-        return HttpResponseBadRequest("Request payload malformed")
+    request_payload, early_response = _parse_cbor_post_or_error(request)
+    if early_response is not None:
+        return early_response
 
     try:
         user_id = request_payload['user_id']
@@ -82,6 +66,7 @@ def log_user_throughput(request):
     # The post was successful
     return HttpResponse("", status=200)
 
+
 # TODO(matt9j) Ensure logging urls are only available on localhost.
 @csrf_exempt
 def log_host_throughput(request):
@@ -89,21 +74,9 @@ def log_host_throughput(request):
         return HttpResponseNotAllowed(['POST'],
                                       "Only POST is supported")
 
-    if request.content_type != "application/cbor":
-        return HttpResponseBadRequest(
-            'Content type must be cbor "application/cbor"')
-    try:
-        request_payload = cbor2.loads(request.body)
-    except cbor2.CBORDecodeError as e:
-        _error_log.warning("Rx malformed log_host_throughput request",
-                           exc_info=e, stack_info=True)
-        return HttpResponseBadRequest("Unable to parse request body as CBOR")
-
-    if not isinstance(request_payload, collections.Mapping):
-        # CBOR will generously parse most strings without error, ensure the
-        # payload is a key:value mapping as expected.
-        _error_log.warning("Malformed cbor payload received", exc_info=True)
-        return HttpResponseBadRequest("Request payload malformed")
+    request_payload, early_response = _parse_cbor_post_or_error(request)
+    if early_response is not None:
+        return early_response
 
     try:
         host_fqdn = request_payload['host_fqdn']
@@ -129,3 +102,38 @@ def log_host_throughput(request):
 
     # The post was successful
     return HttpResponse("", status=200)
+
+
+def _parse_cbor_post_or_error(request):
+    """Validate the request is actually the expected CBOR post
+
+    Returns the valid parsed payload or an appropriate http error response
+    for the error that occurred.
+    """
+    request_payload = None
+    response = None
+    if request.method != "POST":
+        response = HttpResponseNotAllowed(['POST'],
+                                          "Only POST is supported")
+        return request_payload, response
+
+    if request.content_type != "application/cbor":
+        response = HttpResponseBadRequest(
+            'Content type must be cbor "application/cbor"')
+        return request_payload, response
+    try:
+        request_payload = cbor2.loads(request.body)
+    except cbor2.CBORDecodeError as e:
+        _error_log.warning("Rx malformed log_host_throughput request",
+                           exc_info=e, stack_info=True)
+        response = HttpResponseBadRequest("Unable to parse request body as CBOR")
+        return request_payload, response
+
+    if not isinstance(request_payload, collections.Mapping):
+        # CBOR will generously parse most strings without error, ensure the
+        # payload is a key:value mapping as expected.
+        _error_log.warning("Malformed cbor payload received", exc_info=True)
+        response = HttpResponseBadRequest("Request payload malformed")
+        return request_payload, response
+
+    return request_payload, response
