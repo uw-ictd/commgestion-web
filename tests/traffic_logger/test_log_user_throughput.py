@@ -28,7 +28,7 @@ class TrafficLoggerUserThroughputViewTest(TestCase):
         data = b'i-am-garbage-hear-me-r0ar'
         response = self.c.post('/traffic-logger/user/',
                                data=data,
-                               content_type='application/octet-stream')
+                               content_type='application/cbor')
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
 
     def test_missing_key(self):
@@ -36,7 +36,7 @@ class TrafficLoggerUserThroughputViewTest(TestCase):
         marshalled_data = cbor2.dumps(data)
         response = self.c.post('/traffic-logger/user/',
                                data=marshalled_data,
-                               content_type='application/octet-stream')
+                               content_type='application/cbor')
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
 
     def test_subscriber_non_existence(self):
@@ -49,7 +49,7 @@ class TrafficLoggerUserThroughputViewTest(TestCase):
         marshalled_data = cbor2.dumps(data)
         response = self.c.post('/traffic-logger/user/',
                                data=marshalled_data,
-                               content_type='application/octet-stream')
+                               content_type='application/cbor')
 
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
 
@@ -66,6 +66,6 @@ class TrafficLoggerUserThroughputViewTest(TestCase):
         marshalled_data = cbor2.dumps(data)
         response = self.c.post('/traffic-logger/user/',
                                data=marshalled_data,
-                               content_type='application/octet-stream')
+                               content_type='application/cbor')
 
         self.assertEqual(response.status_code, HTTPStatus.OK)

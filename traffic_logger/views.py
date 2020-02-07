@@ -4,7 +4,6 @@ The traffic logger provides programatic APIs rather than rendered user-facing
 pages. It uses CBOR for payload marshalling and unmarshalling.
 
  """
-
 from django.db import DatabaseError
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import (HttpResponse, HttpResponseBadRequest,
@@ -17,7 +16,9 @@ from django.contrib.auth.models import User
 from web.models import Subscriber, Usage
 
 import cbor2
+import collections
 import logging
+
 
 # Setup the local error log
 _error_log = logging.getLogger('commgestion.traffic_logger')
@@ -29,12 +30,22 @@ def log_user_throughput(request):
     if request.method != "POST":
         return HttpResponseNotAllowed(['POST'],
                                       "Only POST is supported")
+
+    if request.content_type != "application/cbor":
+        return HttpResponseBadRequest(
+            'Content type must be cbor "application/cbor"')
     try:
         request_payload = cbor2.loads(request.body)
     except cbor2.CBORDecodeError as e:
         _error_log.warning("Rx malformed log_user_throughput request",
                            exc_info=e, stack_info=True)
         return HttpResponseBadRequest("Unable to parse request body as CBOR")
+
+    if not isinstance(request_payload, collections.Mapping):
+        # CBOR will generously parse most strings without error, ensure the
+        # payload is a key:value mapping as expected.
+        _error_log.warning("Malformed cbor payload received", exc_info=True)
+        return HttpResponseBadRequest("Request payload malformed")
 
     try:
         user_id = request_payload['user_id']
