@@ -1,4 +1,3 @@
-console.log("hello");
 Highcharts.chart('user-data', {
 
     title: {

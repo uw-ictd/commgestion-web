@@ -1,6 +1,6 @@
 {% load static %}
 
-{% block main %} this is the public access page with gauge
+{% block main %}
     {% include "graphViews/publicLayout.html" %}
     <script>
         var dataFromServer = {{data | safe}};
