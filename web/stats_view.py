@@ -1,7 +1,7 @@
 import json
 import datetime
-from django.db.models import Sum
 from web.models import Application, Usage, Subscriber
+from django.db.models import Sum
 
 def get_graph2_data():
     query_set = Application.objects.all()
