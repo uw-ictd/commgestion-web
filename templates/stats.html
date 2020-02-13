@@ -2,13 +2,24 @@
 {% load static %}
 
 {% block main %}
-    <p>There are {{totalUsers}} users in the database.</p>
+    <style>
+    .highcharts-container{
+      width: 100% !important;
+    }
+
+    .highcharts-root{
+      width: 100% !important;
+    }
+    </style>
     {% include "graphViews/statsLayout.html" %}
     <script>
         var dataFromServer = {{dataSets | safe}};
         function lookUpData(graphid) {
             return JSON.parse(dataFromServer[graphid]);
         }
+        setInterval(function () {
+          window.dispatchEvent(new Event('resize'));
+        }, 1000);
     </script>
     <script src="{% static "js/data/lineGraph.js" %}" defer></script>
     <script src="{% static "js/data/barChart.js" %}"></script>
