@@ -3,6 +3,7 @@ from django.shortcuts import render
 from web import public_view
 from . import stats_view
 from . import usuario_view
+from . import profile_view
 
 
 # Create your views here.
@@ -24,7 +25,8 @@ def public_info(request):
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    subs = profile_view.generate_table()
+    return render(request, 'profile.html', context=subs)
 
 
 def usuario(request):

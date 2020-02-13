@@ -3,5 +3,23 @@
 
 {% block main %}
     {% include "graphViews/profileLayout.html" %}
-    <script src="{% static "js/data/userConsumption.js" %}"></script>
+<!--    <script src="{% static "js/data/userConsumption.js" %}"></script>-->
+    <script>
+        var dataFromServer = {{data | safe}};
+        console.log(dataFromServer)
+        
+    </script>
+<table id="myTable" calss="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            data
+        </tr>
+    </tbody>
+</table>
+    
 {% endblock %}

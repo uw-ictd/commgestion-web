@@ -16,5 +16,5 @@ def generate_test_data():
     
     #query for the current usage
     qs_agg = Usage.objects.filter(timestamp__exact=time).aggregate(thru = Sum('throughput'))
-    data =[round(qs_agg['thru'], 2)]
-    return {"data": data}
+    public_data =[round(qs_agg['thru'], 2)]
+    return {"data": public_data}
