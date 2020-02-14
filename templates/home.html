@@ -1,11 +1,9 @@
 {% extends "_layout.html" %}
 {% load static %}
 {% load i18n %}
+{% block navbar %}
 
+{% endblock %}
 {% block main %}
     <p> {% include "public_info.html" %} </p>
-    <script>
-        var dataFromServer = {{data | safe}};
-    </script>
-    <script src="{% static "js/data/gauge.js" %}"></script>
 {% endblock %}
