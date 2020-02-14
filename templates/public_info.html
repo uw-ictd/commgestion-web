@@ -1,9 +1,10 @@
+{% extends "_layout.html" %}
 {% load static %}
 
 {% block main %}
     {% include "graphViews/publicLayout.html" %}
     <script>
         var dataFromServer = {{data | safe}};
-    </script>
-    <script src="{% static "js/data/gauge.js" %}"></script>
+    </script>   
+    <script src="{% static 'js/data/gauge.js' %}"></script>
 {% endblock %}
