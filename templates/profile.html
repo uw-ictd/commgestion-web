@@ -6,7 +6,6 @@
     <script src="{% static 'js/datatables.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "css/datatables.min.css" %}">
     <script>
-    
         $(document).ready(function(){
             console.log("ready!");
             $("#table_id").DataTable();
@@ -25,19 +24,19 @@
         <script>
             var dataFromServer = {{data | safe}};
             console.log(dataFromServer);
-            for (x in dataFromServer){
-                console.log(dataFromServer[x].fields.user);
-                //// ^^ how to access the data ^^^ 
+            for(d in dataFromServer){
+                console.log(dataFromServer[d].fields.user)
             }
         </script>
-        {% for d in dataFromServer %}
+        <tbody>
+        {% for d in data %}
+        <script>console.log(d.fields.user)</script>
         <tr>
-            {% for x in d %}
-                <script> console.log(x);</script>
-                <td>{{ x.user }}</td>
-            {% endfor %}
+            <td>{{d.fields.user}}</td>
+            <td>{{d.fields.phonenumber}}</td>
         </tr>
         {% endfor %}
+        </tbody>
     </table>
 </div>
 
