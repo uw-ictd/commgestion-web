@@ -5,7 +5,7 @@
     {% include "graphViews/profileLayout.html" %}
     <script src="{% static 'js/datatables.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "css/datatables.min.css" %}">
-<script>
+    <script>
     
         $(document).ready(function(){
             console.log("ready!");
@@ -16,7 +16,7 @@
     <table id="table_id" class="table table-striped table-bordered" cellspacing="1" width="100%">
 
         <thead>
-                <th>attr1</th>
+                <th>User</th>
                 <th>attr2</th>
                 <th>attr3</th>
                 <th>attr4</th>
@@ -25,10 +25,15 @@
         <script>
             var dataFromServer = {{data | safe}};
             console.log(dataFromServer);
+            for (x in dataFromServer){
+                console.log(dataFromServer[x].fields.user);
+                //// ^^ how to access the data ^^^ 
+            }
         </script>
         {% for d in dataFromServer %}
         <tr>
-            {% for x in d %} 
+            {% for x in d %}
+                <script> console.log(x);</script>
                 <td>{{ x.user }}</td>
             {% endfor %}
         </tr>
