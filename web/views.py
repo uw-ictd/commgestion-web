@@ -10,7 +10,7 @@ from . import profile_view
 def home(request):
     gauge = public_view.generate_test_data()
     print(gauge)
-    return render(request, 'home.html', context=gauge)
+    return render(request, 'public_info.html', context=gauge)
 
 
 def net_stats(request):
