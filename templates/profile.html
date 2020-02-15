@@ -27,16 +27,35 @@
             </thead>
             <tbody>
             {% for d in data %}
-            {%
             <tr>
                 <td>{{d.user}}</td>
                 <td>{{d.phonenumber}}</td>
                 <td>{{d.display_name}}</td>
                 <td>{{d.imsi}}</td>
                 <td>{{d.guti}}</td>
-                <td>{{d.is_local}}</td>
-                <td>{{d.role}}</td>
-                <td>{{d.connectivity_status}}</td>
+                
+                {% if d.is_local == True%}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+                
+                {%if d.role == 1 %}
+                    <td>Admin</td>
+                {%elif d.role == 2 %}
+                    <td>User</td>
+                {%else%}
+                    <td>Researcher</td>
+                {% endif %}
+                
+                {% if d.connectivity_status == 1 %}
+                    <td>Connected</td>
+                {% elif d.connectivity_status == 2 %} 
+                    <td>Not Connected</td>
+                {% else %}
+                    <td>Deactivated</td>
+                {% endif %}
+                
                 <td>{{d.last_time_online}}</td>
                 <td>{{d.rate_limit_kbps}}</td>
             </tr>
