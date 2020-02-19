@@ -1,11 +1,18 @@
 // Build the chart
-console.log(dataFromServer);
 Highcharts.chart('graph-5', {
     chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
         type: 'pie'
+    },
+    accessibility: {
+        announceNewData: {
+            enabled: true
+        },
+        point: {
+            valueSuffix: '%'
+        }
     },
     title: {
         text: 'Uso de datos comunitarios'
@@ -18,12 +25,18 @@ Highcharts.chart('graph-5', {
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
-                enabled: false
+                enabled: true,
+                format: '{point.name}: {point.percentage:.1f}%'
             },
-            showInLegend: true
+            // showInLegend: true
         }
     },
     series: [{
         data: dataFromServer
-    }]
+    }],
+    drilldown: {
+        series: [
+            drillDownInfo
+        ]
+    }
 });
