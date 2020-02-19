@@ -28,6 +28,7 @@ def profile(request):
     subs = profile_view.generate_table()
     return render(request, 'profile.html', context=subs)
 
+
 @login_required
 def usuario(request):
     context = usuario_view.generate_test_data()
