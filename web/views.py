@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from web import public_view
 from . import stats_view
@@ -27,7 +28,7 @@ def profile(request):
     subs = profile_view.generate_table()
     return render(request, 'profile.html', context=subs)
 
-
+@login_required
 def usuario(request):
     context = usuario_view.generate_test_data()
     return render(request, 'usuario_pie.html', context=context)
