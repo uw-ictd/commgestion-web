@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-21 01:16+0000\n"
+"POT-Creation-Date: 2020-02-19 01:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commgestion/settings.py:124
+#: commgestion/settings.py:136
 msgid "English"
 msgstr ""
 
-#: commgestion/settings.py:125
+#: commgestion/settings.py:137
 msgid "Spanish"
 msgstr ""
 
-#: templates/home.html:9
-msgid "This is home!"
-msgstr "Esto es hogar!"
+#: templates/navbar.html:3
+msgid "Public"
+msgstr ""
+
+#: templates/navbar.html:12
+msgid "Stats"
+msgstr ""
+
+#: templates/navbar.html:12
+msgid "(current)"
+msgstr ""
+
+#: templates/navbar.html:15
+#, fuzzy
+#| msgid "User"
+msgid "Users"
+msgstr "Usuario"
+
+#: templates/navbar.html:18
+msgid "UserProfile"
+msgstr ""
+
+#: templates/profile.html:17
+msgid "User"
+msgstr "Usuario"
+
+#: templates/profile.html:18
+msgid "Phone Number"
+msgstr ""
+
+#: templates/profile.html:19
+msgid "Display Name"
+msgstr ""
+
+#: templates/profile.html:20
+msgid "IMSI"
+msgstr ""
+
+#: templates/profile.html:21
+msgid "GUTI"
+msgstr ""
+
+#: templates/profile.html:22
+msgid "Local"
+msgstr ""
+
+#: templates/profile.html:23
+msgid "Role"
+msgstr ""
+
+#: templates/profile.html:24
+msgid "Connectivity Status"
+msgstr ""
+
+#: templates/profile.html:25
+msgid "Last Online"
+msgstr ""
+
+#: templates/profile.html:26
+msgid "Rate Limit Kpbs"
+msgstr ""
+
+#: web/public_view.py:10
+msgid "Current network usage"
+msgstr ""
+
+#: web/usuario_view.py:24
+msgid "Use of community data"
+msgstr "Uso de datos comunitarios"
+
+#: web/usuario_view.py:46
+msgid "Other (Merged)"
+msgstr ""
+
+#~ msgid "This is home!"
+#~ msgstr "Esto es hogar!"

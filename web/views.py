@@ -9,7 +9,6 @@ from . import profile_view
 # Create your views here.
 def home(request):
     gauge = public_view.generate_test_data()
-    print(gauge)
     return render(request, 'public_info.html', context=gauge)
 
 
@@ -20,7 +19,7 @@ def net_stats(request):
 
 def public_info(request):
     gauge = public_view.generate_test_data()
-    print(gauge)
+    # TODO: Check if you want to re-render this as a new request or use `redirect()` built in django
     return render(request, 'public_info.html', context=gauge)
 
 

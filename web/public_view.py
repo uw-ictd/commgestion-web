@@ -3,8 +3,11 @@ import random
 from web.models import Subscriber, Usage
 from django.utils import timezone
 from django.db.models import Sum
+from django.utils.translation import gettext_lazy as _
+
 
 def generate_test_data():
+    GRAPH_TITLE = _('Current network usage').__str__()
     
     #make some "current usage" data (runs every time so we have fresh numbers)
     k = 5
@@ -17,4 +20,7 @@ def generate_test_data():
     #query for the current usage
     qs_agg = Usage.objects.filter(timestamp__exact=time).aggregate(thru = Sum('throughput'))
     public_data =[round(qs_agg['thru'], 2)]
-    return {"data": public_data}
+    return {
+        "data": public_data,
+        'title': json.dumps(GRAPH_TITLE)
+    }

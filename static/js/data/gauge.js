@@ -9,7 +9,7 @@ Highcharts.chart('hc-gauge', {
     },
 
     title: {
-        text: 'Current network usage'
+        text: gaugeGraphTitle
     },
 
     pane: {

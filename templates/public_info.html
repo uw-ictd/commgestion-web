@@ -5,6 +5,7 @@
     {% include "graphViews/publicLayout.html" %}
     <script>
         var dataFromServer = {{data | safe}};
+        var gaugeGraphTitle = {{ title | safe }};
     </script>   
     <script src="{% static 'js/data/gauge.js' %}"></script>
 {% endblock %}

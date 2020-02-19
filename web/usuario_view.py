@@ -1,6 +1,7 @@
 import json
 
 from django.db.models import Sum
+from django.utils.translation import gettext_lazy as _
 
 from web.models import Subscriber, Usage
 
@@ -20,6 +21,8 @@ def build_drilldown_information(drilldown_name, drilldown_data):
 
 def generate_test_data():
     MAX_PERCENT_TO_START_MERGE = 0.75  # TODO: Do this by the number of users if necessary i.e. limit to 10 users etc..,
+    GRAPH_TITLE = _('Use of community data').__str__()
+
     usageData = Usage.objects.values("user").annotate(Sum("throughput")).order_by('-throughput__sum')
     total_consumed = sum([usage['throughput__sum'] for usage in usageData])
     data = []
@@ -40,9 +43,13 @@ def generate_test_data():
             left_over_sum += usage['throughput__sum']
     if left_over_sum > 0:
         data.append({
-            'name': 'Other (Merged)',
+            'name': _('Other (Merged)').__str__(),
             'y': left_over_sum,
             'drilldown': "Other (Merged)"
         })
     drilldown_response = build_drilldown_information('Other (Merged)', drilldown_data)
-    return {'data': json.dumps(data), 'drilldown': json.dumps(drilldown_response)}
+    return {
+        'data': json.dumps(data),
+        'drilldown': json.dumps(drilldown_response),
+        'title': json.dumps(GRAPH_TITLE)
+    }
