@@ -20,12 +20,24 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls import url
 from . import views
 
+from django.utils.translation import ugettext_lazy as _
+
 urlpatterns = [
     url(r'^stats/$', views.net_stats, name='stats'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^public/$', views.public_info, name='public_info'),
     url(r'^usuario/$', views.usuario, name='usuario'),
-    # url(r'^accounts/login/', auth_views.LoginView.as_view()),
-    path('accounts/login/', auth_views.LoginView.as_view()),
     path('', views.home, name='home')
 ]
+
+# Authentication patterns
+urlpatterns += [
+    path('login/', auth_views.LoginView.as_view(
+        template_name='admin/login.html',
+        extra_context={
+            'site_header': _('Community Cellular Login')
+        }
+    ), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+]
+
