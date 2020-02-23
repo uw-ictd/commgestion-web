@@ -23,7 +23,6 @@ Highcharts.chart('graph-3', {
     },
     series: [
         {
-            name: '',
             colorByPoint: true,
             data: lookUpData("graph3")
         }

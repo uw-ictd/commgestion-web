@@ -18,7 +18,7 @@ Highcharts.chart('graph-5', {
         text: usagePieTitle
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
     },
     plotOptions: {
         pie: {
