@@ -9,7 +9,7 @@ Highcharts.chart('graph-4', {
         text: lookUpTitle('graph4')
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{point.percentage:.1f}%'
     },
     plotOptions: {
         pie: {
@@ -23,7 +23,6 @@ Highcharts.chart('graph-4', {
     },
     series: [
         {
-            name: "Browsers",
             colorByPoint: true,
             data: lookUpData("graph4")
         }

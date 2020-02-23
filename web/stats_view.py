@@ -9,6 +9,9 @@ BAR_CHART_TITLE = _('Data Use (Throughput) per Application').__str__()
 PIE_LEFT_TITLE = _('Local Users and Non-Local Users').__str__() 
 PIE_RIGHT_TITLE = _('Local Content and Non-Local').__str__()
 
+AXIS_TITLE_LINE = _('Throughput').__str__()
+AXIS_TITLE_BAR = _('Throughput').__str__()
+
 def get_graph2_data():
     query_set = Application.objects.all()
     data = []
@@ -27,14 +30,14 @@ def get_graph3_data():
 
     data3.append(
         {
-            'name': "Locales",
+            'name': _("Locales").__str__(),
             'y': localUserSum
         }
     )
 
     data3.append(
         {
-            'name': "No Locales",
+            'name': _("No Locales").__str__(),
             'y': nonLocalSum
         }
     )
@@ -83,11 +86,17 @@ def generate_test_data():
         "graph3": json.dumps(PIE_LEFT_TITLE),
         "graph4": json.dumps(PIE_RIGHT_TITLE)
     })
+
+    labelSet = ({
+        "graph1": json.dumps(AXIS_TITLE_LINE),
+        "graph2": json.dumps(AXIS_TITLE_BAR)
+    })
     
 
     return {
         'totalUsers': total_users,
         'dataSets': data,
         'rows': row_builder,
-        'titleSet': titles
+        'titleSet': titles,
+        'axisLabels': labelSet
     }

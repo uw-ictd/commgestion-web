@@ -8,8 +8,19 @@ Highcharts.chart('thru-vs-time', {
     title: {
         text: lookUpTitle('graph1')
     },
+    legend:{
+        enabled: false
+    },
+    tooltip: {
+        pointFormat: '{point.y:.2f}'
+    },
     xAxis: {
         type: 'datetime'
+    },
+    yAxis: {
+        title: {
+            text: lookUpAxisLabel('graph1')
+        }
     },
     series: [{
         data: lookUpData("graph1")

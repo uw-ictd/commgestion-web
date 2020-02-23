@@ -11,7 +11,7 @@ Highcharts.chart('thru-by-app', {
     },
     yAxis: {
         title: {
-            text: 'Rendimiento'
+            text: lookUpAxisLabel("graph2")
         }
 
     },
@@ -28,8 +28,7 @@ Highcharts.chart('thru-by-app', {
     },
 
     tooltip: {
-        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b><br/>'
+        pointFormat: '{point.y:.2f}'
     },
 
     series: [
