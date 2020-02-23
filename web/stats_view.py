@@ -2,6 +2,12 @@ import json
 import datetime
 from web.models import Application, Usage, Subscriber
 from django.db.models import Sum
+from django.utils.translation import gettext_lazy as _
+
+LINE_GRAPH_TITLE = _('Data Use (Throughput) vs. Time').__str__()
+BAR_CHART_TITLE = _('Data Use (Throughput) per Application').__str__()
+PIE_LEFT_TITLE = _('Local Users and Non-Local Users').__str__() 
+PIE_RIGHT_TITLE = _('Local Content and Non-Local').__str__()
 
 def get_graph2_data():
     query_set = Application.objects.all()
@@ -36,89 +42,19 @@ def get_graph3_data():
 
 def generate_test_data():
     """ Generate fake data for the network statistics page
-    """
-    qs = Usage.objects.all()
-    print(qs)
-    #Usage.objects.filter(attribute__in=attributes).values('timestamp').annotate(thrpt = Sum('throughput'))
-    
-    qs_agg = Usage.objects.values('timestamp').annotate(thrpt = Sum('throughput'))
-    print(qs_agg)
-    data = []
+    """   
+    qs_agg = Usage.objects.values('timestamp').annotate(thrpt = Sum('throughput'))   
+    g1_data = []
     for x in qs_agg:
         time = x['timestamp'] #values returns a dictionary
         thru = x['thrpt']
-        data.append([time,thru])
+        g1_data.append([time,thru])
     
-    data_graph1 = data
-    """ [
-        [datetime.datetime(2019, 8, 1, 6, 20), 29.9],
-        [datetime.datetime(2019, 8, 1, 6, 21), 71.5],
-        [datetime.datetime(2019, 8, 1, 6, 22), 106.4],
-        [datetime.datetime(2019, 8, 1, 6, 23), 29.9],
-        [datetime.datetime(2019, 8, 1, 6, 24), 71.5],
-        [datetime.datetime(2019, 8, 1, 6, 25), 106.4],
-        [datetime.datetime(2019, 8, 1, 6, 26), 29.9],
-        [datetime.datetime(2019, 8, 1, 6, 27), 71.5],
-        [datetime.datetime(2019, 8, 1, 6, 28), 106.4]
-    ] """
-       
+    data_graph1 = g1_data
+ 
     data_graph2 = get_graph2_data()
 
-    """ [
-        {
-            'name': "Chrome",
-            'y': 62.74,
-        },
-        {
-            'name': "Firefox",
-            'y': 10.57,
-        },
-        {
-            'name': "Internet Explorer",
-            'y': 7.23,
-        },
-        {
-            'name': "Safari",
-            'y': 5.58,
-        },
-        {
-            'name': "Edge",
-            'y': 4.02,
-        },
-        {
-            'name': "Opera",
-            'y': 1.92,
-        },
-        {
-            'name': "Other",
-            'y': 7.62,
-        }
-    ] """
-
-    # data_graph3 = [
-    #     {
-    #         'name': "Locales",
-    #         'y': 62,
-    #     },
-    #     {
-    #         'name': "Extranjeros",
-    #         'y': 38,
-    #     },
-    # ]
     data_graph3 = get_graph3_data()
-
-    # data_graph4 = [
-    #     {
-    #         'name': "Locales",
-    #         'y': 62,
-    #         #'drilldown': "Locales"
-    #     },
-    #     {
-    #         'name': "No Locales",
-    #         'y': 38,
-    #         #'drilldown': "No Locales"
-    #     },
-    # ]
 
     data_graph4 = get_graph3_data()
 
@@ -140,9 +76,18 @@ def generate_test_data():
         "graph3": json.dumps(data_graph3, default=datetime_string_converter),
         "graph4": json.dumps(data_graph4, default=datetime_string_converter)
     }, default=datetime_string_converter)
+    
+    titles = ({
+        "graph1": json.dumps(LINE_GRAPH_TITLE),
+        "graph2": json.dumps(BAR_CHART_TITLE),
+        "graph3": json.dumps(PIE_LEFT_TITLE),
+        "graph4": json.dumps(PIE_RIGHT_TITLE)
+    })
+    
 
     return {
         'totalUsers': total_users,
         'dataSets': data,
         'rows': row_builder,
+        'titleSet': titles
     }

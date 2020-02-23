@@ -4,7 +4,7 @@ Highcharts.chart('thru-by-app', {
         type: 'column'
     },
     title: {
-        text: 'Uso de datos en total de cada aplicacion'
+        text: lookUpTitle("graph2")
     },
     xAxis: {
         type: 'category'

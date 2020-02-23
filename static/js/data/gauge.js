@@ -66,7 +66,7 @@ Highcharts.chart('hc-gauge', {
             rotation: 'auto'
         },
         title: {
-            text: 'sum(throughput)'
+            text: metricTitle
         },
         plotBands: [{
             from: 0,

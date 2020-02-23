@@ -6,7 +6,7 @@ Highcharts.chart('graph-3', {
         type: 'pie'
     },
     title: {
-        text: 'Uso de usuarios locales o extranjeros'
+        text: lookUpTitle('graph3')
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

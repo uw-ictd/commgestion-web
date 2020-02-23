@@ -6,7 +6,7 @@ Highcharts.chart('graph-4', {
         type: 'pie'
     },
     title: {
-        text: 'Cantidad de datos que son locales o al internet'
+        text: lookUpTitle('graph4')
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

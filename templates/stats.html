@@ -17,6 +17,10 @@
         function lookUpData(graphid) {
             return JSON.parse(dataFromServer[graphid]);
         }
+        var graphTitles = {{titleSet | safe}}
+        function lookUpTitle(graphid){
+            return JSON.parse(graphTitles[graphid]);
+        }
         setInterval(function () {
           window.dispatchEvent(new Event('resize'));
         }, 1000);

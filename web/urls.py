@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^public/$', views.public_info, name='public_info'),
     url(r'^usuario/$', views.usuario, name='usuario'),
-    path('', views.home, name='home')
+    path('', views.public_info, name='home')
 ]
 
 # Authentication patterns

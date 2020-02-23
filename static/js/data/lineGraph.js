@@ -6,7 +6,7 @@
 Highcharts.chart('thru-vs-time', {
 
     title: {
-        text: 'Uso de datos en total de comunidad'
+        text: lookUpTitle('graph1')
     },
     xAxis: {
         type: 'datetime'

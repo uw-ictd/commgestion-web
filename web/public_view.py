@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 def generate_test_data():
     GRAPH_TITLE = _('Current network usage').__str__()
+    METRIC_TITLE = _('Sum(throughput)').__str__()
     
     #make some "current usage" data (runs every time so we have fresh numbers)
     k = 5
@@ -22,5 +23,6 @@ def generate_test_data():
     public_data =[round(qs_agg['thru'], 2)]
     return {
         "data": public_data,
-        'title': json.dumps(GRAPH_TITLE)
+        'title': json.dumps(GRAPH_TITLE),
+        'metric_title': json.dumps(METRIC_TITLE)
     }
