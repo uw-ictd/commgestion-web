@@ -35,25 +35,25 @@
                 <td>{{d.guti}}</td>
                 
                 {% if d.is_local == True%}
-                    <td>Yes</td>
+                    <td>{% trans "Yes" %}</td>
                 {% else %}
-                    <td>No</td>
+                    <td>{% trans "No" %}</td>
                 {% endif %}
                 
                 {%if d.role == 1 %}
-                    <td>Admin</td>
+                    <td>{% trans "Admin" %}</td>
                 {%elif d.role == 2 %}
-                    <td>User</td>
+                    <td>{% trans "User" %}</td>
                 {%else%}
-                    <td>Researcher</td>
+                    <td>{% trans "Researcher" %}</td>
                 {% endif %}
                 
                 {% if d.connectivity_status == 1 %}
-                    <td>Connected</td>
+                    <td>{%trans "Connected" %}</td>
                 {% elif d.connectivity_status == 2 %} 
-                    <td>Not Connected</td>
+                    <td>{% trans "Not Connected" %}</td>
                 {% else %}
-                    <td>Deactivated</td>
+                    <td>{% trans "Deactivated" %}</td>
                 {% endif %}
                 
                 <td>{{d.last_time_online}}</td>
@@ -71,36 +71,5 @@
     {% endfor %}
 </tr>
 {% endfor %}
-<!--
-    <script>
-        var dataFromServer = {{data | safe}};
-        $(document).ready( function(){
-            $('#my-table').DataTable({
-                order: [[0, "asc"]],
-                pageLength: 25,
-                responsive: true,
-                data: dataFromServerata
-            });
-        }
-    </script>
 
-
-&lt;!&ndash;    <script src="{% static "js/data/userConsumption.js" %}"></script>&ndash;&gt;
-    <script>
-        // var dataFromServer = {{data | safe}};
-        // console.log(dataFromServer);
-        // $(document).ready(function() {
-        //
-        //     var json=JSON.parse('{{ json_data | safe }}');
-        //     $('#body').DataTable({
-        //         data: json,
-        //         columns:[
-        //             { title: "user" },
-        //             { title: "phonenumber" },
-        //             { title: "display_name" }]
-        //     } );
-        // };-->
-    </script>
-
-    
 {% endblock %}
