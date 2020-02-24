@@ -9,10 +9,10 @@
         var usagePieTitle = {{ title | safe }};
     </script>
     <link rel="stylesheet" type="text/css" href="{% static "css/lightpick.css" %}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://unpkg.com/lightpick@latest/lightpick.js"></script>
-    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="{% static 'js/moment.min.js' %}"></script>
+    <script src="{% static 'js/lightpick.js' %}"></script>
+    <script src="{% static 'js/modules/drilldown.js' %}"></script>
+    <script src="{% static 'js/modules/accessibility.js' %}"></script>
     <script src="{% static 'js/data/usuarioPie.js' %}"></script>
     <div align="center">
         <input type="text" id="datepicker" placeholder="start date"/>
