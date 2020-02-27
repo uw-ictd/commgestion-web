@@ -7,7 +7,11 @@
 
     <script>
         $(document).ready(function(){
-            $("#table_id").DataTable();
+            $("#table_id").DataTable({
+                "language": {
+                    "url": "/static/i18n/Spanish.json"
+                }
+            });
         });
     </script>
     <div style="width:90%; margin:0 auto;">
