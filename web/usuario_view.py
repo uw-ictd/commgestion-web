@@ -23,8 +23,8 @@ def generate_test_data():
     MAX_PERCENT_TO_START_MERGE = 0.75  # TODO: Do this by the number of users if necessary i.e. limit to 10 users etc..,
     GRAPH_TITLE = _('Use of community data').__str__()
 
-    usageData = Usage.objects.values("user").annotate(Sum("throughput")).order_by('-throughput__sum')
-    total_consumed = sum([usage['throughput__sum'] for usage in usageData])
+    usageData = Usage.objects.values("user").annotate(Sum("throughput")).order_by('-throughput__sum') #sums the current row
+    total_consumed = sum([usage['throughput__sum'] for usage in usageData]) #calculates sum of the total table
     data = []
     percent_consumed = 0.0
     left_over_sum = 0
