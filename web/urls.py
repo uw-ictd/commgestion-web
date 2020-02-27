@@ -25,7 +25,6 @@ from django.utils.translation import ugettext_lazy as _
 urlpatterns = [
     url(r'^stats/$', views.net_stats, name='stats'),
     url(r'^profile/$', views.profile, name='profile'),
-    url(r'^public/$', views.public_info, name='public_info'),
     url(r'^usuario/$', views.usuario, name='usuario'),
     path('', views.public_info, name='home')
 ]
