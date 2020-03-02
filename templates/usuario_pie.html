@@ -15,13 +15,16 @@
     <script src="{% static 'js/modules/accessibility.js' %}"></script>
     <script src="{% static 'js/data/usuarioPie.js' %}"></script>
     <div align="center">
-        <input type="text" id="datepicker" placeholder="start date"/>
-        <input type="text" id="datepickerEnd" placeholder="end date"/>
+        <form method="post" action="{% url 'usuario' %}">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
     </div>
     <script>
     var picker = new Lightpick({
-        field: document.getElementById("datepicker"),
-        secondField: document.getElementById("datepickerEnd"),
+        field: document.getElementById("datepicker-from"),
+        secondField: document.getElementById("datepicker-to"),
         singleDate: false,
         onSelect: function(date){
             document.getElementById("datepicker").innerHTML = date.format('Do MMMM YYYY');

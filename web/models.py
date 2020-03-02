@@ -10,8 +10,6 @@ class Application(models.Model):
 
     def __str__(self):
         return 'Application: {} -> {}'.format(self.host, self.throughput)
-    def hello(self):
-        print("hello")
 
 
 class UserDefinedHost(models.Model):
