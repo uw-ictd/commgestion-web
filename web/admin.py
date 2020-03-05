@@ -29,6 +29,11 @@ class UserDefinedHostAdmin(admin.ModelAdmin):
     def view_user_defined_host(self):
         return format_html('<a class="button" target="_blank" href="https://{}">View</a>'.format(self.name))
 
+@admin.register(Usage)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('user', 'throughput', 'timestamp')
+    
+@admin.register(HostMapping)
+class HostMappingAdmin(admin.ModelAdmin):
+    list_display = ('host', 'captured_host')
 
-admin.site.register(HostMapping)
-admin.site.register(Usage)
