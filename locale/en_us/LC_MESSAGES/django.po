@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-19 01:07+0000\n"
+"POT-Creation-Date: 2020-03-05 21:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,54 +45,118 @@ msgstr ""
 msgid "UserProfile"
 msgstr ""
 
-#: templates/profile.html:17
+#: templates/profile.html:21 templates/profile.html:50
 msgid "User"
 msgstr ""
 
-#: templates/profile.html:18
+#: templates/profile.html:22
 msgid "Phone Number"
 msgstr ""
 
-#: templates/profile.html:19
+#: templates/profile.html:23
 msgid "Display Name"
 msgstr ""
 
-#: templates/profile.html:20
+#: templates/profile.html:24
 msgid "IMSI"
 msgstr ""
 
-#: templates/profile.html:21
+#: templates/profile.html:25
 msgid "GUTI"
 msgstr ""
 
-#: templates/profile.html:22
+#: templates/profile.html:26
 msgid "Local"
 msgstr ""
 
-#: templates/profile.html:23
+#: templates/profile.html:27
 msgid "Role"
 msgstr ""
 
-#: templates/profile.html:24
+#: templates/profile.html:28
 msgid "Connectivity Status"
 msgstr ""
 
-#: templates/profile.html:25
+#: templates/profile.html:29
 msgid "Last Online"
 msgstr ""
 
-#: templates/profile.html:26
+#: templates/profile.html:30
 msgid "Rate Limit Kpbs"
+msgstr ""
+
+#: templates/profile.html:42
+msgid "Yes"
+msgstr ""
+
+#: templates/profile.html:44
+msgid "No"
+msgstr ""
+
+#: templates/profile.html:48
+msgid "Admin"
+msgstr ""
+
+#: templates/profile.html:52
+msgid "Researcher"
+msgstr ""
+
+#: templates/profile.html:56
+msgid "Connected"
+msgstr ""
+
+#: templates/profile.html:58
+msgid "Not Connected"
+msgstr ""
+
+#: templates/profile.html:60
+msgid "Deactivated"
 msgstr ""
 
 #: web/public_view.py:10
 msgid "Current network usage"
 msgstr ""
 
+#: web/public_view.py:11
+msgid "Sum(throughput)"
+msgstr ""
+
+#: web/stats_view.py:7
+msgid "Data Use (Throughput) vs. Time"
+msgstr ""
+
+#: web/stats_view.py:8
+msgid "Data Use (Throughput) per Application"
+msgstr ""
+
+#: web/stats_view.py:9
+msgid "Local Users and Non-Local Users"
+msgstr ""
+
+#: web/stats_view.py:10
+msgid "Local Content and Non-Local"
+msgstr ""
+
+#: web/stats_view.py:12 web/stats_view.py:13
+msgid "Throughput"
+msgstr ""
+
+#: web/stats_view.py:33
+msgid "Locales"
+msgstr ""
+
+#: web/stats_view.py:40
+msgid "No Locales"
+msgstr ""
+
+#: web/urls.py:37
+msgid "Community Cellular Login"
+msgstr ""
+
 #: web/usuario_view.py:24
 msgid "Use of community data"
 msgstr ""
 
-#: web/usuario_view.py:46
+#: web/usuario_view.py:55
 msgid "Other (Merged)"
 msgstr ""
