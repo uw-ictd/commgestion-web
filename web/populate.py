@@ -9,6 +9,7 @@ from django.utils import timezone
 
 # add more applications
 def add_applications():
+    Application.objects.all().delete()
     hosts = ['https://google.com/', 'https://facebook.com', 'https://whatsapp.com', 'https://santainesapp.mx']
     for host_name in hosts:
         Application.objects.create(
