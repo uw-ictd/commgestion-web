@@ -39,7 +39,8 @@ def add_hostmappings():
                 (udh_youtube, captured_youtube), (udh_wiki, captured_wikipedia)]
 
     for hm in udh_list:
-        HostMapping.objects.create(host=hm[0], captured_host=hm[1])
+        for captured_fqdn in hm[1]:
+            HostMapping.objects.create(host=hm[0], captured_host=captured_fqdn)
 
     print(UserDefinedHost.objects.all())
 
