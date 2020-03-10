@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 class Application(models.Model):
-    host = models.CharField(max_length=50, unique=True)
+    host = models.CharField(max_length=255, unique=True)
     throughput = models.FloatField()
     timestamp = models.DateTimeField()
 
@@ -21,7 +21,7 @@ class UserDefinedHost(models.Model):
 
 class HostMapping(models.Model):
     host = models.ForeignKey(UserDefinedHost, on_delete=models.CASCADE)
-    captured_host = models.CharField(max_length=50)
+    captured_host = models.CharField(max_length=255)
 
     def __str__(self):
         return 'HostMapping: {} -> {}'.format(self.captured_host, self.host.name)
