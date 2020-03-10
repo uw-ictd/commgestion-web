@@ -1,0 +1,15 @@
+[commgestion]
+    debug = true
+    # SECURITY WARNING: keep the secret key used in production secret!
+    secret_key = "__Insecure Dev Key__"
+    allowed_hosts = ["localhost"]
+
+    [commgestion.db]
+        kind = "sqlite3"
+        path = "db.sqlite3"
+        database = "commgestionDev"
+        username = "commgestion"
+        password = "commgestion"
+        host = "localhost"
+        port = 5432
+

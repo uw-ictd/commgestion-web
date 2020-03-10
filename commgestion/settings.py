@@ -11,27 +11,47 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import logging
+import sys
+
+import commgestion.config
 
 from django.utils.translation import ugettext_lazy as _
 
-from commgestion.config import DATABASE_CONFIG
+log = logging.getLogger(__name__)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '94i6)49+1^xx7s4l*1p64x(fyqnv@9mv2c&h5(9rs6$o)wt(tp'
+# Heuristic to see if we are running the development server.
+RUNNING_DEV_SERVER = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
+RUNNING_MANAGE_COMMAND = (len(sys.argv) > 0 and sys.argv[0] == 'manage.py')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Parse deployment specific configuration
+try:
+    config_path = os.path.join("/", "etc", "commgestion", "config.toml")
+    config = commgestion.config.parse_from_file(config_path)
+except FileNotFoundError as e:
+    log.warning("Unable to find prod config at /etc/commgestion/config.toml")
+    if not (RUNNING_DEV_SERVER or RUNNING_MANAGE_COMMAND):
+        log.error("A prod config is required when not running the dev server.")
+        raise e
 
-ALLOWED_HOSTS = []
+    log.warning("Attempting to use the development configuration.")
+    dev_config_path = os.path.join(BASE_DIR, "config-dev.toml")
+    config = commgestion.config.parse_from_file(dev_config_path)
 
-APPEND_SLASH = True
+DEBUG = config["debug"]
+if not RUNNING_DEV_SERVER and DEBUG:
+    log.critical(
+        "Running a debug server in production is a security vulnerability!")
+
+ALLOWED_HOSTS = config["allowed_hosts"]
+DATABASES = config["db"]
+SECRET_KEY = config["secret_key"]
 
 # Application definition
 
@@ -57,6 +77,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'commgestion.urls'
+APPEND_SLASH = True
 
 TEMPLATES = [
     {
@@ -76,26 +97,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'commgestion.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'postgres': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DATABASE_CONFIG['NAME'],
-        'USER': DATABASE_CONFIG['USER'],
-        'PASSWORD': DATABASE_CONFIG['PASSWORD'],
-        'HOST': DATABASE_CONFIG['HOST'],
-        'PORT': DATABASE_CONFIG['PORT'],
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
