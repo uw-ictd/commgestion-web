@@ -7,9 +7,3 @@
     [commgestion.db]
         kind = "sqlite3"
         path = "db.sqlite3"
-        database = "commgestionDev"
-        username = "commgestion"
-        password = "commgestion"
-        host = "localhost"
-        port = 5432
-
