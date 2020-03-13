@@ -45,7 +45,7 @@ except FileNotFoundError as e:
     config = commgestion.config.parse_from_file(dev_config_path)
 
 DEBUG = config["debug"]
-if not RUNNING_DEV_SERVER and DEBUG:
+if not (RUNNING_DEV_SERVER or RUNNING_MANAGE_COMMAND) and DEBUG:
     log.critical(
         "Running a debug server in production is a security vulnerability!")
 
