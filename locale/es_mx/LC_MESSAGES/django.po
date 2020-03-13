@@ -19,23 +19,23 @@ msgstr ""
 
 #: commgestion/settings.py:136
 msgid "English"
-msgstr ""
+msgstr "Ingles"
 
 #: commgestion/settings.py:137
 msgid "Spanish"
-msgstr ""
+msgstr "Catalan/Español"
 
 #: templates/navbar.html:3
 msgid "Public"
-msgstr ""
+msgstr "Público"
 
 #: templates/navbar.html:12
 msgid "Stats"
-msgstr ""
+msgstr "Estadísticas"
 
 #: templates/navbar.html:12
 msgid "(current)"
-msgstr ""
+msgstr "presente"
 
 #: templates/navbar.html:15
 #, fuzzy
@@ -45,7 +45,7 @@ msgstr "Usuario"
 
 #: templates/navbar.html:18
 msgid "UserProfile"
-msgstr ""
+msgstr "Perfiles de Usuarios"
 
 #: templates/profile.html:21 templates/profile.html:50
 msgid "User"
@@ -53,31 +53,31 @@ msgstr "Usuario"
 
 #: templates/profile.html:22
 msgid "Phone Number"
-msgstr ""
+msgstr "Número de teléfono"
 
 #: templates/profile.html:23
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #: templates/profile.html:24
 msgid "IMSI"
-msgstr ""
+msgstr "ISMI"
 
 #: templates/profile.html:25
 msgid "GUTI"
-msgstr ""
+msgstr "GUTI"
 
 #: templates/profile.html:26
 msgid "Local"
-msgstr ""
+msgstr "Local"
 
 #: templates/profile.html:27
 msgid "Role"
-msgstr ""
+msgstr "Tipo de usuario"
 
 #: templates/profile.html:28
 msgid "Connectivity Status"
-msgstr ""
+msgstr "Estado de Conectividad"
 
 #: templates/profile.html:29
 msgid "Last Online"
@@ -85,19 +85,19 @@ msgstr ""
 
 #: templates/profile.html:30
 msgid "Rate Limit Kpbs"
-msgstr ""
+msgstr "Limitación de velocidad (kbps)"
 
 #: templates/profile.html:42
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: templates/profile.html:44
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: templates/profile.html:48
 msgid "Admin"
-msgstr ""
+msgstr "Administrador(a)"
 
 #: templates/profile.html:52
 msgid "Researcher"
@@ -105,19 +105,19 @@ msgstr ""
 
 #: templates/profile.html:56
 msgid "Connected"
-msgstr ""
+msgstr "Conectado(a)"
 
 #: templates/profile.html:58
 msgid "Not Connected"
-msgstr ""
+msgstr "Desconectado(a)"
 
 #: templates/profile.html:60
 msgid "Deactivated"
-msgstr ""
+msgstr "Desactivado(a)"
 
 #: web/public_view.py:10
 msgid "Current network usage"
-msgstr ""
+msgstr "Uso actual"
 
 #: web/public_view.py:11
 msgid "Sum(throughput)"
@@ -133,15 +133,15 @@ msgstr ""
 
 #: web/stats_view.py:9
 msgid "Local Users and Non-Local Users"
-msgstr ""
+msgstr "Usuarios locales versus extrañeros"
 
 #: web/stats_view.py:10
 msgid "Local Content and Non-Local"
-msgstr ""
+msgstr "Contenido local versus externo"
 
 #: web/stats_view.py:12 web/stats_view.py:13
 msgid "Throughput"
-msgstr ""
+msgstr "Rendimiento"
 
 #: web/stats_view.py:33
 msgid "Locales"
@@ -153,7 +153,7 @@ msgstr ""
 
 #: web/urls.py:37
 msgid "Community Cellular Login"
-msgstr ""
+msgstr "Iniciar sesión para aministrar la red comunitaria"
 
 #: web/usuario_view.py:24
 msgid "Use of community data"
@@ -161,7 +161,7 @@ msgstr "Uso de datos comunitarios"
 
 #: web/usuario_view.py:55
 msgid "Other (Merged)"
-msgstr ""
+msgstr "Otros (combinado)"
 
 #~ msgid "This is home!"
 #~ msgstr "Esto es hogar!"
