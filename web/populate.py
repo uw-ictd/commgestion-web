@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from web.models import Application, UserDefinedHost, HostMapping, Subscriber, Usage
-from collections import namedtuple
 import random
 from django.utils import timezone
 

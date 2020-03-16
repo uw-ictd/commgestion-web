@@ -1,5 +1,4 @@
 from web.models import Subscriber
-from django.utils.translation import gettext_lazy as _
 
 
 def generate_table():

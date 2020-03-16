@@ -1,8 +1,5 @@
-from datetime import datetime
-
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.admin.views.decorators import staff_member_required
 
 from web import public_view
 from web.forms import UserSearchTimeForm
