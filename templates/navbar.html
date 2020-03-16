@@ -27,11 +27,11 @@
                 <a class="nav-link" href="#">{{user.get_username}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}">{% trans "Logout"%}</a>
             </li>
             {% else %}
             <li class="nav-item">
-                <a href="{% url 'login' %}" class="nav-link">Login</a>
+                <a href="{% url 'login' %}" class="nav-link">{% trans "Login" %}</a>
             </li>
             {% endif %}
         </ul>

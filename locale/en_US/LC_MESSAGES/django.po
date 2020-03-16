@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 21:23+0000\n"
+"POT-Creation-Date: 2020-03-16 21:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Public"
 msgstr ""
 
-#: templates/navbar.html:12 templates/public_info.html:7
+#: templates/navbar.html:12
 msgid "Stats"
 msgstr ""
 
@@ -43,6 +43,14 @@ msgstr ""
 
 #: templates/navbar.html:18
 msgid "UserProfile"
+msgstr ""
+
+#: templates/navbar.html:30
+msgid "Logout"
+msgstr ""
+
+#: templates/navbar.html:34
+msgid "Login"
 msgstr ""
 
 #: templates/profile.html:21 templates/profile.html:50
