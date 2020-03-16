@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-05 21:56+0000\n"
+"POT-Creation-Date: 2020-03-16 21:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commgestion/settings.py:136
+#: commgestion/settings.py:143
 msgid "English"
 msgstr ""
 
-#: commgestion/settings.py:137
+#: commgestion/settings.py:144
 msgid "Spanish"
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Public"
 msgstr ""
 
-#: templates/navbar.html:12
+#: templates/navbar.html:12 templates/public_info.html:7
 msgid "Stats"
 msgstr ""
 

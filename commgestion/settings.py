@@ -128,6 +128,12 @@ LANGUAGE_CODE = 'en-us'
 # that are generated in the locale/ directory configured for this project expects to have an '_' instead and will NOT
 # work if there is a '-'.
 #
+# Also, the locale directory created must be in the format ll_CC since the
+# directory is a "locale name" and not a "language code". Notably,
+# the country specific modifier is capitalized and the base locale is not.
+# This is detailed in the django docs at
+# https://docs.djangoproject.com/en/3.0/topics/i18n/#definitions
+#
 # Generate locale definitions: python manage.py makemessages -l <locale_> / django-admin makemessages -l <locale_>
 # Compile locale translations: python manage.py compilemessage -l <locale_> / django-admin compilemessage -l <locale_>
 #
