@@ -1,25 +1,29 @@
 {% load i18n %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarDefinedCollapseData"
-            aria-controls="navbarDefinedCollapseData" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    {% if user.is_authenticated %}
+        <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarDefinedCollapseData"
+                aria-controls="navbarDefinedCollapseData" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    {% endif %}
 
     <a class="navbar-brand" href="{% url 'home' %}">{% trans "Public" %}</a>
 
-    <div class="collapse navbar-collapse order-2" id="navbarDefinedCollapseData">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'stats' %}">{% trans "Stats" %}<span class="sr-only">{% trans "(current)" %}</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'usuario' %}">{% trans "Users" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">{% trans "UserProfile" %}</a>
-            </li>
-        </ul>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="collapse navbar-collapse order-2" id="navbarDefinedCollapseData">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'stats' %}">{% trans "Stats" %}<span class="sr-only">{% trans "(current)" %}</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'usuario' %}">{% trans "Users" %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">{% trans "UserProfile" %}</a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
 
     <div class="navbar-expand order-1 order-md-3 ml-auto">
         <ul class="navbar-nav">
