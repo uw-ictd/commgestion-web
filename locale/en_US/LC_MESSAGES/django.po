@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-17 06:22+0000\n"
+"POT-Creation-Date: 2020-03-17 17:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,7 +73,7 @@ msgstr ""
 msgid "GUTI"
 msgstr ""
 
-#: templates/profiles.html:26
+#: templates/profiles.html:26 web/network_stats_view.py:56
 msgid "Local"
 msgstr ""
 
@@ -121,32 +121,38 @@ msgstr ""
 msgid "Deactivated"
 msgstr ""
 
-#: web/network_stats_view.py:7
+#: web/network_stats_view.py:8
 msgid "Data Use (Throughput) vs. Time"
 msgstr ""
 
-#: web/network_stats_view.py:8
+#: web/network_stats_view.py:9
 msgid "Data Use (Throughput) per Application"
 msgstr ""
 
-#: web/network_stats_view.py:9
+#: web/network_stats_view.py:10
 msgid "Local Users and Non-Local Users"
 msgstr ""
 
-#: web/network_stats_view.py:10
+#: web/network_stats_view.py:11
 msgid "Local Content and Non-Local"
 msgstr ""
 
-#: web/network_stats_view.py:12 web/network_stats_view.py:13
+#: web/network_stats_view.py:13 web/network_stats_view.py:14
 msgid "Throughput"
 msgstr ""
 
-#: web/network_stats_view.py:33
-msgid "Locales"
+#: web/network_stats_view.py:36
+msgctxt "people from a place"
+msgid "Locals"
 msgstr ""
 
-#: web/network_stats_view.py:40
-msgid "No Locales"
+#: web/network_stats_view.py:43
+msgctxt "people from outside a place"
+msgid "Others"
+msgstr ""
+
+#: web/network_stats_view.py:63
+msgid "External"
 msgstr ""
 
 #: web/network_users_view.py:24

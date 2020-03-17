@@ -1,18 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Community Cellular Network Translations.
+# Copyright (C) 2020, Matt Johnson <matt9j@cs.uw.edu>
+# This file is distributed under the Mozilla Public License Version 2.0.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-17 06:22+0000\n"
+"POT-Creation-Date: 2020-03-17 17:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Matt Johnson <matt9j@cs.uw.edu>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: es-mx\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -73,7 +72,7 @@ msgstr "ISMI"
 msgid "GUTI"
 msgstr "GUTI"
 
-#: templates/profiles.html:26
+#: templates/profiles.html:26 web/network_stats_view.py:56
 msgid "Local"
 msgstr "Local"
 
@@ -121,33 +120,39 @@ msgstr "Desconectado(a)"
 msgid "Deactivated"
 msgstr "Desactivado(a)"
 
-#: web/network_stats_view.py:7
+#: web/network_stats_view.py:8
 msgid "Data Use (Throughput) vs. Time"
 msgstr "Uso de datos versus tiempo"
 
-#: web/network_stats_view.py:8
+#: web/network_stats_view.py:9
 msgid "Data Use (Throughput) per Application"
 msgstr "Uso de datos por aplicación"
 
-#: web/network_stats_view.py:9
+#: web/network_stats_view.py:10
 msgid "Local Users and Non-Local Users"
 msgstr "Usuarios locales versus extrañeros"
 
-#: web/network_stats_view.py:10
+#: web/network_stats_view.py:11
 msgid "Local Content and Non-Local"
 msgstr "Contenido local versus externo"
 
-#: web/network_stats_view.py:12 web/network_stats_view.py:13
+#: web/network_stats_view.py:13 web/network_stats_view.py:14
 msgid "Throughput"
 msgstr "Rendimiento"
 
-#: web/network_stats_view.py:33
-msgid "Locales"
+#: web/network_stats_view.py:36
+msgctxt "people from a place"
+msgid "Locals"
 msgstr "Locales"
 
-#: web/network_stats_view.py:40
-msgid "No Locales"
-msgstr "No locales"
+#: web/network_stats_view.py:43
+msgctxt "people from outside a place"
+msgid "Others"
+msgstr "Otros"
+
+#: web/network_stats_view.py:63
+msgid "External"
+msgstr "Externo"
 
 #: web/network_users_view.py:24
 msgid "Use of community data"
@@ -168,9 +173,3 @@ msgstr "Cantidad de datos"
 #: web/urls.py:36
 msgid "Community Cellular Login"
 msgstr "Iniciar sesión para aministrar la red comunitaria"
-
-#~ msgid "Users"
-#~ msgstr "Usuarios"
-
-#~ msgid "This is home!"
-#~ msgstr "Esto es hogar!"
