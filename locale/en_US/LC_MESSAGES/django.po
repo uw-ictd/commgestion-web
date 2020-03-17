@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 21:33+0000\n"
+"POT-Creation-Date: 2020-03-17 06:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,100 +25,136 @@ msgstr ""
 msgid "Spanish"
 msgstr ""
 
-#: templates/navbar.html:3
+#: templates/navbar.html:10
 msgid "Public"
 msgstr ""
 
-#: templates/navbar.html:12
+#: templates/navbar.html:16
 msgid "Stats"
 msgstr ""
 
-#: templates/navbar.html:12
+#: templates/navbar.html:16
 msgid "(current)"
 msgstr ""
 
-#: templates/navbar.html:15
-msgid "Users"
+#: templates/navbar.html:19
+msgid "Usage"
 msgstr ""
 
-#: templates/navbar.html:18
-msgid "UserProfile"
+#: templates/navbar.html:22
+msgid "Profiles"
 msgstr ""
 
-#: templates/navbar.html:30
+#: templates/navbar.html:33
 msgid "Logout"
 msgstr ""
 
-#: templates/navbar.html:34
+#: templates/navbar.html:37
 msgid "Login"
 msgstr ""
 
-#: templates/profile.html:21 templates/profile.html:50
+#: templates/profiles.html:21 templates/profiles.html:50
 msgid "User"
 msgstr ""
 
-#: templates/profile.html:22
+#: templates/profiles.html:22
 msgid "Phone Number"
 msgstr ""
 
-#: templates/profile.html:23
+#: templates/profiles.html:23
 msgid "Display Name"
 msgstr ""
 
-#: templates/profile.html:24
+#: templates/profiles.html:24
 msgid "IMSI"
 msgstr ""
 
-#: templates/profile.html:25
+#: templates/profiles.html:25
 msgid "GUTI"
 msgstr ""
 
-#: templates/profile.html:26
+#: templates/profiles.html:26
 msgid "Local"
 msgstr ""
 
-#: templates/profile.html:27
+#: templates/profiles.html:27
 msgid "Role"
 msgstr ""
 
-#: templates/profile.html:28
+#: templates/profiles.html:28
 msgid "Connectivity Status"
 msgstr ""
 
-#: templates/profile.html:29
+#: templates/profiles.html:29
 msgid "Last Online"
 msgstr ""
 
-#: templates/profile.html:30
+#: templates/profiles.html:30
 msgid "Rate Limit Kpbs"
 msgstr ""
 
-#: templates/profile.html:42
+#: templates/profiles.html:42
 msgid "Yes"
 msgstr ""
 
-#: templates/profile.html:44
+#: templates/profiles.html:44
 msgid "No"
 msgstr ""
 
-#: templates/profile.html:48
+#: templates/profiles.html:48
 msgid "Admin"
 msgstr ""
 
-#: templates/profile.html:52
+#: templates/profiles.html:52
 msgid "Researcher"
 msgstr ""
 
-#: templates/profile.html:56
+#: templates/profiles.html:56
 msgid "Connected"
 msgstr ""
 
-#: templates/profile.html:58
+#: templates/profiles.html:58
 msgid "Not Connected"
 msgstr ""
 
-#: templates/profile.html:60
+#: templates/profiles.html:60
 msgid "Deactivated"
+msgstr ""
+
+#: web/network_stats_view.py:7
+msgid "Data Use (Throughput) vs. Time"
+msgstr ""
+
+#: web/network_stats_view.py:8
+msgid "Data Use (Throughput) per Application"
+msgstr ""
+
+#: web/network_stats_view.py:9
+msgid "Local Users and Non-Local Users"
+msgstr ""
+
+#: web/network_stats_view.py:10
+msgid "Local Content and Non-Local"
+msgstr ""
+
+#: web/network_stats_view.py:12 web/network_stats_view.py:13
+msgid "Throughput"
+msgstr ""
+
+#: web/network_stats_view.py:33
+msgid "Locales"
+msgstr ""
+
+#: web/network_stats_view.py:40
+msgid "No Locales"
+msgstr ""
+
+#: web/network_users_view.py:24
+msgid "Use of community data"
+msgstr ""
+
+#: web/network_users_view.py:55
+msgid "Other (Merged)"
 msgstr ""
 
 #: web/public_view.py:10
@@ -129,42 +165,6 @@ msgstr ""
 msgid "Sum(throughput)"
 msgstr ""
 
-#: web/stats_view.py:7
-msgid "Data Use (Throughput) vs. Time"
-msgstr ""
-
-#: web/stats_view.py:8
-msgid "Data Use (Throughput) per Application"
-msgstr ""
-
-#: web/stats_view.py:9
-msgid "Local Users and Non-Local Users"
-msgstr ""
-
-#: web/stats_view.py:10
-msgid "Local Content and Non-Local"
-msgstr ""
-
-#: web/stats_view.py:12 web/stats_view.py:13
-msgid "Throughput"
-msgstr ""
-
-#: web/stats_view.py:33
-msgid "Locales"
-msgstr ""
-
-#: web/stats_view.py:40
-msgid "No Locales"
-msgstr ""
-
-#: web/urls.py:37
+#: web/urls.py:36
 msgid "Community Cellular Login"
-msgstr ""
-
-#: web/usuario_view.py:24
-msgid "Use of community data"
-msgstr ""
-
-#: web/usuario_view.py:55
-msgid "Other (Merged)"
 msgstr ""
