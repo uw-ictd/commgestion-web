@@ -6,7 +6,7 @@ from web.forms import UserSearchTimeForm
 
 from . import stats_view
 from . import network_users_view
-from . import profile_view
+from . import profiles_view
 
 
 # Create your views here.
@@ -25,9 +25,9 @@ def public_info(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def profile(request):
-    subs = profile_view.generate_table()
-    return render(request, 'profile.html', context=subs)
+def profiles(request):
+    subs = profiles_view.generate_table()
+    return render(request, 'profiles.html', context=subs)
 
 
 @login_required
