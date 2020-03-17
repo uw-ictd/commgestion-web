@@ -9,18 +9,16 @@ from . import network_users_view
 from . import profiles_view
 
 
-# Create your views here.
+def public_info(request):
+    gauge = public_view.generate_test_data()
+    return render(request, 'public_info.html', context=gauge)
+
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def network_stats(request):
     context = network_stats_view.generate_test_data()
     return render(request, 'network_stats.html', context=context)
-
-
-def public_info(request):
-    gauge = public_view.generate_test_data()
-    # TODO: Check if you want to re-render this as a new request or use `redirect()` built in django
-    return render(request, 'public_info.html', context=gauge)
 
 
 @login_required
