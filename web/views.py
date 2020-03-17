@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from web import public_view
 from web.forms import UserSearchTimeForm
 
-from . import stats_view
+from . import network_stats_view
 from . import network_users_view
 from . import profiles_view
 
@@ -12,9 +12,9 @@ from . import profiles_view
 # Create your views here.
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def net_stats(request):
-    context = stats_view.generate_test_data()
-    return render(request, 'stats.html', context=context)
+def network_stats(request):
+    context = network_stats_view.generate_test_data()
+    return render(request, 'network_stats.html', context=context)
 
 
 def public_info(request):
