@@ -3,8 +3,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from web import public_view
 from web.forms import UserSearchTimeForm
+
 from . import stats_view
-from . import usuario_view
+from . import network_users_view
 from . import profile_view
 
 
@@ -31,16 +32,16 @@ def profile(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def usuario(request):
+def network_users(request):
     if request.method == 'POST':
         form = UserSearchTimeForm(request.POST)
         if form.is_valid():
             from_date = form.cleaned_data['from_date']
             to_date = form.cleaned_data['to_date']
-            context = usuario_view.generate_test_data(from_date=from_date, to_date=to_date)
+            context = network_users_view.generate_test_data(from_date=from_date, to_date=to_date)
         else:
-            context = usuario_view.generate_test_data()
+            context = network_users_view.generate_test_data()
     else:
-        context = usuario_view.generate_test_data()
+        context = network_users_view.generate_test_data()
     context['form'] = UserSearchTimeForm()
-    return render(request, 'usuario_pie.html', context=context)
+    return render(request, 'network_users.html', context=context)

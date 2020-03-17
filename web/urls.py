@@ -22,9 +22,9 @@ from . import views
 from django.utils.translation import ugettext_lazy as _
 
 urlpatterns = [
-    url(r'^network/stats/?$', views.net_stats, name='network_stats'),
-    url(r'^profiles/?$', views.profile, name='profiles'),
-    url(r'^network/usage/?$', views.usuario, name='network_usage'),
+    url(r'^network/stats/?$', views.net_stats, name='stats'),
+    url(r'^profiles/?$', views.profile, name='profile'),
+    url(r'^network/users/?$', views.network_users, name='network_users'),
     path('', views.public_info, name='home')
 ]
 

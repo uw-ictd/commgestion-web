@@ -15,7 +15,7 @@
     <script src="{% static 'js/modules/accessibility.js' %}"></script>
     <script src="{% static 'js/data/usuarioPie.js' %}"></script>
     <div align="center">
-        <form method="post" action="{% url 'usuario' %}">
+        <form method="post" action="{% url 'network_users' %}">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit">
