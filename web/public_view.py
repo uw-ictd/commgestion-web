@@ -8,7 +8,8 @@ from django.utils.translation import gettext_lazy as _
 
 def generate_test_data():
     GRAPH_TITLE = _('Current network usage').__str__()
-    METRIC_TITLE = _('Sum(throughput)').__str__()
+    METRIC_TITLE = _('Total Throughput {}').__str__()
+    DEFAULT_UNITS = _(' KBps').__str__()
     
     #make some "current usage" data (runs every time so we have fresh numbers)
     k = 5
@@ -21,8 +22,12 @@ def generate_test_data():
     #query for the current usage
     qs_agg = Usage.objects.filter(timestamp__exact=time).aggregate(thru = Sum('throughput'))
     public_data =[round(qs_agg['thru'], 2)]
+    # TODO: Do some computation here to find out if it's KBps or Mbps etc..,
+    units_served = DEFAULT_UNITS
+
     return {
         "data": public_data,
         'title': json.dumps(GRAPH_TITLE),
-        'metric_title': json.dumps(METRIC_TITLE)
+        'metric_title': json.dumps(METRIC_TITLE.format(DEFAULT_UNITS)),
+        'dimensions': json.dumps(units_served)
     }

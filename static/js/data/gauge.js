@@ -87,7 +87,7 @@ Highcharts.chart('hc-gauge', {
         name: 'Current network use',
         data: dataFromServer,
         tooltip: {
-            valueSuffix: 'sum(throughput)'
+            valueSuffix: dimensionType
         }
     }]
 

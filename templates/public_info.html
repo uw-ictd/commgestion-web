@@ -6,7 +6,8 @@
     <script>
         var dataFromServer = {{data | safe}};
         var gaugeGraphTitle = {{ title | safe }};
-        var metricTitle = {{metric_title | safe}}
+        var metricTitle = {{metric_title | safe}};
+        var dimensionType = {{ dimensions | safe }};
     </script>   
     <script src="{% static 'js/data/gauge.js' %}"></script>
 {% endblock %}
