@@ -6,6 +6,9 @@ Highcharts.chart('graph-5', {
         plotShadow: false,
         type: 'pie'
     },
+    credits: {
+        enabled: false
+    },
     accessibility: {
         announceNewData: {
             enabled: true

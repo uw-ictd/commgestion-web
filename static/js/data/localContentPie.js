@@ -8,6 +8,9 @@ Highcharts.chart('graph-4', {
     title: {
         text: lookUpTitle('graph4')
     },
+    credits: {
+        enabled: false
+    },
     tooltip: {
         pointFormat: '{point.percentage:.1f}%'
     },

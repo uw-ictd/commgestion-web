@@ -8,6 +8,9 @@ Highcharts.chart('thru-vs-time', {
     title: {
         text: lookUpTitle('graph1')
     },
+    credits: {
+        enabled: false
+    },
     legend:{
         enabled: false
     },

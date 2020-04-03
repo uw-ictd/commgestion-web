@@ -3,6 +3,9 @@ Highcharts.chart('thru-by-app', {
     chart: {
         type: 'column'
     },
+    credits: {
+        enabled: false
+    },
     title: {
         text: lookUpTitle("graph2")
     },

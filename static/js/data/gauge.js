@@ -11,6 +11,9 @@ Highcharts.chart('hc-gauge', {
     title: {
         text: gaugeGraphTitle
     },
+    credits: {
+        enabled: false
+    },
 
     pane: {
         startAngle: -150,
