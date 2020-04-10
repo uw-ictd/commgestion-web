@@ -1,10 +1,16 @@
-<div class="container-fluid">
+<div class="container-fluid align-items-center justify-content-center">
 <!--    <div class="row">-->
 <!--        <div class="col-12" id="hc-gauge">-->
 <!--        </div>-->
 <!--    </div>-->
     <div class="row">
-        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12" id="hc-gauge">
         </div>
+        {% if data|length == 0 %}
+            <div class="alert alert-danger align-content-center text-center" id="warning">
+                No Subscriber / Usage Data available. Please add network data feed into the database.
+            </div>
+        {% else  %}
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 align-content-center" id="hc-gauge">
+        {% endif %}
     </div>
  </div>
