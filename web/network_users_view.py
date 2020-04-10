@@ -57,8 +57,9 @@ def generate_test_data(from_date=None, to_date=None):
             'drilldown': "Other (Merged)"
         })
     drilldown_response = build_drilldown_information('Other (Merged)', drilldown_data)
+    title_with_date = GRAPH_TITLE + " " + from_date.__str__() + " - " + to_date.__str__()
     return {
         'data': json.dumps(data),
         'drilldown': json.dumps(drilldown_response),
-        'title': json.dumps(GRAPH_TITLE)
+        'title': json.dumps(title_with_date)
     }
