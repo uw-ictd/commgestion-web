@@ -2,8 +2,9 @@ import json
 
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
-
+from django.utils import translation
 from web.models import Subscriber, Usage
+from django.utils.formats import date_format
 
 
 def lookup_user(user_id):
@@ -24,11 +25,15 @@ def generate_test_data(from_date=None, to_date=None):
     GRAPH_TITLE = _('Use of community data').__str__()
 
     if from_date and to_date:
+        from_date_string = from_date.strftime('%d %b %Y')
+        to_date_string = to_date.strftime('%d %b %Y')
+        title_with_date = GRAPH_TITLE + " between " + from_date_string + " and " + to_date_string
         usageData = Usage.objects.filter(timestamp__range=[from_date, to_date])\
                         .values('user')\
                         .annotate(Sum("throughput"))\
                         .order_by('-throughput__sum') #sums the current row
     else:
+        title_with_date = GRAPH_TITLE
         usageData = Usage.objects.values("user")\
                         .annotate(Sum("throughput"))\
                         .order_by('-throughput__sum') #sums the current row
@@ -57,7 +62,7 @@ def generate_test_data(from_date=None, to_date=None):
             'drilldown': "Other (Merged)"
         })
     drilldown_response = build_drilldown_information('Other (Merged)', drilldown_data)
-    title_with_date = GRAPH_TITLE + " " + from_date.__str__() + " - " + to_date.__str__()
+
     return {
         'data': json.dumps(data),
         'drilldown': json.dumps(drilldown_response),
