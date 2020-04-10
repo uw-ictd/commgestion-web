@@ -1,8 +1,13 @@
+from random import randint
+
 from django.contrib.auth.models import User
 from django.db import models
 
 
 # Create your models here.
+from django.db.models import Count
+
+
 class Application(models.Model):
     host = models.CharField(max_length=255, unique=True)
     throughput = models.FloatField()
@@ -25,6 +30,13 @@ class HostMapping(models.Model):
 
     def __str__(self):
         return 'HostMapping: {} -> {}'.format(self.captured_host, self.host.name)
+
+
+class SubscriberManager(models.Manager):
+    def random(self):
+        count = self.aggregate(count=Count('id'))['count']
+        random_index = randint(0, count - 1)
+        return self.all()[random_index]
 
 
 class Subscriber(models.Model):
@@ -51,6 +63,8 @@ class Subscriber(models.Model):
         (ConnectionStatus.BLOCKED, u'blocked'),
     )
 
+    objects = SubscriberManager()
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phonenumber = models.CharField(max_length=50)
     display_name = models.CharField(max_length=100)
@@ -68,7 +82,7 @@ class Subscriber(models.Model):
 
 class Usage(models.Model):
     user = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
-    throughput = models.FloatField()
+    throughput = models.FloatField()  # Store only bytes RX/TX Throughput in kiloBytes (KB)
     timestamp = models.DateTimeField()
 
     def get_username(self):
