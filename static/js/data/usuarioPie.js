@@ -42,4 +42,8 @@ Highcharts.chart('graph-5', {
             drillDownInfo
         ]
     },
+    lang: {
+        noData: noDataErrorMessage,
+        useHTML: true
+    }
 });

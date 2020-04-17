@@ -36,9 +36,6 @@ def network_users(request):
         if form.is_valid():
             from_date = form.cleaned_data['from_date']
             to_date = form.cleaned_data['to_date']
-            print('this is the date')
-            print(from_date)
-            print(to_date)
             context = network_users_view.generate_test_data(from_date=from_date, to_date=to_date)
             print(context)
         else:

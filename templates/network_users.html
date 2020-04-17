@@ -7,6 +7,7 @@
         var dataFromServer = {{data | safe}};
         var drillDownInfo = {{ drilldown | safe }};
         var usagePieTitle = {{ title | safe }};
+        var noDataErrorMessage = {{ errorMessage | safe }}
     </script>
     <link rel="stylesheet" type="text/css" href="{% static "css/lightpick.css" %}">
     <script src="{% static 'js/moment.min.js' %}"></script>

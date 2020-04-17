@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-17 17:17+0000\n"
+"POT-Creation-Date: 2020-04-17 19:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,20 +155,30 @@ msgstr ""
 msgid "External"
 msgstr ""
 
-#: web/network_users_view.py:24
+#: web/network_users_view.py:25
 msgid "Use of community data"
 msgstr ""
 
-#: web/network_users_view.py:55
+#: web/network_users_view.py:26
+msgid ""
+"No Data available between the chosen dates.<br>Please search for a different "
+"time."
+msgstr ""
+
+#: web/network_users_view.py:61
 msgid "Other (Merged)"
 msgstr ""
 
-#: web/public_view.py:10
+#: web/public_view.py:12
 msgid "Current network usage"
 msgstr ""
 
-#: web/public_view.py:11
-msgid "Sum(throughput)"
+#: web/public_view.py:13
+msgid "Total Throughput {}"
+msgstr ""
+
+#: web/public_view.py:14
+msgid " KBps"
 msgstr ""
 
 #: web/urls.py:36

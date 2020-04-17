@@ -23,6 +23,7 @@ def build_drilldown_information(drilldown_name, drilldown_data):
 def generate_test_data(from_date=None, to_date=None):
     MAX_PERCENT_TO_START_MERGE = 0.75  # TODO: Do this by the number of users if necessary i.e. limit to 10 users etc..,
     GRAPH_TITLE = _('Use of community data').__str__()
+    NO_DATA_ERROR_MESSAGE = _("No Data available between the chosen dates.<br>Please search for a different time.").__str__()
 
     if from_date and to_date:
         from_date_string = from_date.strftime('%d %b %Y')
@@ -66,5 +67,6 @@ def generate_test_data(from_date=None, to_date=None):
     return {
         'data': json.dumps(data),
         'drilldown': json.dumps(drilldown_response),
-        'title': json.dumps(title_with_date)
+        'title': json.dumps(title_with_date),
+        'errorMessage': json.dumps(NO_DATA_ERROR_MESSAGE),
     }
