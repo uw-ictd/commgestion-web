@@ -20,9 +20,9 @@ Highcharts.chart('thru-vs-time', {
     xAxis: {
         type: 'datetime'
     },
-    yAxis: {
-        title: {
-            text: lookUpAxisLabel('graph1')
+    "yAxis": {
+        "title": {
+            "text": lookUpAxisLabel('graph1')
         }
     },
     series: [{
