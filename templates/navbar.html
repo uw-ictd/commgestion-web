@@ -12,13 +12,13 @@
     {% if user.is_authenticated %}
         <div class="collapse navbar-collapse order-2" id="navbarDefinedCollapseData">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item {% if 'stats' in request.get_full_path %} active {% endif %}">
                     <a class="nav-link" href="{% url 'network_stats' %}">{% trans "Stats" %}<span class="sr-only">{% trans "(current)" %}</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if 'users' in request.get_full_path %} active {% endif %}">
                     <a class="nav-link" href="{% url 'network_users' %}">{% trans "Usage" %}</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if 'profiles' in request.get_full_path %} active {% endif %}">
                     <a class="nav-link" href="{% url 'profiles' %}">{% trans "Profiles" %}</a>
                 </li>
             </ul>
