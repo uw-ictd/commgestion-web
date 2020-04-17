@@ -1,7 +1,12 @@
+from datetime import timedelta
+
 from django.contrib.auth.models import User
 from web.models import Application, UserDefinedHost, HostMapping, Subscriber, Usage
 import random
 from django.utils import timezone
+from datetime import date
+from datetime import time
+from datetime import datetime
 
 
 # from django.contrib.auth.models import User
@@ -50,7 +55,8 @@ def add_subscribers(subscriber_total=10):
     def add_subscribers():
     """
     Subscriber.objects.all().delete()
-    User.objects.all().delete()
+    User.objects.filter(is_superuser=False).all().delete()
+
     Usage.objects.all().delete()
 
     imsi_format = "123456789{}"
@@ -81,9 +87,22 @@ def add_subscribers(subscriber_total=10):
         )
 
         created_subscriber = Subscriber.objects.get(phonenumber=imsi_value)
-        for j in range(5):
-            Usage.objects.create(user=created_subscriber, throughput=50 * random.random(), timestamp=timezone.now())
+        # for j in range(30):
+        #     Usage.objects.create(user=created_subscriber, throughput=50 * random.random(), timestamp=timezone.now())
 
+        #print( datetime.now() + timedelta(days=1))
+        #Subtract 60 seconds.
+        #print( datetime.now() - timedelta(seconds=60))
+        #Add 2 years.
+        #print( datetime.now() + timedelta(days=730))
+
+        for j in range(30):
+            Usage.objects.create(user=created_subscriber, throughput=50 * random.random(),
+            timestamp=(datetime.now() + timedelta(days=1)))
+            #having trouble printing anything out
+            #where is the bug
+            print(datetime.now() + timedelta(days=1))
+            print(datetime.now() + timedelta(weeks=1))
 
 def get_subscribers():
     total = Subscriber.objects.all()
