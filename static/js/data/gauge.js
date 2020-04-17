@@ -1,116 +1,133 @@
-Highcharts.chart('hc-gauge', {
-
-    chart: {
-        type: 'gauge',
-        plotBackgroundColor: null,
-        plotBackgroundImage: null,
-        plotBorderWidth: 0,
-        plotShadow: false
-    },
-
-    title: {
-        text: gaugeGraphTitle
-    },
-    credits: {
-        enabled: false
-    },
-
-    pane: {
-        startAngle: -150,
-        endAngle: 150,
-        background: [{
-            backgroundColor: {
-                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                stops: [
-                    [0, '#FFF'],
-                    [1, '#333']
-                ]
-            },
-            borderWidth: 0,
-            outerRadius: '109%'
-        }, {
-            backgroundColor: {
-                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                stops: [
-                    [0, '#333'],
-                    [1, '#FFF']
-                ]
-            },
-            borderWidth: 1,
-            outerRadius: '107%'
-        }, {
-            // default background
-        }, {
-            backgroundColor: '#DDD',
-            borderWidth: 0,
-            outerRadius: '105%',
-            innerRadius: '103%'
-        }]
-    },
-
-    // the value axis
-    yAxis: {
-        min: 0,
-        max: 1000,
-
-        minorTickInterval: 'auto',
-        minorTickWidth: 1,
-        minorTickLength: 10,
-        minorTickPosition: 'inside',
-        minorTickColor: '#666',
-
-        tickPixelInterval: 30,
-        tickWidth: 2,
-        tickPosition: 'inside',
-        tickLength: 10,
-        tickColor: '#666',
-        labels: {
-            step: 2,
-            rotation: 'auto'
+function createGuageChart(chartType) {
+    let needleValue = dataFromServer;
+    let guageParameterString = metricTitle;
+    // Follows the green, yellow, red bounds in each of the case
+    let bounds = {
+        'green': [0, 400],
+        'yellow': [400, 600],
+        'red': [600, 1000]
+    };
+    if (chartType === 'Mbps') {
+        newValueInMbps = dataFromServer[0] * 0.008;
+        needleValue = [newValueInMbps];
+        bounds = {
+            'green': [0, 6.4],
+            'yellow': [6.4, 11.2],
+            'red': [11.2, 16]
+        };
+        guageParameterString = guageParameterString.replace('KBps', 'Mbps');
+    } else if (chartType === 'MBps') {
+        newValueInMBps = dataFromServer[0] * 0.001;
+        needleValue = [newValueInMBps];
+        bounds = {
+            'green': [0, 0.8],
+            'yellow': [0.8, 1.4],
+            'red': [1.4, 2.0]
+        };
+        guageParameterString = guageParameterString.replace('KBps', 'MBps');
+    }
+    Highcharts.chart('hc-gauge', {
+        chart: {
+            type: 'gauge',
+            plotBackgroundColor: null,
+            plotBackgroundImage: null,
+            plotBorderWidth: 0,
+            plotShadow: false
         },
         title: {
-            text: metricTitle
+            text: gaugeGraphTitle
         },
-        plotBands: [{
-            from: 0,
-            to: 400,
-            color: '#55BF3B' // green
-        }, {
-            from: 400,
-            to: 600,
-            color: '#DDDF0D' // yellow
-        }, {
-            from: 600,
-            to: 1000,
-            color: '#DF5353' // red
-        }]
-    },
+        credits: {
+            enabled: false
+        },
+        pane: {
+            startAngle: -150,
+            endAngle: 150,
+            background: [{
+                backgroundColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                    stops: [
+                        [0, '#FFF'],
+                        [1, '#333']
+                    ]
+                },
+                borderWidth: 0,
+                outerRadius: '109%'
+            }, {
+                backgroundColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                    stops: [
+                        [0, '#333'],
+                        [1, '#FFF']
+                    ]
+                },
+                borderWidth: 1,
+                outerRadius: '107%'
+            }, {
+                // default background
+            }, {
+                backgroundColor: '#DDD',
+                borderWidth: 0,
+                outerRadius: '105%',
+                innerRadius: '103%'
+            }]
+        },
 
-    series: [{
-        name: 'Current network use',
-        data: dataFromServer,
-        tooltip: {
-            valueSuffix: dimensionType
-        }
-    }]
+        // the value axis
+        yAxis: {
+            min: bounds['green'][0],
+            max: bounds['red'][1],
 
-}
-// Add some life
-/*function (chart) {
-    if (!chart.renderer.forExport) {
-        setInterval(function () {
-            var point = chart.series[0].points[0],
-                newVal,
-                inc = Math.round((Math.random() - 0.5) * 20);
+            minorTickInterval: 'auto',
+            minorTickWidth: 1,
+            minorTickLength: 10,
+            minorTickPosition: 'inside',
+            minorTickColor: '#666',
 
-            newVal = point.y + inc;
-            if (newVal < 0 || newVal > 200) {
-                newVal = point.y - inc;
+            tickPixelInterval: 30,
+            tickWidth: 2,
+            tickPosition: 'inside',
+            tickLength: 10,
+            tickColor: '#666',
+            labels: {
+                step: 2,
+                rotation: 'auto'
+            },
+            title: {
+                text: guageParameterString
+            },
+            plotBands: [{
+                from: bounds['green'][0],
+                to: bounds['green'][1],
+                color: '#55BF3B' // green
+            }, {
+                from: bounds['yellow'][0],
+                to: bounds['yellow'][1],
+                color: '#DDDF0D' // yellow
+            }, {
+                from: bounds['red'][0],
+                to: bounds['red'][1],
+                color: '#DF5353' // red
+            }]
+        },
+
+        series: [{
+            name: 'Current network use',
+            data: needleValue,
+            tooltip: {
+                valueSuffix: chartType
             }
+        }]
 
-            point.update(newVal);
+    });
+}
 
-        }, 3000);
-    }
-}*/
-);
+$("#guageDataType").change(function() {
+    chartType = $("#guageDataType option:selected").val();
+    console.log(chartType);
+    createGuageChart(chartType)
+});
+
+$( document ).ready(function() {
+    createGuageChart('KBps');
+});

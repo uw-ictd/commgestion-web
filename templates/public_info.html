@@ -8,6 +8,8 @@
         var gaugeGraphTitle = {{ title | safe }};
         var metricTitle = {{metric_title | safe}};
         var dimensionType = {{ dimensions | safe }};
-    </script>   
+    </script>
+    {% if data %}
     <script src="{% static 'js/data/gauge.js' %}"></script>
+    {% endif %}
 {% endblock %}

@@ -1,8 +1,4 @@
 <div class="container-fluid align-items-center justify-content-center">
-<!--    <div class="row">-->
-<!--        <div class="col-12" id="hc-gauge">-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="row">
         </div>
         {% if data|length == 0 %}
@@ -10,7 +6,21 @@
                 No Subscriber / Usage Data available. Please add network data feed into the database.
             </div>
         {% else  %}
+            <div class="row">
             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 align-content-center" id="hc-gauge">
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 col-sm-12 align-content-center"></div>
+            <div class="col-4 col-md-4 col-lg-4 col-sm-12 col-xl-4 align-content-center">
+                <div class="form-group align-content-center">
+                    <label for="exampleFormControlSelect1">View Network Throughput as</label>
+                    <select class="form-control" id="guageDataType">
+                        <option value="KBps">KiloBytes per seconds (KBps)</option>
+                        <option value="Mbps">Megabits per second (Mbps)</option>
+                        <option value="MBps">MegaBytes per second (MBps)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 col-sm-12 align-content-center"></div>
         {% endif %}
     </div>
  </div>
