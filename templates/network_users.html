@@ -14,12 +14,19 @@
     <script src="{% static 'js/modules/drilldown.js' %}"></script>
     <script src="{% static 'js/modules/accessibility.js' %}"></script>
     <script src="{% static 'js/data/usuarioPie.js' %}"></script>
-    <div align="center">
-        <form method="post" action="{% url 'network_users' %}">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit">
-        </form>
+    <div align="row">
+        <div class="col-4 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 offset-sm-0 offset-md-4 offset-lg-4 offset-xl-4">
+            <form method="post" action="{% url 'network_users' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                {% for field in form %}
+                        <label for="{{ field.label }}">{{ field.label }}</label>
+                        {{ field }}
+                {% endfor %}
+                </div>
+                <input type="submit" class="btn btn-success" value="Submit">
+            </form>
+        </div>
     </div>
     <script>
     var picker = new Lightpick({

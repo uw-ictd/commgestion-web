@@ -7,7 +7,9 @@ class UserSearchTimeForm(forms.Form):
         widget=forms.DateInput(attrs={
             'id': "datepicker-from",
             'placeholder': 'Start Date',
-        })
+            'class': 'form-control',
+            'aria-describedby': 'From Date Field',
+        }),
     )
 
     to_date = forms.DateField(
@@ -15,5 +17,7 @@ class UserSearchTimeForm(forms.Form):
         widget=forms.DateInput(attrs={
             'id': "datepicker-to",
             'placeholder': 'End Date',
+            'class': 'form-control',
+            'aria-describedby': 'To Date Field',
         })
     )

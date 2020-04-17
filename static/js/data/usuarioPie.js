@@ -18,7 +18,7 @@ Highcharts.chart('graph-5', {
         }
     },
     title: {
-        text: usagePieTitle
+        text: usagePieTitle,
     },
     tooltip: {
         pointFormat: '<b>{point.percentage:.1f}%</b>'
@@ -41,5 +41,5 @@ Highcharts.chart('graph-5', {
         series: [
             drillDownInfo
         ]
-    }
+    },
 });
