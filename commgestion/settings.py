@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web',
+    'chartkick',
 ]
 
 MIDDLEWARE = [
@@ -163,8 +164,10 @@ USE_TZ = True
 STATIC_ROOT = "/var/www/commgestion/static"
 STATIC_URL = '/static/'
 
+import chartkick
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    chartkick.js(),
 ]
 
 LOGIN_URL = '/login'

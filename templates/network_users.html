@@ -1,6 +1,5 @@
 {% extends "_layout.html" %}
 {% load static %}
-
 {% block main %} 
 {% include "graphViews/usuarioLayout.html" %}
     <script> 
@@ -15,6 +14,7 @@
     <script src="{% static 'js/modules/drilldown.js' %}"></script>
     <script src="{% static 'js/modules/accessibility.js' %}"></script>
     <script src="{% static 'js/data/usuarioPie.js' %}"></script>
+
     <div align="row">
         <div class="col-4 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 offset-sm-0 offset-md-4 offset-lg-4 offset-xl-4">
             <form method="post" action="{% url 'network_users' %}">

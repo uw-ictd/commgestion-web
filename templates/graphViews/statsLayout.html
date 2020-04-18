@@ -1,7 +1,17 @@
-{% for item in rows %}
+{% load chartkick %}
 <div class="row">
-	{% for rowName in item %}
-	<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12" id={{rowName}}> </div>
-	{% endfor %}
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+        {% line_chart lineData with id="graph1" library={"title":{"text":"Hello2"}, "xAxis":{"title":{"text": "test"}}, "yAxis":"testing"} %}
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+        {% column_chart columnData with library={"title":{"text":"Hello2"}, "xAxis":{"title":{"text": "test"}}, "yAxis":"testing"} %}
+    </div>
 </div>
-{% endfor %}
+<div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+        {% pie_chart pieChartUserData with title="" %}
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+        {% pie_chart pieChartContentData with title="" %}
+    </div>
+</div>
