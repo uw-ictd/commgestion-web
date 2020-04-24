@@ -78,7 +78,11 @@ def generate_test_data():
     #max_th = Usage.objects.all().aggregate(Max('throughput'))
     #print(max_th)
     qs_agg = Usage.objects.values('timestamp').annotate(thrpt = Sum('throughput'))
-    print(qs_agg)
+    thr_dict = qs_agg.values('thrpt').distinct()
+    thrrr = [x['thrpt'] for x in thr_dict]
+    print(thrrr)
+    print(max(thrrr))
+    #print(qs_agg)
     g1_data = []
     max_th = 0
     #BEST WAY TO GET THE MAX SO THAT ALL THE VALUES CAN BE CONVERTED TO MBPS IN THE LOOP
