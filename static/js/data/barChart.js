@@ -1,19 +1,19 @@
 // https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/column-drilldown/
 function createBarChart(chartUnit) {
-    let dataKbps = lookUpData("graph2");
-    var data = [dataKbps.length];
+    let dataKBps = lookUpData("graph2");
+    var data = [dataKBps.length];
     
     if(chartUnit === 'Mbps'){
-        for (var i = 0; i < dataKbps.length; i++) {
-            data[i] = {"name": String(dataKbps[i].name), "y": dataKbps[i].y / 1000};
+        for (var i = 0; i < dataKBps.length; i++) {
+            data[i] = {"name": String(dataKBps[i].name), "y": dataKBps[i].y / 1000};
         }
     }else if(chartUnit === 'MBps'){
-        for (var i = 0; i < dataKbps.length; i++) {
-            data[i] = {"name": String(dataKbps[i].name), "y": dataKbps[i].y / 1000 / 8};
+        for (var i = 0; i < dataKBps.length; i++) {
+            data[i] = {"name": String(dataKBps[i].name), "y": dataKBps[i].y / 1000 / 8};
         }
     }
     else{
-        data = dataKbps;
+        data = dataKBps;
     }
 
     let axisTitle = lookUpAxisLabel("graph2") + " (" + chartUnit + ")";
