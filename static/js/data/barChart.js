@@ -70,5 +70,6 @@ $("#thru-by-app-unit").change(function() {
 });
 
 $( document ).ready(function() {
-     createBarChart('KBps');
+    chartUnit = $("#thru-by-app-unit option:selected").val();
+    createBarChart(chartUnit);
  });

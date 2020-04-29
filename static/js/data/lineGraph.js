@@ -56,5 +56,6 @@ $("#thru-vs-time-unit").change(function() {
 });
 
 $( document ).ready(function() {
-    createLineChart('KBps');
+    chartUnit = $("#thru-vs-time-unit option:selected").val();
+    createLineChart(chartUnit);
 });
