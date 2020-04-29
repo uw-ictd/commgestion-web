@@ -22,7 +22,8 @@ Highcharts.chart('thru-vs-time', {
     },
     "yAxis": {
         "title": {
-            "text": lookUpAxisLabel('graph1')
+            "text": 
+                ('graph1')
         }
     },
     series: [{

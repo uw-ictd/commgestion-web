@@ -25,10 +25,8 @@
         }
 
         var axisText = {{axisLabels | safe}};
-        var units = {{unitSet | safe}};
         function lookUpAxisLabel(graphid){
-            console.log(JSON.parse(axisText[graphid]))
-            return JSON.parse(axisText[graphid]) + " (" + JSON.parse(units[graphid]) + ")";
+            return JSON.parse(axisText[graphid]);
         }
 
         setInterval(function () {

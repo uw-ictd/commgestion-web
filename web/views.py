@@ -37,7 +37,6 @@ def network_users(request):
             from_date = form.cleaned_data['from_date']
             to_date = form.cleaned_data['to_date']
             context = network_users_view.generate_test_data(from_date=from_date, to_date=to_date)
-            print(context)
         else:
             context = network_users_view.generate_test_data()
     else:

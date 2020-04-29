@@ -14,11 +14,6 @@ PIE_RIGHT_TITLE = _('Local Content and Non-Local').__str__()
 AXIS_TITLE_LINE = _('Throughput').__str__()
 AXIS_TITLE_BAR = _('Throughput').__str__()
 
-UNIT_THRESHOLD = 5000;
-UNIT_LINE = "units"
-UNIT_BAR = "units2"
-
-
 def get_graph2_data():
     query_set = Application.objects.all()
     data = []
@@ -75,27 +70,15 @@ def get_graph4_data():
 def generate_test_data():
     """ Generate fake data for the network statistics page
     """
-    #max_th = Usage.objects.all().aggregate(Max('throughput'))
-    #print(max_th)
     qs_agg = Usage.objects.values('timestamp').annotate(thrpt = Sum('throughput'))
-    thr_dict = qs_agg.values('thrpt').distinct()
-    thrrr = [x['thrpt'] for x in thr_dict]
-    print(thrrr)
-    print(max(thrrr))
-    #print(qs_agg)
+    # thr_dict = qs_agg.values('thrpt').distinct()
+    # thrrr = [x['thrpt'] for x in thr_dict]
     g1_data = []
-    max_th = 0
-    #BEST WAY TO GET THE MAX SO THAT ALL THE VALUES CAN BE CONVERTED TO MBPS IN THE LOOP
-    #IF NEEDED?????? 
     for x in qs_agg:
         time = x['timestamp'] #values returns a dictionary
         thru = x['thrpt']
         g1_data.append([time,thru])
-        if(thru > max_th):
-            max_th = thru
-        #print("max thru ")
-        #print(max_th)
-            
+        
     data_graph1 = g1_data
 
     data_graph2 = get_graph2_data()
@@ -134,17 +117,11 @@ def generate_test_data():
         "graph1": json.dumps(AXIS_TITLE_LINE),
         "graph2": json.dumps(AXIS_TITLE_BAR)
     })
-    
-    unit_dict = ({
-        'graph1': json.dumps(UNIT_LINE),
-        'graph2': json.dumps(UNIT_BAR)
-    })
 
     return {
         'totalUsers': total_users,
         'dataSets': data,
         'rows': row_builder,
         'titleSet': titles,
-        'axisLabels': labelSet,
-        'unitSet': unit_dict
+        'axisLabels': labelSet
     }
