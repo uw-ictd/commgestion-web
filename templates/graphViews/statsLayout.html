@@ -39,16 +39,15 @@
 	{% for rowName in item %}
 	<div class = "col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
 		{% if forloop.parentloop.counter == 1 %}
-		<div>
-			<label>{{rowName}}-unit</label>
-			<select class="form-control" id="{{rowName}}-unit">
-				<option value="KBps">KiloBytes per seconds (KBps)</option>
+		<div class = "col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+			<select class="form-control-sm" id="{{rowName}}-unit">
+				<option value="KBps">KiloBytes per second (KBps)</option>
 				<option value="Mbps">Megabits per second (Mbps)</option>
 				<option value="MBps">MegaBytes per second (MBps)</option>
 			</select>
 		</div>
 		{% endif %}
-		<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12" id={{rowName}}></div>
+		<div id={{rowName}}></div>
 	</div>
 	{% endfor %}
 </div>
