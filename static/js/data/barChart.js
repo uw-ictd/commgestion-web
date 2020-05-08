@@ -20,7 +20,8 @@ function createBarChart(chartUnit) {
     
     Highcharts.chart('thru-by-app', {
         chart: {
-            type: 'column'
+            type: 'column',
+            animation: false
         },
         credits: {
             enabled: false
@@ -59,13 +60,12 @@ function createBarChart(chartUnit) {
                 colorByPoint: true,
                 data: data
             }
-        ],
+        ]
     });
 }
 
 $("#thru-by-app-unit").change(function() {
     chartUnit = $("#thru-by-app-unit option:selected").val();
-    console.log(chartUnit);
     createBarChart(chartUnit);
 });
 
