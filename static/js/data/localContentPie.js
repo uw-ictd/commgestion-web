@@ -3,7 +3,8 @@ Highcharts.chart('graph-4', {
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
-        type: 'pie'
+        type: 'pie',
+        animation: false,
     },
     title: {
         text: lookUpTitle('graph4')

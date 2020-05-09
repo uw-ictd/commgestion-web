@@ -3,7 +3,7 @@
 //date object sytnax https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC
 //Date.UTC(year[, month[, day[, hour[, minute[, second[, millisecond]]]]]])
 // months are 0 indexed, days are not.
-function createLineChart(chartUnit) {
+function createLineChart(chartUnit, animate) {
     let dataKBps = lookUpData("graph1");
     var data = [dataKBps.length];
 
@@ -44,6 +44,15 @@ function createLineChart(chartUnit) {
                     
             }
         },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: false,
+                },
+                animation: animate
+            }
+        },
         series: [{
             data: data
         }]
@@ -52,10 +61,10 @@ function createLineChart(chartUnit) {
 
 $("#thru-vs-time-unit").change(function() {
     chartUnit = $("#thru-vs-time-unit option:selected").val();
-    createLineChart(chartUnit);
+    createLineChart(chartUnit, true);
 });
 
 $( document ).ready(function() {
     chartUnit = $("#thru-vs-time-unit option:selected").val();
-    createLineChart(chartUnit);
+    createLineChart(chartUnit, false);
 });

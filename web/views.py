@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
+from datetime import datetime
+from datetime import timedelta
 
 from web import public_view
 from web.forms import UserSearchTimeForm, ModalForm
@@ -43,10 +45,9 @@ def network_users(request):
         if form.is_valid():
             from_date = form.cleaned_data['from_date']
             to_date = form.cleaned_data['to_date']
-            context = network_users_view.generate_test_data(from_date=from_date, to_date=to_date)
-        else:
-            context = network_users_view.generate_test_data()
     else:
-        context = network_users_view.generate_test_data()
+        from_date = datetime.now() - timedelta(days=7)
+        to_date = datetime.now()
+    context = network_users_view.generate_test_data(from_date=from_date, to_date=to_date)
     context['form'] = UserSearchTimeForm()
     return render(request, 'network_users.html', context=context)
