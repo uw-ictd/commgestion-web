@@ -21,3 +21,7 @@ class UserSearchTimeForm(forms.Form):
             'aria-describedby': 'To Date Field',
         })
     )
+
+class ModalForm(forms.Form):
+    email = forms.EmailField()
+    name = forms.CharField(label='Your name')

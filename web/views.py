@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from web import public_view
-from web.forms import UserSearchTimeForm
+from web.forms import UserSearchTimeForm, ModalForm
 
 from . import network_stats_view
 from . import network_users_view
@@ -24,6 +24,13 @@ def network_stats(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def profiles(request):
+    if request.method == 'POST':
+        form = ModalForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            print(name, email)
+
     subs = profiles_view.generate_table()
     return render(request, 'profiles.html', context=subs)
 
