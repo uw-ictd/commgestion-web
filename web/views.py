@@ -30,8 +30,13 @@ def profiles(request):
         form = ModalForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            print(name, email)
+            phoneNumber = form.cleaned_data['phoneNumber']
+            display = form.cleaned_data['display']
+            isLocal = form.cleaned_data['localNonLocal']
+            role = form.cleaned_data['role']
+            connected = form.cleaned_data['connected']
+            activeStatus = form.cleaned_data['active']
+            print(name, phoneNumber, display, isLocal, role, connected, activeStatus)
 
     subs = profiles_view.generate_table()
     return render(request, 'profiles.html', context=subs)

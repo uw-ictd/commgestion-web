@@ -16,8 +16,16 @@
     </script>
 
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm">
+<button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm">
     Add Subscriber
+</button>
+
+<button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
+    Edit
+</button>
+
+<button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
+    Delete
 </button>
 
 <!-- modal form example -->
@@ -49,13 +57,13 @@
                     <div class="form-group">
                         <label class="control-label">IMSI</label>
                         <div>
-                            <input type="number" readonly id="0" placeholder="IMSI value" class="form-control input-lg" name="imsi" value="">
+                            <input type="number" readonly="readonly" placeholder="IMSI value" class="form-control input-lg" name="imsi" value="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">GUTI Value </label>
                         <div>
-                            <input type="number" readonly id="0" placeholder="GUTI" class="form-control input-lg" name="guti" value="">
+                            <input type="number" readonly="readonly" placeholder="GUTI" class="form-control input-lg" name="guti" value="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,7 +108,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
     <!-- user profile table -->
     <div style="width:90%; margin:0 auto;">
         <table id="table_id" class="table table-striped table-bordered" cellspacing="1" width="100%">
@@ -119,7 +126,7 @@
             </thead>
             <tbody>
             {% for d in data %}
-            <tr>
+            <tr onclick="edit.enabled=true">
                 <td>{{d.user}}</td>
                 <td>{{d.phonenumber}}</td>
                 <td>{{d.display_name}}</td>

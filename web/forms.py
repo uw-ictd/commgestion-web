@@ -23,5 +23,10 @@ class UserSearchTimeForm(forms.Form):
     )
 
 class ModalForm(forms.Form):
-    email = forms.EmailField()
     name = forms.CharField(label='Your name')
+    phoneNumber = forms.NumberInput()
+    display = forms.CharField(label='Display name')
+    localNonLocal = forms.CharField(label='Local or non local')
+    role = forms.CharField(label='Role')
+    connected = forms.CharField(label='Connected')
+    activeStatus = forms.DateTimeField(label='Last active')
