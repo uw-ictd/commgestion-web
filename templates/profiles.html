@@ -1,4 +1,9 @@
 {% extends "_layout.html" %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css" />
 {% load static %}
 {% load i18n %}
 
@@ -14,100 +19,124 @@
             });
         });
     </script>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js" ></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js" ></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js" ></script>
+    <script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js" ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+    <script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js" ></script>
+    <sript src="https://luca-vercelli.github.io/DataTable-AltEditor/src/dataTables.altEditor.free.js"></sript>
+    <script>
+        $(document).on('click', 'tr', function(e) {
+            $('tr.selected').removeClass('selected'); //clear other selections
+            $(this).addClass('selected'); //mark this row as selected
+            $('#edit').attr('disabled', false);
+            $('#delete').attr('disabled', false);
+            $('#add').attr('disabled', true);
+        });
+
+        $('a.delete').on('click', function(e){
+           e.preventDefault(); //stop native link behavior
+           $('tr.selected').remove(); //remove selected row
+           $('#edit').attr('disabled', true);
+           $('#delete').attr('disabled', true);
+           $('#add').attr('disabled', false);
+        });
+    </script>
 
     <!-- Button trigger modal -->
-<button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm">
-    Add Subscriber
-</button>
+    <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm">
+        Add Subscriber
+    </button>
 
-<button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
-    Edit
-</button>
+    <button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
+        Edit
+    </button>
 
-<button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
-    Delete
-</button>
+    <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
+        Delete
+    </button>
 
-<!-- modal form example -->
-<div id="ModalLoginForm" class="modal fade">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2>Add a Subscriber</h2>
-                <form role="form" method="POST" action="{% url 'profiles' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label class="control-label">Username</label>
-                        <div>
-                            <input type="text" placeholder="Username" class="form-control input-lg" name="username" value="">
+    <!-- modal form example -->
+    <div id="ModalLoginForm" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2>Add a Subscriber</h2>
+                    <form role="form" method="POST" action="{% url 'profiles' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label">Username</label>
+                            <div>
+                                <input type="text" placeholder="Username" class="form-control input-lg" name="username" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Phone Number</label>
-                        <div>
-                            <input type="number" placeholder="1234567890" class="form-control input-lg" name="phone" value="">
+                        <div class="form-group">
+                            <label class="control-label">Phone Number</label>
+                            <div>
+                                <input type="number" placeholder="1234567890" class="form-control input-lg" name="phone" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Display Name</label>
-                        <div>
-                            <input type="text" placeholder="rache" class="form-control input-lg" name="display" value="">
+                        <div class="form-group">
+                            <label class="control-label">Display Name</label>
+                            <div>
+                                <input type="text" placeholder="rache" class="form-control input-lg" name="display" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">IMSI</label>
-                        <div>
-                            <input type="number" readonly="readonly" placeholder="IMSI value" class="form-control input-lg" name="imsi" value="">
+                        <div class="form-group">
+                            <label class="control-label">IMSI</label>
+                            <div>
+                                <input type="number" readonly="readonly" placeholder="IMSI value" class="form-control input-lg" name="imsi" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">GUTI Value </label>
-                        <div>
-                            <input type="number" readonly="readonly" placeholder="GUTI" class="form-control input-lg" name="guti" value="">
+                        <div class="form-group">
+                            <label class="control-label">GUTI Value </label>
+                            <div>
+                                <input type="number" readonly="readonly" placeholder="GUTI" class="form-control input-lg" name="guti" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Local or Non-local User</label>
-                        <div>
-                            <input type="text" placeholder="Yes or No" class="form-control input-lg" name="local" value="">
+                        <div class="form-group">
+                            <label class="control-label">Local or Non-local User</label>
+                            <div>
+                                <input type="text" placeholder="Yes or No" class="form-control input-lg" name="local" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Role</label>
-                        <div>
-                            <input type="text" placeholder="User/Researcher/Admin" class="form-control input-lg" name="role" value="">
+                        <div class="form-group">
+                            <label class="control-label">Role</label>
+                            <div>
+                                <input type="text" placeholder="User/Researcher/Admin" class="form-control input-lg" name="role" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Connectivity Status</label>
-                        <div>
-                            <input type="text" placeholder="Connected/Not Connected" class="form-control input-lg" name="connected" value="">
+                        <div class="form-group">
+                            <label class="control-label">Connectivity Status</label>
+                            <div>
+                                <input type="text" placeholder="Connected/Not Connected" class="form-control input-lg" name="connected" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Last Online</label>
-                        <div>
-                            <input type="datetime-local" placeholder="Month day, year. time stamp" class="form-control input-lg" name="lastActive" value="">
+                        <div class="form-group">
+                            <label class="control-label">Last Online</label>
+                            <div>
+                                <input type="datetime-local" placeholder="Month day, year. time stamp" class="form-control input-lg" name="lastActive" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Rate Limit Kbps</label>
-                        <div>
-                            <input type="email" readonly id="0" placeholder="100kbps" class="form-control input-lg" name="rateLimit" value="">
+                        <div class="form-group">
+                            <label class="control-label">Rate Limit Kbps</label>
+                            <div>
+                                <input type="email" readonly id="0" placeholder="100kbps" class="form-control input-lg" name="rateLimit" value="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                            <button type="submit" class="btn btn-success">
-                                Register
-                            </button>
+                        <div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-success">
+                                    Register
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <!-- user profile table -->
     <div style="width:90%; margin:0 auto;">
         <table id="table_id" class="table table-striped table-bordered" cellspacing="1" width="100%">
@@ -126,7 +155,7 @@
             </thead>
             <tbody>
             {% for d in data %}
-            <tr onclick="edit.enabled=true">
+            <tr role="row">
                 <td>{{d.user}}</td>
                 <td>{{d.phonenumber}}</td>
                 <td>{{d.display_name}}</td>
@@ -162,7 +191,13 @@
             </tbody>
         </table>
     </div>
-
+    <div class="dataTables_info" id="example_info">
+        <span class="select-info">
+            <span class="select-item"> </span>
+            <span class="select-item"> </span>
+            <span class="select-item"> </span>
+        </span>
+    </div>
 {% for d in dataFromServer %}
 <tr>
     {% for x in d %} <td>{{ x }}</td>
