@@ -18,29 +18,12 @@
                 }
             });
         });
-    </script>
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js" ></script>
-    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js" ></script>
-    <script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js" ></script>
-    <script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js" ></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
-    <script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js" ></script>
-    <sript src="https://luca-vercelli.github.io/DataTable-AltEditor/src/dataTables.altEditor.free.js"></sript>
-    <script>
         $(document).on('click', 'tr', function(e) {
             $('tr.selected').removeClass('selected'); //clear other selections
             $(this).addClass('selected'); //mark this row as selected
             $('#edit').attr('disabled', false);
             $('#delete').attr('disabled', false);
             $('#add').attr('disabled', true);
-        });
-
-        $('a.delete').on('click', function(e){
-           e.preventDefault(); //stop native link behavior
-           $('tr.selected').remove(); //remove selected row
-           $('#edit').attr('disabled', true);
-           $('#delete').attr('disabled', true);
-           $('#add').attr('disabled', false);
         });
     </script>
 
