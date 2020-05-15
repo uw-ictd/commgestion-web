@@ -23,25 +23,24 @@
             $(this).addClass('selected'); //mark this row as selected
             $('#edit').attr('disabled', false);
             $('#delete').attr('disabled', false);
-            $('#add').attr('disabled', true);
         });
     </script>
 
     <!-- Button trigger modal -->
-    <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm">
+    <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalAddForm">
         Add Subscriber
     </button>
 
-    <button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
+    <button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalEditForm" disabled="true">
         Edit
     </button>
 
-    <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalLoginForm" disabled="true">
+    <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalDeleteForm" disabled="true">
         Delete
     </button>
 
-    <!-- modal form example -->
-    <div id="ModalLoginForm" class="modal fade">
+    <!-- modal add form -->
+    <div id="ModalAddForm" class="modal fade">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -63,7 +62,7 @@
                         <div class="form-group">
                             <label class="control-label">Display Name</label>
                             <div>
-                                <input type="text" placeholder="rache" class="form-control input-lg" name="display" value="">
+                                <input type="text" placeholder="name" class="form-control input-lg" name="display" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -105,7 +104,7 @@
                         <div class="form-group">
                             <label class="control-label">Rate Limit Kbps</label>
                             <div>
-                                <input type="email" readonly id="0" placeholder="100kbps" class="form-control input-lg" name="rateLimit" value="">
+                                <input type="email" readonly="readonly" placeholder="100kbps" class="form-control input-lg" name="rateLimit" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -120,6 +119,169 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <!-- modal edit form -->
+    <div id="ModalEditForm" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2>Edit a Subscriber</h2>
+                    <form role="form" method="POST" action="{% url 'profiles' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label">Username</label>
+                            <div>
+                                <input type="text" placeholder="Username" class="form-control input-lg" name="username" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Phone Number</label>
+                            <div>
+                                <input type="number" placeholder="1234567890" class="form-control input-lg" name="phone" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Display Name</label>
+                            <div>
+                                <input type="text" placeholder="name" class="form-control input-lg" name="display" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">IMSI</label>
+                            <div>
+                                <input type="number" readonly="readonly" placeholder="IMSI value" class="form-control input-lg" name="imsi" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">GUTI Value </label>
+                            <div>
+                                <input type="number" readonly="readonly" placeholder="GUTI" class="form-control input-lg" name="guti" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Local or Non-local User</label>
+                            <div>
+                                <input type="text" placeholder="Yes or No" class="form-control input-lg" name="local" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Role</label>
+                            <div>
+                                <input type="text" placeholder="User/Researcher/Admin" class="form-control input-lg" name="role" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Connectivity Status</label>
+                            <div>
+                                <input type="text" placeholder="Connected/Not Connected" class="form-control input-lg" name="connected" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Last Online</label>
+                            <div>
+                                <input type="datetime-local" placeholder="Month day, year. time stamp" class="form-control input-lg" name="lastActive" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Rate Limit Kbps</label>
+                            <div>
+                                <input type="email" readonly="readonly" placeholder="100kbps" class="form-control input-lg" name="rateLimit" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-success">
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- modal delete form -->
+    <div id="ModalDeleteForm" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2>Delete a Subscriber</h2>
+                    <form role="form" method="POST" action="{% url 'profiles' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label">Username</label>
+                            <div>
+                                <input type="text" placeholder="Username" class="form-control input-lg" name="username" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Phone Number</label>
+                            <div>
+                                <input type="number" placeholder="1234567890" class="form-control input-lg" name="phone" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Display Name</label>
+                            <div>
+                                <input type="text" placeholder="name" class="form-control input-lg" name="display" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">IMSI</label>
+                            <div>
+                                <input type="number" readonly="readonly" placeholder="IMSI value" class="form-control input-lg" name="imsi" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">GUTI Value </label>
+                            <div>
+                                <input type="number" readonly="readonly" placeholder="GUTI" class="form-control input-lg" name="guti" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Local or Non-local User</label>
+                            <div>
+                                <input type="text" placeholder="Yes or No" class="form-control input-lg" name="local" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Role</label>
+                            <div>
+                                <input type="text" placeholder="User/Researcher/Admin" class="form-control input-lg" name="role" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Connectivity Status</label>
+                            <div>
+                                <input type="text" placeholder="Connected/Not Connected" class="form-control input-lg" name="connected" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Last Online</label>
+                            <div>
+                                <input type="datetime-local" placeholder="Month day, year. time stamp" class="form-control input-lg" name="lastActive" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Rate Limit Kbps</label>
+                            <div>
+                                <input type="email" readonly="readonly" placeholder="100kbps" class="form-control input-lg" name="rateLimit" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-success">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <!-- user profile table -->
     <div style="width:90%; margin:0 auto;">
         <table id="table_id" class="table table-striped table-bordered" cellspacing="1" width="100%">
