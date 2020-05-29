@@ -37,9 +37,10 @@ def profiles(request):
             connected = form.cleaned_data['connected']
             activeStatus = form.cleaned_data['active']
             print(name, phoneNumber, display, isLocal, role, connected, activeStatus)
-
-    subs = profiles_view.generate_table()
-    return render(request, 'profiles.html', context=subs)
+    
+    context = profiles_view.generate_table()
+    context['form'] = ModalForm()
+    return render(request, 'profiles.html', context=context)
 
 
 @login_required

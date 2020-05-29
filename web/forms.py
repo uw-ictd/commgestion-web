@@ -23,10 +23,18 @@ class UserSearchTimeForm(forms.Form):
     )
 
 class ModalForm(forms.Form):
-    name = forms.CharField(label='Your name')
-    phoneNumber = forms.NumberInput()
-    display = forms.CharField(label='Display name')
-    localNonLocal = forms.CharField(label='Local or non local')
-    role = forms.CharField(label='Role')
-    connected = forms.CharField(label='Connected')
-    activeStatus = forms.DateTimeField(label='Last active')
+    ROLES = (('Admin', 'Admin'), ('User', 'User'))
+    LOCAL = (('Yes', 'Yes'), ('No', 'No'))
+    CONN_STATUS = (('Online', 'Online'), ('Offline', 'Offline'), ('Blocked', 'Blocked'))
+
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
+    email = forms.EmailField(label='Email Address')
+    imsi = forms.RegexField(label="IMSI", help_text='10-digit number on SIM card', regex=r'^[0-9]{10}$', error_messages = {
+        'required':"Please Enter your Name"
+    }, strip=True)
+    guti = forms.RegexField(label="GUTI", help_text='5 digits ???? following IMSI value', regex=r'^[0-9]{10}$', strip=True)
+    phone = forms.RegexField(label="Phone Number", regex=r'^[0-9]{5}$', strip=True)
+    resident_status = forms.ChoiceField(choices=LOCAL, label='Local Resident?')
+    role = forms.ChoiceField(choices=ROLES)
+    connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
