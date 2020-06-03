@@ -57,3 +57,20 @@ def network_users(request):
     context = network_users_view.generate_test_data(from_date=from_date, to_date=to_date)
     context['form'] = UserSearchTimeForm()
     return render(request, 'network_users.html', context=context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def addForm(request):
+    if request.method == 'POST':
+        form = ModalForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            imsi = form.cleaned_data['imsi']
+            guti = form.cleaned_data['guti']
+            phone = form.cleaned_data['phone']
+            resident_status = form.cleaned_data['resident_status']
+            role = form.cleaned_data['role']
+            connection_status = form.cleaned_data['connection_status']
+            context = network_users_view.lookup_user(imsi)
