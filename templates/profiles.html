@@ -49,10 +49,29 @@
                         {% csrf_token %}
                         <div class="form-group">
                             {% for field in form %}
-                            <label>{{ field.label }}</label>
-                            {{ field }}
-                            <br/>
+                              <label>{{ field.label }}</label>
+                              {{ field }}
+                              {{ field.errors }}
+                              {{ field.helptext }}
+                              {% if field.errors %}
+                                I haz errors and they are: <br/>
+                              {% endif %}
+                              {% for error in field.errors %}
+                                  {{ error }} <br/>
+                              {% endfor %}
+
+                              <br/>
                             {% endfor %}
+                            {% if form.errors %}
+                                <p>All the errors in the form are below</p>
+                                {{ form.errors }}
+                                <br/>
+                                <p>Explicit loop</p>
+                                {% for error in form.errors %}
+                                    {{ error }}
+                                {% endfor %}
+
+                            {% endif %}
                         </div>
                         <input type="submit" class="btn btn-success" value="Submit">
                     </form>
