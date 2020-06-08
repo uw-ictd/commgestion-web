@@ -1,5 +1,5 @@
 import logging
-import toml
+import tomlkit
 
 # To ensure that the postgres Database connections and migrations work,
 # it is necessary to install
@@ -18,7 +18,7 @@ def parse_from_file(filepath):
     """
     config = {}
     with open(filepath) as f:
-        raw_config = toml.load(f)
+        raw_config = tomlkit.parse(f.read())
 
     try:
         config["debug"] = bool(raw_config["commgestion"]["debug"])
