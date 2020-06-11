@@ -14,7 +14,7 @@ if __name__ =="__main__":
 
     marshalled_payload = cbor2.dumps(payload)
 
-    response = requests.post("http://localhost:8000/traffic-logger/user", data=marshalled_payload)
+    response = requests.post("http://localhost:8000/telemetry/user", data=marshalled_payload)
 
     print(response)
     print(response.content)

@@ -22,5 +22,5 @@ urlpatterns = [
     path('', include('web.urls')),
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
-    path('traffic-logger/', include('traffic_logger.urls')),
+    path('telemetry/', include('traffic_logger.urls')),
 ] + static(settings.STATIC_URL)

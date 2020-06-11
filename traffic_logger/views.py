@@ -26,7 +26,7 @@ _error_log = logging.getLogger('commgestion.traffic_logger')
 
 # TODO(matt9j) Ensure logging urls are only available on localhost.
 @csrf_exempt
-def log_user_throughput(request):
+def log_subscriber_usage(request):
     request_payload, early_response = _parse_cbor_post_or_error(request)
     if early_response is not None:
         return early_response
@@ -70,7 +70,7 @@ def log_user_throughput(request):
 
 # TODO(matt9j) Ensure logging urls are only available on localhost.
 @csrf_exempt
-def log_host_throughput(request):
+def log_host_usage(request):
     if request.method != "POST":
         return HttpResponseNotAllowed(['POST'],
                                       "Only POST is supported")
