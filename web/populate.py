@@ -52,8 +52,6 @@ def add_hostmappings():
         for captured_fqdn in hm[1]:
             HostMapping.objects.create(host=hm[0], captured_host=captured_fqdn)
 
-    print(UserDefinedHost.objects.all())
-
 
 def add_subscribers(subscriber_total=10):
     """Add subscribers, which requires fake "User" info like email phone imsi
