@@ -56,8 +56,9 @@ def log_user_throughput(request):
 
     # Create the usage object itself.
     try:
-        SubscriberUsage.objects.create(user=subscriber_instance,
-                                       throughput=throughput,
+        SubscriberUsage.objects.create(subscriber=subscriber_instance,
+                                       up_kbytes=throughput,
+                                       down_kbytes=throughput,
                                        timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
@@ -94,7 +95,8 @@ def log_host_throughput(request):
     # Create the host usage object itself.
     try:
         HostUsage.objects.create(host=host_fqdn,
-                                 throughput=throughput,
+                                 up_kbytes=throughput,
+                                 down_kbytes=throughput,
                                  timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
