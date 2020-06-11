@@ -13,8 +13,11 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
 from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth.models import User
-from web.models import (HostUsage, Subscriber, SubscriberUsage)
-
+from web.models import (Subscriber,
+                        BackhaulUsage,
+                        HostUsage,
+                        RanUsage,
+                        SubscriberUsage)
 import cbor2
 import collections
 import logging
@@ -106,6 +109,78 @@ def log_host_usage(request):
     return HttpResponse("", status=200)
 
 
+# TODO(matt9j) Ensure logging urls are only available on localhost.
+@csrf_exempt
+def log_ran_usage(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(['POST'],
+                                      "Only POST is supported")
+
+    request_payload, early_response = _parse_cbor_post_or_error(request)
+    if early_response is not None:
+        return early_response
+
+    try:
+        # TODO(matt9j) Save a more informative throughput sketch (see NSDI paper)
+        throughput = request_payload['throughput_kbps']
+        begin_timestamp = request_payload['begin_timestamp']
+        # TODO(matt9j) Support timestamp ranges
+        end_timestamp = request_payload['end_timestamp']
+    except KeyError as e:
+        _error_log.warning("Rx RanUsage log request with missing keys",
+                           exc_info=True)
+        return HttpResponseBadRequest(
+            "Missing required request key {}".format(str(e)))
+
+    # Create the host usage object itself.
+    try:
+        RanUsage.objects.create(timestamp=begin_timestamp,
+                                up_kbytes=throughput,
+                                down_kbytes=throughput)
+    except (ObjectDoesNotExist, DatabaseError):
+        _error_log.critical("Failed to write data", exc_info=True)
+        return HttpResponseServerError("Internal server error")
+
+    # The post was successful
+    return HttpResponse("", status=200)
+
+
+# TODO(matt9j) Ensure logging urls are only available on localhost.
+@csrf_exempt
+def log_backhaul_usage(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(['POST'],
+                                      "Only POST is supported")
+
+    request_payload, early_response = _parse_cbor_post_or_error(request)
+    if early_response is not None:
+        return early_response
+
+    try:
+        # TODO(matt9j) Save a more informative throughput sketch (see NSDI paper)
+        throughput = request_payload['throughput_kbps']
+        begin_timestamp = request_payload['begin_timestamp']
+        # TODO(matt9j) Support timestamp ranges
+        end_timestamp = request_payload['end_timestamp']
+    except KeyError as e:
+        _error_log.warning("Rx BackhaulUsage log request with missing keys",
+                           exc_info=True)
+        return HttpResponseBadRequest(
+            "Missing required request key {}".format(str(e)))
+
+    # Create the host usage object itself.
+    try:
+        BackhaulUsage.objects.create(timestamp=begin_timestamp,
+                                     up_kbytes=throughput,
+                                     down_kbytes=throughput)
+    except (ObjectDoesNotExist, DatabaseError):
+        _error_log.critical("Failed to write data", exc_info=True)
+        return HttpResponseServerError("Internal server error")
+
+    # The post was successful
+    return HttpResponse("", status=200)
+
+
 def _parse_cbor_post_or_error(request):
     """Validate the request is actually the expected CBOR post
 
@@ -126,7 +201,7 @@ def _parse_cbor_post_or_error(request):
     try:
         request_payload = cbor2.loads(request.body)
     except cbor2.CBORDecodeError as e:
-        _error_log.warning("Rx malformed log_host_throughput request",
+        _error_log.warning("Rx malformed log request",
                            exc_info=e, stack_info=True)
         response = HttpResponseBadRequest("Unable to parse request body as CBOR")
         return request_payload, response
