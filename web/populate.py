@@ -18,7 +18,8 @@ def add_applications():
     for host_name in hosts:
         HostUsage.objects.create(
             host=host_name,
-            throughput=1000 * random.random(),
+            down_kbytes=1000 * random.random(),
+            up_kbytes=50 * random.random(),
             timestamp=timezone.now())
 
 
@@ -97,7 +98,9 @@ def add_subscribers(subscriber_total=10):
         #print( datetime.now() + timedelta(days=730))
 
         for j in range(30):
-            SubscriberUsage.objects.create(user=created_subscriber, throughput=50 * random.random(),
+            SubscriberUsage.objects.create(subscriber=created_subscriber,
+                                           down_kbytes=50 * random.random(),
+                                           up_kbytes=10 * random.random(),
                                            timestamp=(datetime.now() + timedelta(days=1)))
             #having trouble printing anything out
             #where is the bug
