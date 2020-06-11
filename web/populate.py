@@ -101,7 +101,7 @@ def add_subscribers(subscriber_total=10):
                 subscriber=created_subscriber,
                 down_kbytes=50 * random.random(),
                 up_kbytes=10 * random.random(),
-                timestamp=timezone.now(),
+                timestamp=timezone.now() + timedelta(days=j),
             )
 
 
