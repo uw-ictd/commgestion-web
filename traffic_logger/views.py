@@ -13,7 +13,7 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
 from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth.models import User
-from web.models import (Application, Subscriber, Usage)
+from web.models import (HostUsage, Subscriber, SubscriberUsage)
 
 import cbor2
 import collections
@@ -56,9 +56,9 @@ def log_user_throughput(request):
 
     # Create the usage object itself.
     try:
-        Usage.objects.create(user=subscriber_instance,
-                             throughput=throughput,
-                             timestamp=begin_timestamp)
+        SubscriberUsage.objects.create(user=subscriber_instance,
+                                       throughput=throughput,
+                                       timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
         return HttpResponseServerError("Internal server error")
@@ -93,9 +93,9 @@ def log_host_throughput(request):
 
     # Create the host usage object itself.
     try:
-        Application.objects.create(host=host_fqdn,
-                                   throughput=throughput,
-                                   timestamp=begin_timestamp)
+        HostUsage.objects.create(host=host_fqdn,
+                                 throughput=throughput,
+                                 timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
         return HttpResponseServerError("Internal server error")
