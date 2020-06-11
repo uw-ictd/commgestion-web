@@ -28,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Heuristic to see if we are running the development server.
 RUNNING_DEV_SERVER = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
-RUNNING_MANAGE_COMMAND = (len(sys.argv) > 0 and sys.argv[0] == 'manage.py')
+RUNNING_MANAGE_COMMAND = (len(sys.argv) > 0 and 'manage.py' in sys.argv[0])
 
 # Parse deployment specific configuration
 try:
