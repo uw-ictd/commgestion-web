@@ -52,6 +52,14 @@ class Subscriber(models.Model):
         return "Subscriber: {}".format(self.imsi)
 
 
+class CommunityUsage(models.Model):
+    throughput = models.FloatField()  # Store only bytes RX/TX Throughput in kiloBytes (KB)
+    timestamp = models.DateTimeField()
+
+    def __str__(self):
+        return 'CommunityUsage: {} -> {}'.format(self.timestamp, self.throughput)
+
+
 class SubscriberUsage(models.Model):
     subscriber = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
     throughput = models.FloatField()  # Store only bytes RX/TX Throughput in kiloBytes (KB)
