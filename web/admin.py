@@ -3,14 +3,14 @@ from django.contrib import admin
 # Register your models here.
 from django.utils.html import format_html
 
-from .models import Application, Subscriber, UserDefinedHost, HostMapping, Usage
+from .models import HostUsage, Subscriber, UserDefinedHost, HostMapping, SubscriberUsage
 
 admin.site.site_header = 'Community Cellular Admin'  # Updates the written text
 admin.site.index_title = 'Community Cellular'  # Tab Title content
 admin.site.site_title = 'Application Administration Panel'  # Tab title | sub_title
 
 
-@admin.register(Application)
+@admin.register(HostUsage)
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = ('host', 'throughput', 'timestamp')
 
@@ -29,7 +29,7 @@ class UserDefinedHostAdmin(admin.ModelAdmin):
     def view_user_defined_host(self):
         return format_html('<a class="button" target="_blank" href="https://{}">View</a>'.format(self.name))
 
-@admin.register(Usage)
+@admin.register(SubscriberUsage)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('user', 'throughput', 'timestamp')
     

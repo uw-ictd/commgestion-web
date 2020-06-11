@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-from web.models import Subscriber, Usage
+from web.models import Subscriber, SubscriberUsage
 
 from django.utils import timezone
 
@@ -35,7 +35,7 @@ class SubscriberModelTest(TestCase):
         created_subscriber = Subscriber.objects.get(phonenumber=IMSI_VALUE)
 
         # Validating the Subscriber information.
-        self.assertEqual(created_subscriber.user, created_user)
+        self.assertEqual(created_subscriber.subscriber, created_user)
         self.assertEqual(created_subscriber.phonenumber, IMSI_VALUE)
         self.assertEqual(created_subscriber.display_name, 'person')
         self.assertEqual(created_subscriber.imsi, IMSI_VALUE)
@@ -54,12 +54,12 @@ class SubscriberModelTest(TestCase):
         s_value = str(created_subscriber)
         self.assertEqual(s_value, "Subscriber: {}".format(IMSI_VALUE))
 
-        # Start testing for Usage
-        Usage.objects.create(user=created_subscriber, throughput=10, timestamp=timezone.now())
-        Usage.objects.create(user=created_subscriber, throughput=15, timestamp=timezone.now())
+        # Start testing for SubscriberUsage
+        SubscriberUsage.objects.create(user=created_subscriber, throughput=10, timestamp=timezone.now())
+        SubscriberUsage.objects.create(user=created_subscriber, throughput=15, timestamp=timezone.now())
 
         # Query usage per subscriber using foreignKey filter
-        usage_list = Usage.objects.filter(user=created_subscriber)
+        usage_list = SubscriberUsage.objects.filter(user=created_subscriber)
         self.assertEqual(len(usage_list), 2)
 
         # Query for usage using subscriber object

@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth.models import User
-from web.models import Application, UserDefinedHost, HostMapping, Subscriber, Usage
+from web.models import HostUsage, UserDefinedHost, HostMapping, Subscriber, SubscriberUsage
 import random
 from django.utils import timezone
 from datetime import date
@@ -13,10 +13,10 @@ from datetime import datetime
 
 # add more applications
 def add_applications():
-    Application.objects.all().delete()
+    HostUsage.objects.all().delete()
     hosts = ['https://google.com/', 'https://facebook.com', 'https://whatsapp.com', 'https://santainesapp.mx']
     for host_name in hosts:
-        Application.objects.create(
+        HostUsage.objects.create(
             host=host_name,
             throughput=1000 * random.random(),
             timestamp=timezone.now())
@@ -57,7 +57,7 @@ def add_subscribers(subscriber_total=10):
     Subscriber.objects.all().delete()
     User.objects.filter(is_superuser=False).all().delete()
 
-    Usage.objects.all().delete()
+    SubscriberUsage.objects.all().delete()
 
     imsi_format = "123456789{}"
     email_format = "person{}@email.com"
@@ -88,7 +88,7 @@ def add_subscribers(subscriber_total=10):
 
         created_subscriber = Subscriber.objects.get(phonenumber=imsi_value)
         # for j in range(30):
-        #     Usage.objects.create(user=created_subscriber, throughput=50 * random.random(), timestamp=timezone.now())
+        #     SubscriberUsage.objects.create(user=created_subscriber, throughput=50 * random.random(), timestamp=timezone.now())
 
         #print( datetime.now() + timedelta(days=1))
         #Subtract 60 seconds.
@@ -97,8 +97,8 @@ def add_subscribers(subscriber_total=10):
         #print( datetime.now() + timedelta(days=730))
 
         for j in range(30):
-            Usage.objects.create(user=created_subscriber, throughput=50 * random.random(),
-                                 timestamp=(datetime.now() + timedelta(days=1)))
+            SubscriberUsage.objects.create(user=created_subscriber, throughput=50 * random.random(),
+                                           timestamp=(datetime.now() + timedelta(days=1)))
             #having trouble printing anything out
             #where is the bug
             print(datetime.now() + timedelta(days=1))
@@ -110,7 +110,7 @@ def get_subscribers():
 
 
 def get_usage():
-    return Usage.objects.all()
+    return SubscriberUsage.objects.all()
 
 
 add_subscribers(35)

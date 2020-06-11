@@ -3,7 +3,7 @@ import json
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from django.utils import translation
-from web.models import Subscriber, Usage
+from web.models import Subscriber, SubscriberUsage
 from django.utils.formats import date_format
 
 
@@ -29,13 +29,13 @@ def generate_test_data(from_date=None, to_date=None):
         from_date_string = from_date.strftime('%d %b %Y')
         to_date_string = to_date.strftime('%d %b %Y')
         title_with_date = GRAPH_TITLE + " between " + from_date_string + " and " + to_date_string
-        usageData = Usage.objects.filter(timestamp__range=[from_date, to_date])\
-                        .values('user')\
+        usageData = SubscriberUsage.objects.filter(timestamp__range=[from_date, to_date])\
+                        .values('subscriber')\
                         .annotate(Sum("throughput"))\
                         .order_by('-throughput__sum') #sums the current row
     else:
         title_with_date = GRAPH_TITLE
-        usageData = Usage.objects.values("user")\
+        usageData = SubscriberUsage.objects.values("subscriber")\
                         .annotate(Sum("throughput"))\
                         .order_by('-throughput__sum') #sums the current row
 
@@ -49,12 +49,12 @@ def generate_test_data(from_date=None, to_date=None):
             percent_consumed += float(usage['throughput__sum']) / total_consumed
             data.append(
                 {
-                    'name': lookup_user(usage['user']),
+                    'name': lookup_user(usage['subscriber']),
                     'y': usage['throughput__sum']
                 }
             )
         else:
-            drilldown_data.append([lookup_user(usage['user']), usage['throughput__sum']])
+            drilldown_data.append([lookup_user(usage['subscriber']), usage['throughput__sum']])
             left_over_sum += usage['throughput__sum']
     if left_over_sum > 0:
         data.append({
