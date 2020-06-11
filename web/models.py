@@ -52,33 +52,65 @@ class Subscriber(models.Model):
         return "Subscriber: {}".format(self.imsi)
 
 
-class CommunityUsage(models.Model):
-    throughput = models.FloatField()  # Store only bytes RX/TX Throughput in kiloBytes (KB)
+class RanUsage(models.Model):
     timestamp = models.DateTimeField()
 
+    up_kbytes = models.FloatField()
+    down_kbytes = models.FloatField()
+
+    @property
+    def total_kbytes(self):
+        return self.up_kbytes + self.down_kbytes
+
     def __str__(self):
-        return 'CommunityUsage: {} -> {}'.format(self.timestamp, self.throughput)
+        return 'RanUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
+
+
+class BackhaulUsage(models.Model):
+    timestamp = models.DateTimeField()
+
+    up_kbytes = models.FloatField()
+    down_kbytes = models.FloatField()
+
+    @property
+    def total_kbytes(self):
+        return self.up_kbytes + self.down_kbytes
+
+    def __str__(self):
+        return 'BackhaulUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
 
 
 class SubscriberUsage(models.Model):
     subscriber = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
-    throughput = models.FloatField()  # Store only bytes RX/TX Throughput in kiloBytes (KB)
     timestamp = models.DateTimeField()
+
+    up_kbytes = models.FloatField()
+    down_kbytes = models.FloatField()
+
+    @property
+    def total_kbytes(self):
+        return self.up_kbytes + self.down_kbytes
 
     def get_username(self):
         return self.subscriber.display_name
 
     def __str__(self):
-        return 'SubscriberUsage: {} -> {}'.format(self.timestamp, self.throughput)
+        return 'SubscriberUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
 
 
 class HostUsage(models.Model):
     host = models.CharField(max_length=255, unique=True)
-    throughput = models.FloatField()
     timestamp = models.DateTimeField()
 
+    up_kbytes = models.FloatField()
+    down_kbytes = models.FloatField()
+
+    @property
+    def total_kbytes(self):
+        return self.up_kbytes + self.down_kbytes
+
     def __str__(self):
-        return 'HostUsage: {} -> {}'.format(self.host, self.throughput)
+        return 'HostUsage: {} -> {}'.format(self.host, self.total_kbytes)
 
 
 class UserDefinedHost(models.Model):

@@ -20,7 +20,7 @@ def get_graph2_data():
     for x in query_set:
         obj = {
             'name': x.host,
-            'y': x.throughput
+            'y': x.total_kbytes
         }
         data.append(obj)
     return data

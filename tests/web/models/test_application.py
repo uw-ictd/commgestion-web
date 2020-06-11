@@ -15,4 +15,4 @@ class ApplicationModelTest(TestCase):
 
         created_application = HostUsage.objects.get(host=host_name)
         self.assertEqual(created_application.host, host_name)
-        self.assertEqual(created_application.throughput, 1000)
+        self.assertEqual(created_application.total_kbytes, 1000)

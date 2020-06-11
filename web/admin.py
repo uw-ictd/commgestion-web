@@ -12,7 +12,7 @@ admin.site.site_title = 'Application Administration Panel'  # Tab title | sub_ti
 
 @admin.register(HostUsage)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ('host', 'throughput', 'timestamp')
+    list_display = ('host', 'total_kbytes', 'timestamp')
 
 
 @admin.register(Subscriber)
@@ -31,7 +31,7 @@ class UserDefinedHostAdmin(admin.ModelAdmin):
 
 @admin.register(SubscriberUsage)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('user', 'throughput', 'timestamp')
+    list_display = ('subscriber', 'total_kbytes', 'timestamp')
     
 @admin.register(HostMapping)
 class HostMappingAdmin(admin.ModelAdmin):
