@@ -112,6 +112,7 @@ def get_usage():
     return SubscriberUsage.objects.all()
 
 
-add_subscribers(35)
-add_applications()
-add_hostmappings()
+def clear_and_add_defaults():
+    add_subscribers(35)
+    add_applications()
+    add_hostmappings()
