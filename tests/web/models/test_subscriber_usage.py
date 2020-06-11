@@ -35,7 +35,7 @@ class SubscriberModelTest(TestCase):
         created_subscriber = Subscriber.objects.get(phonenumber=IMSI_VALUE)
 
         # Validating the Subscriber information.
-        self.assertEqual(created_subscriber.subscriber, created_user)
+        self.assertEqual(created_subscriber.user, created_user)
         self.assertEqual(created_subscriber.phonenumber, IMSI_VALUE)
         self.assertEqual(created_subscriber.display_name, 'person')
         self.assertEqual(created_subscriber.imsi, IMSI_VALUE)
@@ -55,15 +55,28 @@ class SubscriberModelTest(TestCase):
         self.assertEqual(s_value, "Subscriber: {}".format(IMSI_VALUE))
 
         # Start testing for SubscriberUsage
-        SubscriberUsage.objects.create(user=created_subscriber, throughput=10, timestamp=timezone.now())
-        SubscriberUsage.objects.create(user=created_subscriber, throughput=15, timestamp=timezone.now())
+        SubscriberUsage.objects.create(
+            subscriber=created_subscriber,
+            up_kbytes=10,
+            down_kbytes=10,
+            timestamp=timezone.now()
+        )
+
+        SubscriberUsage.objects.create(
+            subscriber=created_subscriber,
+            up_kbytes=15,
+            down_kbytes=15,
+            timestamp=timezone.now()
+        )
 
         # Query usage per subscriber using foreignKey filter
-        usage_list = SubscriberUsage.objects.filter(user=created_subscriber)
+        usage_list = SubscriberUsage.objects.filter(
+            subscriber=created_subscriber
+        )
         self.assertEqual(len(usage_list), 2)
 
         # Query for usage using subscriber object
-        usage_list_from_subscriber = created_subscriber.usage_set.all()
+        usage_list_from_subscriber = created_subscriber.subscriberusage_set.all()
         self.assertEqual(len(usage_list_from_subscriber), 2)
 
         self.assertEqual(len(usage_list), len(usage_list_from_subscriber))
