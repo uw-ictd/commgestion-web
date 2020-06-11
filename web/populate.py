@@ -20,7 +20,8 @@ def add_applications():
             host=host_name,
             down_kbytes=1000 * random.random(),
             up_kbytes=50 * random.random(),
-            timestamp=timezone.now())
+            timestamp=timezone.now(),
+        )
 
 
 #  add host mapping as well as user defined hosts
@@ -98,10 +99,12 @@ def add_subscribers(subscriber_total=10):
         #print( datetime.now() + timedelta(days=730))
 
         for j in range(30):
-            SubscriberUsage.objects.create(subscriber=created_subscriber,
-                                           down_kbytes=50 * random.random(),
-                                           up_kbytes=10 * random.random(),
-                                           timestamp=(datetime.now() + timedelta(days=1)))
+            SubscriberUsage.objects.create(
+                subscriber=created_subscriber,
+                down_kbytes=50 * random.random(),
+                up_kbytes=10 * random.random(),
+                timestamp=timezone.now(),
+            )
             #having trouble printing anything out
             #where is the bug
             print(datetime.now() + timedelta(days=1))
