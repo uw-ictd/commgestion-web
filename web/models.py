@@ -55,8 +55,8 @@ class Subscriber(models.Model):
 class RanUsage(models.Model):
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.FloatField()
-    down_kbytes = models.FloatField()
+    up_kbytes = models.BigIntegerField()
+    down_kbytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
@@ -69,8 +69,8 @@ class RanUsage(models.Model):
 class BackhaulUsage(models.Model):
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.FloatField()
-    down_kbytes = models.FloatField()
+    up_kbytes = models.BigIntegerField()
+    down_kbytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
@@ -84,8 +84,8 @@ class SubscriberUsage(models.Model):
     subscriber = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.FloatField()
-    down_kbytes = models.FloatField()
+    up_kbytes = models.BigIntegerField()
+    down_kbytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
@@ -102,8 +102,8 @@ class HostUsage(models.Model):
     host = models.CharField(max_length=255, unique=True)
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.FloatField()
-    down_kbytes = models.FloatField()
+    up_kbytes = models.BigIntegerField()
+    down_kbytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
