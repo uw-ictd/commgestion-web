@@ -9,7 +9,9 @@ from web.models import (HostUsage,
                         UserDefinedHost,
                         HostMapping,
                         Subscriber,
-                        SubscriberUsage
+                        SubscriberUsage,
+                        RanUsage,
+                        BackhaulUsage,
                         )
 
 
@@ -103,6 +105,76 @@ def add_subscribers(subscriber_total=10):
             )
 
 
+def add_fake_ran_usage(per_log_delta, total_span):
+    """Add fake logs for overall radio access network (RAN) usage
+    """
+    # ToDo(matt9j) Separate create and destroy into separate functions
+    RanUsage.objects.all().delete()
+
+    # Generate the history going from this moment into the past
+    base_time = timezone.now()
+    end_time = base_time - total_span
+    next_time_to_insert = base_time
+
+    # Track the current throughput and vary as a random walk to draw a
+    # continuous line.
+    up_bytes = 5 * (1000**2)
+    down_bytes = 10 * (1000**2)
+
+    # Store objects in memory to bulk insert for efficiency
+    usages_to_insert = list()
+
+    while next_time_to_insert > end_time:
+        usages_to_insert.append(RanUsage(
+            timestamp=next_time_to_insert,
+            up_bytes=up_bytes,
+            down_bytes=down_bytes,
+        ))
+
+        next_time_to_insert -= per_log_delta
+        up_bytes += int(100 * (1000**1) * (random.random() - 0.5))
+        down_bytes += int(100 * (1000**1) * (random.random() - 0.5))
+        down_bytes = max(down_bytes, 0)
+        up_bytes = max(down_bytes, 0)
+
+    RanUsage.objects.bulk_create(usages_to_insert)
+
+
+def add_fake_backhaul_usage(per_log_delta, total_span):
+    """Add fake logs for overall backhaul network usage
+    """
+    # ToDo(matt9j) Separate create and destroy into separate functions
+    BackhaulUsage.objects.all().delete()
+
+    # Generate the history going from this moment into the past
+    base_time = timezone.now()
+    end_time = base_time - total_span
+    next_time_to_insert = base_time
+
+    # Track the current throughput and vary as a random walk to draw a
+    # continuous line.
+    up_bytes = 5 * (1000**2)
+    down_bytes = 10 * (1000**2)
+
+    # Store objects in memory to bulk insert for efficiency
+    usages_to_insert = list()
+
+    while next_time_to_insert > end_time:
+        usages_to_insert.append(BackhaulUsage(
+            timestamp=next_time_to_insert,
+            up_bytes=up_bytes,
+            down_bytes=down_bytes,
+        ))
+
+        next_time_to_insert -= per_log_delta
+        up_bytes += int(100 * (1000**1) * (random.random() - 0.5))
+        down_bytes += int(100 * (1000**1) * (random.random() - 0.5))
+        down_bytes = max(down_bytes, 0)
+        up_bytes = max(down_bytes, 0)
+
+    BackhaulUsage.objects.bulk_create(usages_to_insert)
+
+
 def get_subscribers():
     total = Subscriber.objects.all()
     return total
@@ -116,3 +188,8 @@ def clear_and_add_defaults():
     add_subscribers(35)
     add_applications()
     add_hostmappings()
+    # ToDo(matt9j) Ran usage not diplayed yet
+    add_fake_ran_usage(timedelta(seconds=10), timedelta(days=30))
+    # ToDo(matt9j) Figure out serverside resampling... keep a coarse time
+    #  interval for now to display on the highcharts frontend
+    add_fake_backhaul_usage(timedelta(minutes=60), timedelta(days=30))
