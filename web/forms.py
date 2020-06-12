@@ -22,6 +22,7 @@ class UserSearchTimeForm(forms.Form):
         })
     )
 
+
 class ModalEditForm(forms.Form):
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
@@ -40,6 +41,7 @@ class ModalEditForm(forms.Form):
     # connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
     # password = forms.CharField(widget = forms.PasswordInput())
 
+
 class ModalForm(forms.Form):
     # this will be the add form
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
@@ -47,6 +49,7 @@ class ModalForm(forms.Form):
     CONN_STATUS = (('Online', 'Online'), ('Offline', 'Offline'), ('Blocked', 'Blocked'))
 
     first_name = forms.CharField(label='First Name')
+
     # last_name = forms.CharField(label='Last Name')
     # email = forms.EmailField(label='Email Address')
     # imsi = forms.RegexField(label="IMSI", help_text='10-digit number on SIM card', regex=r'^[0-9]{10}$', error_messages = {
@@ -62,8 +65,6 @@ class ModalForm(forms.Form):
     def clean_first_name(self):
         name = self.cleaned_data['first_name']
 
-        if (name != 'frankie'):
-            raise forms.ValidationError("Only Frankie Allowed")
-            if (name != 'rachel'):
-                raise forms.ValidationError("Only Frankie or Rachel Allowed")
-            return name
+        if name != 'frankie' or name != 'rachel':
+            raise forms.ValidationError("Only Frankie or Rachel Allowed")
+        return name
