@@ -24,7 +24,8 @@ class TrafficLoggerUserThroughputViewTest(CborBaseTests.ApiTest):
 
     def test_subscriber_non_existence(self):
         data = {'user_id': '0',
-                'throughput_kbps': 1234,
+                'up_bytes': 1234,
+                'down_bytes': 4321,
                 'begin_timestamp': datetime.now(timezone.utc),
                 'end_timestamp': datetime.now(timezone.utc),
                 }
@@ -41,7 +42,8 @@ class TrafficLoggerUserThroughputViewTest(CborBaseTests.ApiTest):
         populate.add_subscribers()
 
         data = {'user_id': '1234567890',
-                'throughput_kbps': 1234,
+                'up_bytes': 1234,
+                'down_bytes': 4321,
                 'begin_timestamp': datetime.now(timezone.utc),
                 'end_timestamp': datetime.now(timezone.utc),
                 }

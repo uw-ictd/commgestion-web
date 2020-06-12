@@ -27,7 +27,8 @@ class TrafficLoggerHostThroughputViewTest(CborBaseTests.ApiTest):
         populate.add_subscribers()
 
         data = {'host_fqdn': 'example.com',
-                'throughput_kbps': 1234,
+                'up_bytes': 1234,
+                'down_bytes': 4321,
                 'begin_timestamp': datetime.now(timezone.utc),
                 'end_timestamp': datetime.now(timezone.utc),
                 }

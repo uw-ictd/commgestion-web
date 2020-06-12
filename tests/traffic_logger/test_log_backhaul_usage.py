@@ -28,7 +28,8 @@ class TelemetryBackhaulUsageViewTest(CborBaseTests.ApiTest):
         # Use the populate module to generate known fake subscribers.
         populate.add_subscribers()
 
-        data = {'throughput_kbps': 1234,
+        data = {'up_bytes': 1234,
+                'down_bytes': 4321,
                 'begin_timestamp': datetime.now(timezone.utc),
                 'end_timestamp': datetime.now(timezone.utc),
                 }
