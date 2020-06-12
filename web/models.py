@@ -55,12 +55,12 @@ class Subscriber(models.Model):
 class RanUsage(models.Model):
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.BigIntegerField()
-    down_kbytes = models.BigIntegerField()
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
-        return self.up_kbytes + self.down_kbytes
+        return float(self.up_bytes + self.down_bytes)/1000
 
     def __str__(self):
         return 'RanUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
@@ -69,12 +69,12 @@ class RanUsage(models.Model):
 class BackhaulUsage(models.Model):
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.BigIntegerField()
-    down_kbytes = models.BigIntegerField()
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
-        return self.up_kbytes + self.down_kbytes
+        return float(self.up_bytes + self.down_bytes)/1000
 
     def __str__(self):
         return 'BackhaulUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
@@ -84,12 +84,12 @@ class SubscriberUsage(models.Model):
     subscriber = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.BigIntegerField()
-    down_kbytes = models.BigIntegerField()
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
-        return self.up_kbytes + self.down_kbytes
+        return float(self.up_bytes + self.down_bytes)/1000
 
     def get_username(self):
         return self.subscriber.display_name
@@ -102,12 +102,12 @@ class HostUsage(models.Model):
     host = models.CharField(max_length=255, unique=True)
     timestamp = models.DateTimeField()
 
-    up_kbytes = models.BigIntegerField()
-    down_kbytes = models.BigIntegerField()
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
 
     @property
     def total_kbytes(self):
-        return self.up_kbytes + self.down_kbytes
+        return float(self.up_bytes + self.down_bytes)/1000
 
     def __str__(self):
         return 'HostUsage: {} -> {}'.format(self.host, self.total_kbytes)
