@@ -1,6 +1,6 @@
 import json
 import datetime
-from web.models import HostUsage, SubscriberUsage, Subscriber
+from web.models import HostUsage, SubscriberUsage, Subscriber, RanUsage, BackhaulUsage
 from django.db.models import Sum
 from django.db.models import Max
 from django.utils.translation import gettext_lazy as _
@@ -70,13 +70,13 @@ def get_graph4_data():
 def generate_test_data():
     """ Generate fake data for the network statistics page
     """
-    qs_agg = SubscriberUsage.objects.values('timestamp').annotate(thrpt = Sum('throughput'))
+    qs_agg = BackhaulUsage.objects.values('timestamp').annotate(thrpt = Sum('down_bytes'))
     # thr_dict = qs_agg.values('thrpt').distinct()
     # thrrr = [x['thrpt'] for x in thr_dict]
     g1_data = []
     for x in qs_agg:
         time = x['timestamp'] #values returns a dictionary
-        thru = x['thrpt']
+        thru = x['thrpt']/1000*8  # ToDo(matt9j) Frontend currently expects kbps
         g1_data.append([time,thru])
         
     data_graph1 = g1_data
