@@ -26,12 +26,14 @@ def network_stats(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def profiles(request):
+    context = profiles_view.generate_table()
+    context['form'] = ModalForm()
     if request.method == 'POST':
         form = ModalForm(request.POST)
         if form.is_valid():
-            first_name = form.clean_first_name()
+            first_name = form.cleaned_data['first_name']
             # last_name = form.cleaned_data['last_name']
-            # email = form.cleaned_data['email']
+            email = form.cleaned_data['email']
             # phone = form.cleaned_data['phone']
             # imsi = form.cleaned_data['imsi']
             # guti = form.cleaned_data['guti']
@@ -41,9 +43,9 @@ def profiles(request):
             # password = form.cleaned_data['password']
             # print(first_name, last_name, email, phone, imsi, guti, resident_status, role, connection_status)
         else:
-            print("invaled")
-    context = profiles_view.generate_table()
-    context['form'] = ModalForm()
+            context['form'] = form
+            print(form.errors)
+            print('invalid')
     return render(request, 'profiles.html', context=context)
 
 
