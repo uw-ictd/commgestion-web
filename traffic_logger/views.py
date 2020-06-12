@@ -37,7 +37,8 @@ def log_subscriber_usage(request):
     try:
         user_id = request_payload['user_id']
         # TODO(matt9j) Save a more informative throughput sketch (see NSDI paper)
-        throughput = request_payload['throughput_kbps']
+        uplink_bytes = request_payload['up_bytes']
+        downlink_bytes = request_payload['down_bytes']
         begin_timestamp = request_payload['begin_timestamp']
         # TODO(matt9j) Support timestamp ranges
         end_timestamp = request_payload['end_timestamp']
@@ -60,8 +61,8 @@ def log_subscriber_usage(request):
     # Create the usage object itself.
     try:
         SubscriberUsage.objects.create(subscriber=subscriber_instance,
-                                       up_bytes=throughput,
-                                       down_bytes=throughput,
+                                       up_bytes=uplink_bytes,
+                                       down_bytes=downlink_bytes,
                                        timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
@@ -85,7 +86,8 @@ def log_host_usage(request):
     try:
         host_fqdn = request_payload['host_fqdn']
         # TODO(matt9j) Save a more informative throughput sketch (see NSDI paper)
-        throughput = request_payload['throughput_kbps']
+        uplink_bytes = request_payload['up_bytes']
+        downlink_bytes = request_payload['down_bytes']
         begin_timestamp = request_payload['begin_timestamp']
         # TODO(matt9j) Support timestamp ranges
         end_timestamp = request_payload['end_timestamp']
@@ -98,8 +100,8 @@ def log_host_usage(request):
     # Create the host usage object itself.
     try:
         HostUsage.objects.create(host=host_fqdn,
-                                 up_bytes=throughput,
-                                 down_bytes=throughput,
+                                 up_bytes=uplink_bytes,
+                                 down_bytes=downlink_bytes,
                                  timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
@@ -122,7 +124,8 @@ def log_ran_usage(request):
 
     try:
         # TODO(matt9j) Save a more informative throughput sketch (see NSDI paper)
-        throughput = request_payload['throughput_kbps']
+        uplink_bytes = request_payload['up_bytes']
+        downlink_bytes = request_payload['down_bytes']
         begin_timestamp = request_payload['begin_timestamp']
         # TODO(matt9j) Support timestamp ranges
         end_timestamp = request_payload['end_timestamp']
@@ -135,8 +138,8 @@ def log_ran_usage(request):
     # Create the host usage object itself.
     try:
         RanUsage.objects.create(timestamp=begin_timestamp,
-                                up_bytes=throughput,
-                                down_bytes=throughput)
+                                up_bytes=uplink_bytes,
+                                down_bytes=downlink_bytes)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
         return HttpResponseServerError("Internal server error")
@@ -158,7 +161,8 @@ def log_backhaul_usage(request):
 
     try:
         # TODO(matt9j) Save a more informative throughput sketch (see NSDI paper)
-        throughput = request_payload['throughput_kbps']
+        uplink_bytes = request_payload['up_bytes']
+        downlink_bytes = request_payload['down_bytes']
         begin_timestamp = request_payload['begin_timestamp']
         # TODO(matt9j) Support timestamp ranges
         end_timestamp = request_payload['end_timestamp']
@@ -171,8 +175,8 @@ def log_backhaul_usage(request):
     # Create the host usage object itself.
     try:
         BackhaulUsage.objects.create(timestamp=begin_timestamp,
-                                     up_bytes=throughput,
-                                     down_bytes=throughput)
+                                     up_bytes=uplink_bytes,
+                                     down_bytes=downlink_bytes)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
         return HttpResponseServerError("Internal server error")
