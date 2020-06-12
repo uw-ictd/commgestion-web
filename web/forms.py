@@ -45,4 +45,6 @@ class ModalForm(forms.Form):
 
         if (name != 'frankie'):
             raise forms.ValidationError("Only Frankie Allowed")
-        return name
+            if (name != 'rachel'):
+                raise forms.ValidationError("Only Frankie or Rachel Allowed")
+            return name
