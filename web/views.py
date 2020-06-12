@@ -4,7 +4,7 @@ from datetime import datetime
 from datetime import timedelta
 
 from web import public_view
-from web.forms import UserSearchTimeForm, ModalForm
+from web.forms import UserSearchTimeForm, ModalForm, ModalEditForm
 
 from . import network_stats_view
 from . import network_users_view
@@ -48,6 +48,28 @@ def profiles(request):
             print('invalid')
     return render(request, 'profiles.html', context=context)
 
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def profiles(request):
+    if request.method == 'POST':
+        form = ModalEditForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            # last_name = form.cleaned_data['last_name']
+            # email = form.cleaned_data['email']
+            # phone = form.cleaned_data['phone']
+            # imsi = form.cleaned_data['imsi']
+            # guti = form.cleaned_data['guti']
+            # resident_status = form.cleaned_data['resident_status']
+            # role = form.cleaned_data['role']
+            # connection_status = form.cleaned_data['connection_status']
+            # password = form.cleaned_data['password']
+            # print(first_name, last_name, email, phone, imsi, guti, resident_status, role, connection_status)
+        else:
+            print("invalid")
+    context = profiles_view.generate_table()
+    context['form'] = ModalForm()
+    return render(request, 'profiles.html', context=context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
