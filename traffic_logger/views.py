@@ -60,8 +60,8 @@ def log_subscriber_usage(request):
     # Create the usage object itself.
     try:
         SubscriberUsage.objects.create(subscriber=subscriber_instance,
-                                       up_kbytes=throughput,
-                                       down_kbytes=throughput,
+                                       up_bytes=throughput,
+                                       down_bytes=throughput,
                                        timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
@@ -98,8 +98,8 @@ def log_host_usage(request):
     # Create the host usage object itself.
     try:
         HostUsage.objects.create(host=host_fqdn,
-                                 up_kbytes=throughput,
-                                 down_kbytes=throughput,
+                                 up_bytes=throughput,
+                                 down_bytes=throughput,
                                  timestamp=begin_timestamp)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
@@ -135,8 +135,8 @@ def log_ran_usage(request):
     # Create the host usage object itself.
     try:
         RanUsage.objects.create(timestamp=begin_timestamp,
-                                up_kbytes=throughput,
-                                down_kbytes=throughput)
+                                up_bytes=throughput,
+                                down_bytes=throughput)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
         return HttpResponseServerError("Internal server error")
@@ -171,8 +171,8 @@ def log_backhaul_usage(request):
     # Create the host usage object itself.
     try:
         BackhaulUsage.objects.create(timestamp=begin_timestamp,
-                                     up_kbytes=throughput,
-                                     down_kbytes=throughput)
+                                     up_bytes=throughput,
+                                     down_bytes=throughput)
     except (ObjectDoesNotExist, DatabaseError):
         _error_log.critical("Failed to write data", exc_info=True)
         return HttpResponseServerError("Internal server error")

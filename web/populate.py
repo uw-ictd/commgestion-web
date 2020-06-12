@@ -97,8 +97,8 @@ def add_subscribers(subscriber_total=10):
         for j in range(30):
             SubscriberUsage.objects.create(
                 subscriber=created_subscriber,
-                down_kbytes=50 * random.random(),
-                up_kbytes=10 * random.random(),
+                down_bytes=50 * random.random(),
+                up_bytes=10 * random.random(),
                 timestamp=timezone.now() + timedelta(days=j),
             )
 

@@ -8,16 +8,13 @@ class BackhaulUsageModelTest(TestCase):
     def test_backhaul_usage_creation(self):
         timestamp = timezone.now()
         BackhaulUsage.objects.create(
-            up_kbytes=1000,
-            down_kbytes=1000,
+            up_bytes=1000,
+            down_bytes=1000,
             timestamp=timestamp,
         )
 
         created = BackhaulUsage.objects.get(timestamp=timestamp)
         self.assertEqual(created.timestamp, timestamp)
 
-        self.assertEqual(created.up_kbytes, 1000)
-        self.assertEqual(created.down_kbytes, 1000)
-        self.assertEqual(created.total_kbytes,
-                         (created.up_kbytes + created.down_kbytes)
-                         )
+        self.assertEqual(created.up_bytes, 1000)
+        self.assertEqual(created.down_bytes, 1000)

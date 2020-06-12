@@ -57,15 +57,15 @@ class SubscriberModelTest(TestCase):
         # Start testing for SubscriberUsage
         SubscriberUsage.objects.create(
             subscriber=created_subscriber,
-            up_kbytes=10,
-            down_kbytes=10,
+            up_bytes=10,
+            down_bytes=10,
             timestamp=timezone.now()
         )
 
         SubscriberUsage.objects.create(
             subscriber=created_subscriber,
-            up_kbytes=15,
-            down_kbytes=15,
+            up_bytes=15,
+            down_bytes=15,
             timestamp=timezone.now()
         )
 
