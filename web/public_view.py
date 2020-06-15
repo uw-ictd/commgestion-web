@@ -27,11 +27,11 @@ def generate_test_data():
 
         # TODO: Fix this test script as necessary and avoid writing data into the database this way.
         while k >= 0 :
-            SubscriberUsage.objects.create(user=random_subscriber, throughput=5000 * random.random(), timestamp=current_time)
+            SubscriberUsage.objects.create(subscriber=random_subscriber, down_bytes=5000 * random.random(), up_bytes=10, timestamp=current_time)
             k-=1
 
         # query for the current usage over the last 1 day.
-        qs_agg = SubscriberUsage.objects.filter(timestamp__gt=time_least_bound).aggregate(thru=Sum('throughput'))
+        qs_agg = SubscriberUsage.objects.filter(timestamp__gt=time_least_bound).aggregate(thru=Sum('down_bytes'))
         if 'thru' not in qs_agg or qs_agg['thru'] is None:
             public_data = [0]
         else:
