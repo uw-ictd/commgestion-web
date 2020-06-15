@@ -23,8 +23,8 @@ def add_applications():
     for host_name in hosts:
         HostUsage.objects.create(
             host=host_name,
-            down_kbytes=1000 * random.random(),
-            up_kbytes=50 * random.random(),
+            down_bytes=1000 * random.random(),
+            up_bytes=50 * random.random(),
             timestamp=timezone.now(),
         )
 
