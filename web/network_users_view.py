@@ -45,24 +45,25 @@ def generate_test_data(from_date=None, to_date=None):
     left_over_sum = 0
     drilldown_data = []
 
-    for usage in usageData:
-        if percent_consumed <= MAX_PERCENT_TO_START_MERGE:
-            percent_consumed += float(usage['total_bytes']) / total_consumed
-            data.append(
-                {
-                    'name': lookup_user(usage['subscriber']),
-                    'y': usage['total_bytes']
-                }
-            )
-        else:
-            drilldown_data.append([lookup_user(usage['subscriber']), usage['total_bytes']])
-            left_over_sum += usage['total_bytes']
-    if left_over_sum > 0:
-        data.append({
-            'name': _('Other (Merged)').__str__(),
-            'y': left_over_sum,
-            'drilldown': "Other (Merged)"
-        })
+    if total_consumed > 0:
+        for usage in usageData:
+            if percent_consumed <= MAX_PERCENT_TO_START_MERGE:
+                percent_consumed += float(usage['total_bytes']) / total_consumed
+                data.append(
+                    {
+                        'name': lookup_user(usage['subscriber']),
+                        'y': usage['total_bytes']
+                    }
+                )
+            else:
+                drilldown_data.append([lookup_user(usage['subscriber']), usage['total_bytes']])
+                left_over_sum += usage['total_bytes']
+        if left_over_sum > 0:
+            data.append({
+                'name': _('Other (Merged)').__str__(),
+                'y': left_over_sum,
+                'drilldown': "Other (Merged)"
+            })
     drilldown_response = build_drilldown_information('Other (Merged)', drilldown_data)
 
     return {
