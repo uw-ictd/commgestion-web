@@ -31,31 +31,32 @@ def generate_test_data(from_date=None, to_date=None):
         title_with_date = GRAPH_TITLE + " between " + from_date_string + " and " + to_date_string
         usageData = SubscriberUsage.objects.filter(timestamp__range=[from_date, to_date])\
                         .values('subscriber')\
-                        .annotate(Sum("throughput"))\
-                        .order_by('-throughput__sum') #sums the current row
+                        .annotate(total_bytes=(Sum("down_bytes") + Sum("up_bytes")))\
+                        .order_by('-total_bytes') #sums the current row
     else:
         title_with_date = GRAPH_TITLE
         usageData = SubscriberUsage.objects.values("subscriber")\
-                        .annotate(Sum("throughput"))\
-                        .order_by('-throughput__sum') #sums the current row
+                        .annotate(total_bytes=(Sum("down_bytes") + Sum("up_bytes")))\
+                        .order_by('-total_bytes') #sums the current row
 
-    total_consumed = sum([usage['throughput__sum'] for usage in usageData]) #calculates sum of the total table
+    total_consumed = sum([usage['total_bytes'] for usage in usageData]) #calculates sum of the total table
     data = []
     percent_consumed = 0.0
     left_over_sum = 0
     drilldown_data = []
+
     for usage in usageData:
         if percent_consumed <= MAX_PERCENT_TO_START_MERGE:
-            percent_consumed += float(usage['throughput__sum']) / total_consumed
+            percent_consumed += float(usage['total_bytes']) / total_consumed
             data.append(
                 {
                     'name': lookup_user(usage['subscriber']),
-                    'y': usage['throughput__sum']
+                    'y': usage['total_bytes']
                 }
             )
         else:
-            drilldown_data.append([lookup_user(usage['subscriber']), usage['throughput__sum']])
-            left_over_sum += usage['throughput__sum']
+            drilldown_data.append([lookup_user(usage['subscriber']), usage['total_bytes']])
+            left_over_sum += usage['total_bytes']
     if left_over_sum > 0:
         data.append({
             'name': _('Other (Merged)').__str__(),
