@@ -4,37 +4,9 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-# Create your models here.
-from django.db.models import Count
-
-
-class Application(models.Model):
-    host = models.CharField(max_length=255, unique=True)
-    throughput = models.FloatField()
-    timestamp = models.DateTimeField()
-
-    def __str__(self):
-        return 'Application: {} -> {}'.format(self.host, self.throughput)
-
-
-class UserDefinedHost(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return 'UserDefinedHost: {}'.format(self.name)
-
-
-class HostMapping(models.Model):
-    host = models.ForeignKey(UserDefinedHost, on_delete=models.CASCADE)
-    captured_host = models.CharField(max_length=255)
-
-    def __str__(self):
-        return 'HostMapping: {} -> {}'.format(self.captured_host, self.host.name)
-
-
 class SubscriberManager(models.Manager):
     def random(self):
-        count = self.aggregate(count=Count('id'))['count']
+        count = self.aggregate(count=models.Count('id'))['count']
         random_index = randint(0, count - 1)
         return self.all()[random_index]
 
@@ -80,13 +52,77 @@ class Subscriber(models.Model):
         return "Subscriber: {}".format(self.imsi)
 
 
-class Usage(models.Model):
-    user = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
-    throughput = models.FloatField()  # Store only bytes RX/TX Throughput in kiloBytes (KB)
+class RanUsage(models.Model):
     timestamp = models.DateTimeField()
 
-    def get_username(self):
-        return self.user.display_name
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
+
+    @property
+    def total_kbytes(self):
+        return float(self.up_bytes + self.down_bytes)/1000
 
     def __str__(self):
-        return 'Usage: {} -> {}'.format(self.timestamp, self.throughput)
+        return 'RanUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
+
+
+class BackhaulUsage(models.Model):
+    timestamp = models.DateTimeField()
+
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
+
+    @property
+    def total_kbytes(self):
+        return float(self.up_bytes + self.down_bytes)/1000
+
+    def __str__(self):
+        return 'BackhaulUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
+
+
+class SubscriberUsage(models.Model):
+    subscriber = models.ForeignKey(Subscriber, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField()
+
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
+
+    @property
+    def total_kbytes(self):
+        return float(self.up_bytes + self.down_bytes)/1000
+
+    def get_username(self):
+        return self.subscriber.display_name
+
+    def __str__(self):
+        return 'SubscriberUsage: {} -> {}'.format(self.timestamp, self.total_kbytes)
+
+
+class HostUsage(models.Model):
+    host = models.CharField(max_length=255, unique=True)
+    timestamp = models.DateTimeField()
+
+    up_bytes = models.BigIntegerField()
+    down_bytes = models.BigIntegerField()
+
+    @property
+    def total_kbytes(self):
+        return float(self.up_bytes + self.down_bytes)/1000
+
+    def __str__(self):
+        return 'HostUsage: {} -> {}'.format(self.host, self.total_kbytes)
+
+
+class UserDefinedHost(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return 'UserDefinedHost: {}'.format(self.name)
+
+
+class HostMapping(models.Model):
+    host = models.ForeignKey(UserDefinedHost, on_delete=models.CASCADE)
+    captured_host = models.CharField(max_length=255)
+
+    def __str__(self):
+        return 'HostMapping: {} -> {}'.format(self.captured_host, self.host.name)

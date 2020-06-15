@@ -2,7 +2,7 @@ import json
 import random
 from datetime import timedelta, datetime
 
-from web.models import Subscriber, Usage
+from web.models import Subscriber, SubscriberUsage
 from django.utils import timezone
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
@@ -27,11 +27,11 @@ def generate_test_data():
 
         # TODO: Fix this test script as necessary and avoid writing data into the database this way.
         while k >= 0 :
-            Usage.objects.create(user=random_subscriber, throughput=5000*random.random(), timestamp=current_time)
+            SubscriberUsage.objects.create(user=random_subscriber, throughput=5000 * random.random(), timestamp=current_time)
             k-=1
 
         # query for the current usage over the last 1 day.
-        qs_agg = Usage.objects.filter(timestamp__gt=time_least_bound).aggregate(thru=Sum('throughput'))
+        qs_agg = SubscriberUsage.objects.filter(timestamp__gt=time_least_bound).aggregate(thru=Sum('throughput'))
         if 'thru' not in qs_agg or qs_agg['thru'] is None:
             public_data = [0]
         else:

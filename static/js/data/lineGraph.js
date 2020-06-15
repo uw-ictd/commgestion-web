@@ -20,6 +20,11 @@ function createLineChart(chartUnit, animate) {
         data = dataKBps;
     }
 
+    // Parse x axis to javascript date objects
+    for (var i = 0; i < data.length; i++) {
+        data[i] = [Date.parse(data[i][0]), data[i][1]];
+    }
+
     let axisTitle = lookUpAxisLabel("graph2") + " (" + chartUnit + ")";
     Highcharts.chart('thru-vs-time', {
     

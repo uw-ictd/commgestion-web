@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-from web.models import Subscriber, Usage
+from web.models import Subscriber, SubscriberUsage
 
 from django.utils import timezone
 
@@ -54,16 +54,29 @@ class SubscriberModelTest(TestCase):
         s_value = str(created_subscriber)
         self.assertEqual(s_value, "Subscriber: {}".format(IMSI_VALUE))
 
-        # Start testing for Usage
-        Usage.objects.create(user=created_subscriber, throughput=10, timestamp=timezone.now())
-        Usage.objects.create(user=created_subscriber, throughput=15, timestamp=timezone.now())
+        # Start testing for SubscriberUsage
+        SubscriberUsage.objects.create(
+            subscriber=created_subscriber,
+            up_bytes=10,
+            down_bytes=10,
+            timestamp=timezone.now()
+        )
+
+        SubscriberUsage.objects.create(
+            subscriber=created_subscriber,
+            up_bytes=15,
+            down_bytes=15,
+            timestamp=timezone.now()
+        )
 
         # Query usage per subscriber using foreignKey filter
-        usage_list = Usage.objects.filter(user=created_subscriber)
+        usage_list = SubscriberUsage.objects.filter(
+            subscriber=created_subscriber
+        )
         self.assertEqual(len(usage_list), 2)
 
         # Query for usage using subscriber object
-        usage_list_from_subscriber = created_subscriber.usage_set.all()
+        usage_list_from_subscriber = created_subscriber.subscriberusage_set.all()
         self.assertEqual(len(usage_list_from_subscriber), 2)
 
         self.assertEqual(len(usage_list), len(usage_list_from_subscriber))
