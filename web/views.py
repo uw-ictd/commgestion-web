@@ -82,7 +82,7 @@ def network_users(request):
     else:
         from_date = datetime.now() - timedelta(days=7)
         to_date = datetime.now()
-    context = network_users_view.generate_test_data(from_date=from_date, to_date=to_date)
+    context = network_users_view.generate_context(from_date=from_date, to_date=to_date)
     context['form'] = UserSearchTimeForm()
     return render(request, 'network_users.html', context=context)
 

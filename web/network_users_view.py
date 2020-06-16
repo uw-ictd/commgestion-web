@@ -18,18 +18,22 @@ def build_drilldown_information(drilldown_name, drilldown_data):
     }
 
 
-def generate_test_data(from_date=None, to_date=None):
-    # TODO: Do this by the number of users if necessary i.e. limit to 10
-    #  users etc...
-    max_percent_to_start_merge = 0.75
+def generate_context(from_date=None, to_date=None):
+    """Generate a django response context dictionary for the network users view
+    """
     graph_title = str(_('Use of community data'))
-    no_data_error_message = str(
-        _("No Data available between the chosen dates.<br>Please search for a different time."))
 
     if from_date and to_date:
         from_date_string = from_date.strftime('%d %b %Y')
         to_date_string = to_date.strftime('%d %b %Y')
-        title_with_date = graph_title + " between " + from_date_string + " and " + to_date_string
+        graph_title = "{} {} {} {} {}".format(
+            graph_title,
+            str(_("between")),
+            from_date_string,
+            str(_("and")),
+            to_date_string,
+        )
+
         usage_data = SubscriberUsage.objects.filter(
             timestamp__range=[from_date, to_date]
         ).values(
@@ -40,7 +44,6 @@ def generate_test_data(from_date=None, to_date=None):
             '-total_bytes'
         )  # sums the current row
     else:
-        title_with_date = graph_title
         usage_data = SubscriberUsage.objects.values(
             "subscriber"
         ).annotate(
@@ -49,42 +52,52 @@ def generate_test_data(from_date=None, to_date=None):
             '-total_bytes'
         )  # sums the current row
 
-    # Calculate sum of the total table
-    total_consumed = sum([usage['total_bytes'] for usage in usage_data])
-    data = []
+    # TODO: Do this by the number of users if necessary i.e. limit to 10
+    #  users etc...
+    max_percent_to_start_merge = 0.75
+
+    toplevel_data = []
     percent_consumed = 0.0
-    left_over_sum = 0
+    other_users_aggregated_bytes = 0
     drilldown_data = []
 
-    if total_consumed > 0:
+    all_user_total_bytes = sum([usage['total_bytes'] for usage in usage_data])
+    if all_user_total_bytes > 0:
         for usage in usage_data:
             if percent_consumed <= max_percent_to_start_merge:
-                percent_consumed += float(usage['total_bytes']) / total_consumed
-                data.append(
-                    {
-                        'name': lookup_user(usage['subscriber']),
-                        'y': usage['total_bytes']
-                    }
-                )
+                # Users up to the cutoff percentage appear on their own.
+                percent_consumed += \
+                    float(usage['total_bytes']) / all_user_total_bytes
+
+                toplevel_data.append({
+                    'name': lookup_user(usage['subscriber']),
+                    'y': usage['total_bytes'],
+                })
             else:
+                # All other users are aggregated into an other slice.
+                other_users_aggregated_bytes += usage['total_bytes']
                 drilldown_data.append(
                     [lookup_user(usage['subscriber']), usage['total_bytes']]
                 )
-                left_over_sum += usage['total_bytes']
 
-        if left_over_sum > 0:
-            data.append({
-                'name': _('Other (Merged)').__str__(),
-                'y': left_over_sum,
-                'drilldown': "Other (Merged)"
+        if other_users_aggregated_bytes > 0:
+            toplevel_data.append({
+                'name': str(_('Other (Merged)')),
+                'y': other_users_aggregated_bytes,
+                'drilldown': str(_("Other (Merged)")),
             })
 
-    drilldown_response = build_drilldown_information('Other (Merged)',
+    drilldown_response = build_drilldown_information(str(_("Other (Merged)")),
                                                      drilldown_data)
 
+    no_data_error_message = "{} <br/> {}".format(
+        str(_("No Data available between the chosen dates.")),
+        str(_("Please search for a different time.")),
+    )
+
     return {
-        'data': json.dumps(data),
+        'data': json.dumps(toplevel_data),
         'drilldown': json.dumps(drilldown_response),
-        'title': json.dumps(title_with_date),
+        'title': json.dumps(graph_title),
         'errorMessage': json.dumps(no_data_error_message),
     }
