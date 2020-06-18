@@ -12,8 +12,10 @@ from . import profiles_view
 
 
 def public_info(request):
-    gauge = public_view.generate_test_data()
-    return render(request, 'public_info.html', context=gauge)
+    return render(request,
+                  'public_info.html',
+                  context=public_view.generate_context(),
+                  )
 
 
 @login_required
