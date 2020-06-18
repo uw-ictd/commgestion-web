@@ -68,11 +68,15 @@ def send_backhaul_usage_report(uplink_generator, downlink_generator):
 
     headers = {"content-type": "application/cbor"}
     url = "http://localhost:8000/telemetry/backhaul"
-    response = requests.post(url,
-                             headers=headers,
-                             data=marshalled_payload,
-                             )
-    print("POST", url, response)
+
+    try:
+        response = requests.post(url,
+                                 headers=headers,
+                                 data=marshalled_payload,
+                                 )
+        print("POST", url, response)
+    except requests.exceptions.ConnectionError as e:
+        print("POST", url, "Connection error:", e)
 
 
 def send_ran_usage_report(uplink_generator, downlink_generator):
@@ -91,11 +95,14 @@ def send_ran_usage_report(uplink_generator, downlink_generator):
 
     headers = {"content-type": "application/cbor"}
     url = "http://localhost:8000/telemetry/ran"
-    response = requests.post(url,
-                             headers=headers,
-                             data=marshalled_payload,
-                             )
-    print("POST", url, response)
+    try:
+        response = requests.post(url,
+                                 headers=headers,
+                                 data=marshalled_payload,
+                                 )
+        print("POST", url, response)
+    except requests.exceptions.ConnectionError as e:
+        print("POST", url, "Connection error:", e)
 
 
 class ThreadedRepeater(threading.Thread):
