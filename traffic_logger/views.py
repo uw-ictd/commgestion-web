@@ -135,7 +135,7 @@ def log_ran_usage(request):
         return HttpResponseBadRequest(
             "Missing required request key {}".format(str(e)))
 
-    # Create the host usage object itself.
+    # Create the ran usage object itself.
     try:
         RanUsage.objects.create(timestamp=begin_timestamp,
                                 up_bytes=uplink_bytes,
@@ -172,7 +172,7 @@ def log_backhaul_usage(request):
         return HttpResponseBadRequest(
             "Missing required request key {}".format(str(e)))
 
-    # Create the host usage object itself.
+    # Create the backhaul usage object itself.
     try:
         BackhaulUsage.objects.create(timestamp=begin_timestamp,
                                      up_bytes=uplink_bytes,
