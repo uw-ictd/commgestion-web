@@ -67,11 +67,35 @@ def send_backhaul_usage_report(uplink_generator, downlink_generator):
     marshalled_payload = cbor2.dumps(backhaul_usage_payload)
 
     headers = {"content-type": "application/cbor"}
-    response = requests.post("http://localhost:8000/telemetry/backhaul",
+    url = "http://localhost:8000/telemetry/backhaul"
+    response = requests.post(url,
                              headers=headers,
                              data=marshalled_payload,
                              )
-    print("Backhaul POST:", response)
+    print("POST", url, response)
+
+
+def send_ran_usage_report(uplink_generator, downlink_generator):
+    up_bytes = uplink_generator.take_step()
+    down_bytes = downlink_generator.take_step()
+    timestamp = datetime.datetime.now(datetime.timezone.utc)
+
+    ran_usage_payload = {
+        'down_bytes': down_bytes,
+        'up_bytes': up_bytes,
+        'begin_timestamp': timestamp,
+        'end_timestamp': timestamp,
+    }
+
+    marshalled_payload = cbor2.dumps(ran_usage_payload)
+
+    headers = {"content-type": "application/cbor"}
+    url = "http://localhost:8000/telemetry/ran"
+    response = requests.post(url,
+                             headers=headers,
+                             data=marshalled_payload,
+                             )
+    print("POST", url, response)
 
 
 class ThreadedRepeater(threading.Thread):
@@ -106,14 +130,12 @@ if __name__ == "__main__":
         clamp_min=0,
         clamp_max=15 * (1000**2),
     )
-
     downlink_usage_generator = UsageGenerator(
         baseline_usage=10 * (1000**2),
         max_step_variation=100 * (1000**1),
         clamp_min=0,
         clamp_max=15 * (1000**2),
     )
-
     backhaul_sender = ThreadedRepeater(
         lambda: send_backhaul_usage_report(
             uplink_usage_generator, downlink_usage_generator
@@ -122,8 +144,30 @@ if __name__ == "__main__":
         run_first=True,
     )
 
+    ran_uplink_usage_generator = UsageGenerator(
+        baseline_usage=6 * (1000**2),
+        max_step_variation=100 * (1000**1),
+        clamp_min=0,
+        clamp_max=15 * (1000**2),
+    )
+    ran_downlink_usage_generator = UsageGenerator(
+        baseline_usage=11 * (1000**2),
+        max_step_variation=100 * (1000**1),
+        clamp_min=0,
+        clamp_max=15 * (1000**2),
+    )
+    ran_sender = ThreadedRepeater(
+        lambda: send_ran_usage_report(
+            ran_uplink_usage_generator, ran_downlink_usage_generator
+        ),
+        repeat_interval_s=10,
+        run_first=True,
+    )
+
     try:
         backhaul_sender.start()
+        ran_sender.start()
     except KeyboardInterrupt:
         print("Shutting down threads-- ctrl+c again to hard exit")
         backhaul_sender.stop()
+        ran_sender.stop()
