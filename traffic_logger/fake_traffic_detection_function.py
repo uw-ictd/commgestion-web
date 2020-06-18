@@ -10,7 +10,7 @@ import cbor2
 import datetime
 import random
 import requests
-import time
+import threading
 
 
 class UsageGenerator(object):
@@ -52,6 +52,53 @@ class UsageGenerator(object):
         return self._current_usage
 
 
+def send_backhaul_usage_report(uplink_generator, downlink_generator):
+    up_bytes = uplink_generator.take_step()
+    down_bytes = downlink_generator.take_step()
+    timestamp = datetime.datetime.now(datetime.timezone.utc)
+
+    backhaul_usage_payload = {
+        'down_bytes': down_bytes,
+        'up_bytes': up_bytes,
+        'begin_timestamp': timestamp,
+        'end_timestamp': timestamp,
+    }
+
+    marshalled_payload = cbor2.dumps(backhaul_usage_payload)
+
+    headers = {"content-type": "application/cbor"}
+    response = requests.post("http://localhost:8000/telemetry/backhaul",
+                             headers=headers,
+                             data=marshalled_payload,
+                             )
+    print("Backhaul POST:", response)
+
+
+class ThreadedRepeater(threading.Thread):
+    """Repeatedly calls the function at a given interval
+
+    Note: The interval creeps forward by the function execution time and
+    should not be used for precise timing.
+    """
+    def __init__(self, function, repeat_interval_s, run_first=False):
+        super().__init__()
+        self._stop_trigger = threading.Event()
+        self._interval_s = repeat_interval_s
+        self._function = function
+        self._run_first = run_first
+
+    def run(self):
+        """Run method overriding Thread::run to call the function repeatedly
+        """
+        if self._run_first:
+            self._function()
+        while not self._stop_trigger.wait(self._interval_s):
+            self._function()
+
+    def stop(self):
+        self._stop_trigger.set()
+
+
 if __name__ == "__main__":
     uplink_usage_generator = UsageGenerator(
         baseline_usage=5 * (1000**2),
@@ -67,23 +114,16 @@ if __name__ == "__main__":
         clamp_max=15 * (1000**2),
     )
 
-    while True:
-        up_bytes = uplink_usage_generator.take_step()
-        down_bytes = downlink_usage_generator.take_step()
-        timestamp = datetime.datetime.now(datetime.timezone.utc),
+    backhaul_sender = ThreadedRepeater(
+        lambda: send_backhaul_usage_report(
+            uplink_usage_generator, downlink_usage_generator
+        ),
+        repeat_interval_s=10,
+        run_first=True,
+    )
 
-        backhaul_usage_payload = {
-            'down_bytes': down_bytes,
-            'up_bytes': up_bytes,
-            'begin_timestamp': timestamp,
-            'end_timestamp': timestamp,
-        }
-
-        marshalled_payload = cbor2.dumps(backhaul_usage_payload)
-
-        response = requests.post("http://localhost:8000/telemetry/backhaul",
-                                 data=marshalled_payload)
-
-        print(response)
-        print(response.content)
-        time.sleep(10)
+    try:
+        backhaul_sender.start()
+    except KeyboardInterrupt:
+        print("Shutting down threads-- ctrl+c again to hard exit")
+        backhaul_sender.stop()
