@@ -5,7 +5,11 @@ from datetime import timedelta
 
 from web.forms import UserSearchTimeForm, ModalForm
 
-from . import (_network_stats, _public, _network_users, _profiles)
+from . import (_api, _network_stats, _network_users, _profiles, _public)
+
+
+# Redefine api as a publicly exportable top level object in the package.
+api = _api
 
 
 def public_info(request):
