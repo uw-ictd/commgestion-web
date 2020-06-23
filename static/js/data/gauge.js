@@ -1,5 +1,5 @@
 function createGuageChart(chartType) {
-    let needleValue = dataFromServer;
+    let needleValue = [0];
     let guageParameterString = metricTitle;
     // Follows the green, yellow, red bounds in each of the case
     let bounds = {
@@ -26,7 +26,7 @@ function createGuageChart(chartType) {
         };
         guageParameterString = guageParameterString.replace('KBps', 'MBps');
     }
-    Highcharts.chart('hc-gauge', {
+    return Highcharts.chart('hc-gauge', {
         chart: {
             type: 'gauge',
             plotBackgroundColor: null,
@@ -45,7 +45,7 @@ function createGuageChart(chartType) {
             endAngle: 150,
             background: [{
                 backgroundColor: {
-                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                    linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
                     stops: [
                         [0, '#FFF'],
                         [1, '#333']
@@ -55,7 +55,7 @@ function createGuageChart(chartType) {
                 outerRadius: '109%'
             }, {
                 backgroundColor: {
-                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                    linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
                     stops: [
                         [0, '#333'],
                         [1, '#FFF']
@@ -122,21 +122,31 @@ function createGuageChart(chartType) {
     });
 }
 
+function updateGaugeChart(chart, new_data) {
+    // TODO(matt9j) Update gauge range based on value magnitude
+    chart.update({
+        series: [{
+            name: 'Current network use',
+            data: [new_data],
+            tooltip: {
+                valueSuffix: "KBps",
+            }
+        }]
+    });
+}
+
 $("#guageDataType").change(function() {
     chartType = $("#guageDataType option:selected").val();
-    console.log(chartType);
     createGuageChart(chartType)
 });
 
 $( document ).ready(function() {
+    console.log("ready");
+    let chart = createGuageChart("KBps")
+
     $.getJSON(api_endpoint, result => {
-        console.log("Received query result")
-        console.log(result)
         let backhaul_total_bytes = result.backhaul.up_bytes_per_second + result.backhaul.down_bytes_per_second;
-        let ran_total_bytes = result.ran.up_bytes_per_second + result.ran.down_bytes_per_second;
         let backhaul_total_kbytes = backhaul_total_bytes/1000;
-        dataFromServer = [backhaul_total_kbytes];
-        console.log(backhaul_total_bytes)
-        createGuageChart("KBps")
+        updateGaugeChart(chart, backhaul_total_kbytes);
     })
 });

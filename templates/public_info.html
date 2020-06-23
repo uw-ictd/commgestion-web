@@ -4,12 +4,9 @@
 {% block main %}
     {% include "graphViews/publicLayout.html" %}
     <script>
-        var dataFromServer = {{data | safe}};
         var gaugeGraphTitle = {{ title | safe }};
         var metricTitle = {{metric_title | safe}};
         var api_endpoint = "{% url 'public_utilization_api' %}";
     </script>
-    {% if data %}
     <script src="{% static 'js/data/gauge.js' %}"></script>
-    {% endif %}
 {% endblock %}
