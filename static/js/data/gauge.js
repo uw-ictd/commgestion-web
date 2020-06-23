@@ -133,10 +133,18 @@ $( document ).ready(function() {
     console.log("ready");
     let chart = createGuageChart(8)
 
-    $.getJSON(api_endpoint, result => {
+    $.getJSON(api_endpoint).done((result) => {
+        $("#warning-container").css("display", "none");
         let backhaul_total_bytes = result.backhaul.up_bytes_per_second + result.backhaul.down_bytes_per_second;
         let backhaul_total_mbits = (backhaul_total_bytes/1000000) * 8;
         backhaul_total_mbits = Number(backhaul_total_mbits.toFixed(3))
         updateGaugeChart(chart, backhaul_total_mbits);
+    }).fail(() => {
+        $("#warning-container").css("display", "inline");
+        chart.update({
+            title: {
+                text: "",
+            },
+        });
     })
 });
