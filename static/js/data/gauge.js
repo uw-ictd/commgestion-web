@@ -1,31 +1,23 @@
-function createGuageChart(chartType) {
-    let needleValue = [0];
-    let guageParameterString = metricTitle;
+function createGuageChart(backhaul_capacity_mbits) {
+    // Render with an intial blank value. Will be updated asynchronously.
+    // Use -1 instead of unknown so the needle will show up on initial load.
+    let needleValue = [-1];
+
+    let gauge_min = 0;
+    let yellow_start = 0.8 * backhaul_capacity_mbits;
+    let red_start = backhaul_capacity_mbits;
+    let gauge_max = 1.2 * backhaul_capacity_mbits;
+
     // Follows the green, yellow, red bounds in each of the case
     let bounds = {
-        'green': [0, 400],
-        'yellow': [400, 600],
-        'red': [600, 1000]
+        'green': [gauge_min, yellow_start],
+        'yellow': [yellow_start, red_start],
+        'red': [red_start, gauge_max]
     };
-    if (chartType === 'Mbps') {
-        newValueInMbps = dataFromServer[0] * 0.008;
-        needleValue = [newValueInMbps];
-        bounds = {
-            'green': [0, 6.4],
-            'yellow': [6.4, 11.2],
-            'red': [11.2, 16]
-        };
-        guageParameterString = guageParameterString.replace('KBps', 'Mbps');
-    } else if (chartType === 'MBps') {
-        newValueInMBps = dataFromServer[0] * 0.001;
-        needleValue = [newValueInMBps];
-        bounds = {
-            'green': [0, 0.8],
-            'yellow': [0.8, 1.4],
-            'red': [1.4, 2.0]
-        };
-        guageParameterString = guageParameterString.replace('KBps', 'MBps');
-    }
+
+    let units = "Mbps"
+    let title = metricTitle + " " + units
+
     return Highcharts.chart('hc-gauge', {
         chart: {
             type: 'gauge',
@@ -94,7 +86,7 @@ function createGuageChart(chartType) {
                 rotation: 'auto'
             },
             title: {
-                text: guageParameterString
+                text: title
             },
             plotBands: [{
                 from: bounds['green'][0],
@@ -115,38 +107,36 @@ function createGuageChart(chartType) {
             name: 'Current network use',
             data: needleValue,
             tooltip: {
-                valueSuffix: chartType
-            }
+                valueDecimals: 3,
+                valueSuffix: units,
+            },
+            wrap: false,
         }]
 
     });
 }
 
 function updateGaugeChart(chart, new_data) {
-    // TODO(matt9j) Update gauge range based on value magnitude
     chart.update({
         series: [{
-            name: 'Current network use',
             data: [new_data],
-            tooltip: {
-                valueSuffix: "KBps",
-            }
-        }]
+        }],
     });
 }
 
 $("#guageDataType").change(function() {
     chartType = $("#guageDataType option:selected").val();
-    createGuageChart(chartType)
+    createGuageChart(8)
 });
 
 $( document ).ready(function() {
     console.log("ready");
-    let chart = createGuageChart("KBps")
+    let chart = createGuageChart(8)
 
     $.getJSON(api_endpoint, result => {
         let backhaul_total_bytes = result.backhaul.up_bytes_per_second + result.backhaul.down_bytes_per_second;
-        let backhaul_total_kbytes = backhaul_total_bytes/1000;
-        updateGaugeChart(chart, backhaul_total_kbytes);
+        let backhaul_total_mbits = (backhaul_total_bytes/1000000) * 8;
+        backhaul_total_mbits = Number(backhaul_total_mbits.toFixed(3))
+        updateGaugeChart(chart, backhaul_total_mbits);
     })
 });

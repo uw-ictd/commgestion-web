@@ -1,9 +1,13 @@
+{% load i18n %}
+
+
+
 <div class="container-fluid align-items-center justify-content-center">
     <div id="warning-container" style="display: none;">
         <div class="row">
             <div class="alert alert-danger align-content-center text-center">
-                No Subscriber / Usage Data available.
-                Please add network data feed into the database.
+                {% trans "No Subscriber / Usage Data available." %}
+                {% trans "Please add network data feed into the database." %}
             </div>
 
         </div>
