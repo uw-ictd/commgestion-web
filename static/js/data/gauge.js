@@ -129,5 +129,14 @@ $("#guageDataType").change(function() {
 });
 
 $( document ).ready(function() {
-    createGuageChart('KBps');
+    $.getJSON(api_endpoint, result => {
+        console.log("Received query result")
+        console.log(result)
+        let backhaul_total_bytes = result.backhaul.up_bytes_per_second + result.backhaul.down_bytes_per_second;
+        let ran_total_bytes = result.ran.up_bytes_per_second + result.ran.down_bytes_per_second;
+        let backhaul_total_kbytes = backhaul_total_bytes/1000;
+        dataFromServer = [backhaul_total_kbytes];
+        console.log(backhaul_total_bytes)
+        createGuageChart("KBps")
+    })
 });
