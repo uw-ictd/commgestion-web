@@ -124,11 +124,6 @@ function updateGaugeChart(chart, new_data) {
     });
 }
 
-$("#guageDataType").change(function() {
-    chartType = $("#guageDataType option:selected").val();
-    createGuageChart(8)
-});
-
 $( document ).ready(function() {
     console.log("ready");
     let chart = createGuageChart(8)
