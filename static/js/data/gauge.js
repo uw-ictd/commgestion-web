@@ -1,12 +1,12 @@
-function createGuageChart(backhaul_capacity_mbits) {
+function createGuageChart(container, nominal_capacity_mbits, title) {
     // Render with an intial blank value. Will be updated asynchronously.
     // Use -1 instead of unknown so the needle will show up on initial load.
     let needleValue = [-1];
 
     let gauge_min = 0;
-    let yellow_start = 0.8 * backhaul_capacity_mbits;
-    let red_start = backhaul_capacity_mbits;
-    let gauge_max = 1.2 * backhaul_capacity_mbits;
+    let yellow_start = 0.8 * nominal_capacity_mbits;
+    let red_start = nominal_capacity_mbits;
+    let gauge_max = 1.2 * nominal_capacity_mbits;
 
     // Follows the green, yellow, red bounds in each of the case
     let bounds = {
@@ -16,9 +16,9 @@ function createGuageChart(backhaul_capacity_mbits) {
     };
 
     let units = "Mbps"
-    let title = metricTitle + " " + units
+    let augmented_title = title + " " + units
 
-    return Highcharts.chart('hc-gauge', {
+    return Highcharts.chart(container, {
         chart: {
             type: 'gauge',
             plotBackgroundColor: null,
@@ -86,7 +86,7 @@ function createGuageChart(backhaul_capacity_mbits) {
                 rotation: 'auto'
             },
             title: {
-                text: title
+                text: augmented_title
             },
             plotBands: [{
                 from: bounds['green'][0],
@@ -125,18 +125,26 @@ function updateGaugeChart(chart, new_data) {
 }
 
 $( document ).ready(function() {
-    console.log("ready");
-    let chart = createGuageChart(8)
+    let dl_chart = createGuageChart('dl-gauge', 8, "DL " + metricTitle)
+    let ul_chart = createGuageChart('ul-gauge', 8, "UL " + metricTitle)
 
     $.getJSON(api_endpoint).done((result) => {
         $("#warning-container").css("display", "none");
-        let backhaul_total_bytes = result.backhaul.up_bytes_per_second + result.backhaul.down_bytes_per_second;
-        let backhaul_total_mbits = (backhaul_total_bytes/1000000) * 8;
-        backhaul_total_mbits = Number(backhaul_total_mbits.toFixed(3))
-        updateGaugeChart(chart, backhaul_total_mbits);
+
+        let backhaul_up_mbits = (result.backhaul.up_bytes_per_second/1000000) * 8;
+        let backhaul_down_mbits = (result.backhaul.down_bytes_per_second/1000000) * 8;
+        backhaul_up_mbits = Number(backhaul_up_mbits.toFixed(3))
+        backhaul_down_mbits = Number(backhaul_down_mbits.toFixed(3))
+        updateGaugeChart(dl_chart, backhaul_down_mbits);
+        updateGaugeChart(ul_chart, backhaul_up_mbits);
     }).fail(() => {
         $("#warning-container").css("display", "inline");
-        chart.update({
+        dl_chart.update({
+            title: {
+                text: "",
+            },
+        });
+        ul_chart.update({
             title: {
                 text: "",
             },
