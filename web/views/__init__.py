@@ -3,32 +3,33 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
 from datetime import timedelta
 
-from web import public_view
-from web.forms import UserSearchTimeForm, ModalForm, ModalEditForm
+from web.forms import UserSearchTimeForm, ModalForm
 
-from . import network_stats_view
-from . import network_users_view
-from . import profiles_view
+from . import (_api, _network_stats, _network_users, _profiles, _public)
+
+
+# Redefine api as a publicly exportable top level object in the package.
+api = _api
 
 
 def public_info(request):
     return render(request,
                   'public_info.html',
-                  context=public_view.generate_context(),
+                  context=_public.generate_context(),
                   )
 
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def network_stats(request):
-    context = network_stats_view.generate_test_data()
+    context = _network_stats.generate_test_data()
     return render(request, 'network_stats.html', context=context)
 
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def profiles(request):
-    context = profiles_view.generate_table()
+    context = _profiles.generate_table()
     context['form'] = ModalForm()
     if request.method == 'POST':
         form = ModalForm(request.POST)
@@ -61,7 +62,7 @@ def network_users(request):
     else:
         from_date = datetime.now() - timedelta(days=7)
         to_date = datetime.now()
-    context = network_users_view.generate_context(from_date=from_date, to_date=to_date)
+    context = _network_users.generate_context(from_date=from_date, to_date=to_date)
     context['form'] = UserSearchTimeForm()
     return render(request, 'network_users.html', context=context)
 
@@ -82,4 +83,4 @@ def addForm(request):
             role = form.cleaned_data['role']
             rate_limit = form.cleaned_data['rate_limit']
             connection_status = form.cleaned_data['connection_status']
-            context = network_users_view.lookup_user(imsi)
+            context = network_users.lookup_user(imsi)

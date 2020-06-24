@@ -1,26 +1,22 @@
-<div class="container-fluid align-items-center justify-content-center">
-    <div class="row">
+{% load i18n %}
+
+
+
+<div class="container-fluid">
+    <div id="warning-container" style="display: none;">
+        <div class="row justify-content-center">
+            <div class="col-6 alert alert-danger align-content-center text-center">
+                {% trans "No Subscriber / Usage Data available." %}
+                {% trans "Please add network data feed into the database." %}
+            </div>
+
         </div>
-        {% if data|length == 0 %}
-            <div class="alert alert-danger align-content-center text-center" id="warning">
-                No Subscriber / Usage Data available. Please add network data feed into the database.
+    </div>
+    <div id="gauge-container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
+                <div id="hc-gauge"></div>
             </div>
-        {% else  %}
-            <div class="row">
-            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 align-content-center" id="hc-gauge">
-            </div>
-            <div class="col-4 col-md-4 col-lg-4 col-sm-12 align-content-center"></div>
-            <div class="col-4 col-md-4 col-lg-4 col-sm-12 col-xl-4 align-content-center">
-                <div class="form-group align-content-center" >
-                    <label for="exampleFormControlSelect1">View Network Throughput as</label>
-                    <select class="form-control" id="guageDataType">
-                        <option value="KBps">KiloBytes per seconds (KBps)</option>
-                        <option value="Mbps">Megabits per second (Mbps)</option>
-                        <option value="MBps">MegaBytes per second (MBps)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-4 col-md-4 col-lg-4 col-sm-12 align-content-center"></div>
-        {% endif %}
+        </div>
     </div>
  </div>
