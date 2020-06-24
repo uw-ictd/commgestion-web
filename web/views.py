@@ -34,16 +34,15 @@ def profiles(request):
         form = ModalForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
-            # last_name = form.cleaned_data['last_name']
+            last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             # phone = form.cleaned_data['phone']
-            # imsi = form.cleaned_data['imsi']
+            imsi = form.cleaned_data['imsi']
             # guti = form.cleaned_data['guti']
             # resident_status = form.cleaned_data['resident_status']
             # role = form.cleaned_data['role']
             # connection_status = form.cleaned_data['connection_status']
             # password = form.cleaned_data['password']
-            # print(first_name, last_name, email, phone, imsi, guti, resident_status, role, connection_status)
         else:
             context['form'] = form
             print(form.errors)
@@ -66,6 +65,7 @@ def network_users(request):
     context['form'] = UserSearchTimeForm()
     return render(request, 'network_users.html', context=context)
 
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def addForm(request):
@@ -76,9 +76,10 @@ def addForm(request):
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             imsi = form.cleaned_data['imsi']
-            guti = form.cleaned_data['guti']
-            phone = form.cleaned_data['phone']
-            resident_status = form.cleaned_data['resident_status']
+            # guti = form.cleaned_data['guti']
+            # phone = form.cleaned_data['phone']
+            # resident_status = form.cleaned_data['resident_status']
             role = form.cleaned_data['role']
+            rate_limit = form.cleaned_data['rate_limit']
             connection_status = form.cleaned_data['connection_status']
             context = network_users_view.lookup_user(imsi)

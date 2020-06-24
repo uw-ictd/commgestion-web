@@ -25,6 +25,8 @@
             $('#delete').attr('disabled', false);
         });
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.7.0/parsley.min.js"></script>
 
     <!-- Button trigger modal -->
     <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalAddForm">
@@ -45,31 +47,23 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Add a Subscriber</h2>
-                    <form method="post" action="{% url 'profiles' %}">
+                    <form method="post" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
                             {% for field in form %}
-                              <label>{{ field.label }}</label>
-                              {{ field }}
-                              {{ field.errors }}
-                              {{ field.helptext }}
-                              {% if field.errors %}
-                                I haz errors and they are: <br/>
-                              {% endif %}
-                              {% for error in field.errors %}
-                                  {{ error }} <br/>
-                              {% endfor %}
-
-                              <br/>
+                                <label>{{ field.label }}</label>
+                                {% if field.label == 'IMSI' %}
+                                    <input data-parsley-pattern="\d+" data-parsley-type="digits" minlength="10" maxlength="10">
+                                    <br/>
+                                {% else %}
+                                    {{ field }}
+                                    <br/>
+                                {% endif %}
                             {% endfor %}
                             {% if form.errors %}
                                 <p>All the errors in the form are below</p>
                                 {{ form.errors }}
                                 <br/>
-                                <p>Explicit loop</p>
-                                {% for error in form.errors %}
-                                    {{ error }}
-                                {% endfor %}
 
                             {% endif %}
                         </div>
@@ -86,7 +80,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Edit a Subscriber</h2>
-                    <form role="form" method="POST" action="{% url 'profiles' %}">
+                    <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
                             {% for field in form %}
@@ -110,7 +104,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Delete a Subscriber</h2>
-                    <form role="form" method="POST" action="{% url 'profiles' %}">
+                    <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
                             {% for field in form %}

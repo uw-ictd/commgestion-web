@@ -12,6 +12,7 @@ psycopg2 = "*"
 django-tables2 = "*"
 cbor2 = "*"
 tomlkit = "*"
+django-parsley = "*"
 
 [requires]
 python_version = "3"
