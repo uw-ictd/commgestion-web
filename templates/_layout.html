@@ -1,9 +1,12 @@
 <html>
+<head>
 {% include "header.html" %}
+</head>
 
 {% block navbar %}
 {% include "navbar.html" %}
 {% endblock %}
+
 <body>
 <div class="container-fluid">
     {% block main %}
@@ -11,5 +14,7 @@
 </div>
 </body>
 
+<footer>
 {% include "footer.html" %}
+</footer>
 </html>
