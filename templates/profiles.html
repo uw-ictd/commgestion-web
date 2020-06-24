@@ -52,13 +52,8 @@
                         <div class="form-group">
                             {% for field in form %}
                                 <label>{{ field.label }}</label>
-                                {% if field.label == 'IMSI' %}
-                                    <input data-parsley-pattern="\d+" data-parsley-type="digits" minlength="10" maxlength="10">
-                                    <br/>
-                                {% else %}
-                                    {{ field }}
-                                    <br/>
-                                {% endif %}
+                                {{ field }}
+                                <br/>
                             {% endfor %}
                             {% if form.errors %}
                                 <p>All the errors in the form are below</p>
