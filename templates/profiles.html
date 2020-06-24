@@ -26,11 +26,11 @@
         });
     </script>
 
-
-<script>
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
-</script>
+    <script>
+    // Rewrite history to not resubmit the page after a post action
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 {% endblock %}
 
