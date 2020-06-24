@@ -1,6 +1,8 @@
 <html>
 <head>
 {% include "header.html" %}
+{% block header_extra %}
+{% endblock %}
 </head>
 
 {% block navbar %}
@@ -14,7 +16,4 @@
 </div>
 </body>
 
-<footer>
-{% include "footer.html" %}
-</footer>
 </html>
