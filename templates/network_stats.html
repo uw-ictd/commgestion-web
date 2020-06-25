@@ -1,6 +1,13 @@
 {% extends "_layout.html" %}
 {% load static %}
 
+{% block header_extra %}
+    <script src="{% static 'js/highcharts.js' %}"></script>
+    <script src="{% static 'js/modules/no-data-to-display.js' %}"></script>
+    <script src="{% static 'js/modules/series-label.js' %}"></script>
+    <script src="{% static 'js/modules/exporting.js' %}" async></script>
+{% endblock %}
+
 {% block main %}
     <style>
     .highcharts-container{
