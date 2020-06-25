@@ -49,7 +49,11 @@ class ModalEditForm(forms.Form):
 class ModalForm(forms.Form):
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
-    CONN_STATUS = (('Online', 'Online'), ('Offline', 'Offline'), ('Blocked', 'Blocked'))
+    CONN_STATUS = (
+        ('Online', 'Online'),
+        ('Offline', 'Offline'),
+        ('Blocked', 'Blocked')
+    )
 
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
@@ -64,7 +68,10 @@ class ModalForm(forms.Form):
         strip=True,
     )
     role = forms.ChoiceField(choices=ROLES)
-    connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
+    connection_status = forms.ChoiceField(
+        choices=CONN_STATUS,
+        label='Connection Status',
+    )
     rate_limit = forms.DecimalField()
     phone = forms.RegexField(
         label="Phone Number",
