@@ -143,16 +143,3 @@
         </tbody>
     </table>
 </div>
-<div class="dataTables_info" id="example_info">
-        <span class="select-info">
-            <span class="select-item"> </span>
-            <span class="select-item"> </span>
-            <span class="select-item"> </span>
-        </span>
-</div>
-{% for d in dataFromServer %}
-    <tr>
-        {% for x in d %} <td>{{ x }}</td>
-        {% endfor %}
-    </tr>
-{% endfor %}
