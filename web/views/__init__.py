@@ -1,9 +1,15 @@
+import random
+
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
 from datetime import timedelta
 
+from django.utils import timezone
+
 from web.forms import UserSearchTimeForm, ModalForm
+from web.models import Subscriber
 
 from . import (_api, _network_stats, _network_users, _profiles, _public)
 
@@ -37,19 +43,56 @@ def profiles(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
-            # phone = form.cleaned_data['phone']
+            phone = form.cleaned_data['phone']
             imsi = form.cleaned_data['imsi']
-            # guti = form.cleaned_data['guti']
-            # resident_status = form.cleaned_data['resident_status']
-            # role = form.cleaned_data['role']
-            # connection_status = form.cleaned_data['connection_status']
-            # password = form.cleaned_data['password']
+            role = form.cleaned_data['role']
+            connection_status = form.cleaned_data['connection_status']
+            rate_limit = form.cleaned_data['rate_limit']
+
+            try:
+                created_user = Subscriber.objects.get(user=imsi)
+            except:
+                print('IMSI is not unique')
+                User.objects.create(
+                    username=imsi,
+                    email=email,
+                    password="temp",
+                )
+                user = User.objects.get(username=imsi)
+                roleNum = roleConversion(role)
+                connectNum = connectionConversion(connection_status)
+                Subscriber.objects.create(
+                    user=user,
+                    phonenumber=phone,
+                    display_name=first_name + " " + last_name,
+                    imsi=imsi,
+                    guti="guti_value" + str(random.randint(0, 100)),
+                    is_local=True, #how do we determine local or not local
+                    role=roleNum,
+                    connectivity_status=connectNum,
+                    last_time_online=timezone.now(),
+                    rate_limit_kbps=rate_limit,
+                )
         else:
             context['form'] = form
             print(form.errors)
             print('invalid')
+
     return render(request, 'profiles.html', context=context)
 
+def roleConversion(roleString):
+    if roleString == 'Admin':
+        return 1
+    if roleString == 'User':
+        return 2
+
+def connectionConversion(string):
+    if string == 'Online':
+        return 1
+    if string == 'Offline':
+        return 2
+    if string == 'Blocked':
+        return 3
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
