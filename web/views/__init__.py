@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
 from datetime import timedelta
 
+import django.http
 from django.utils import timezone
+from django.db import transaction
 
 from web.forms import UserSearchTimeForm, ModalForm
 from web.models import Subscriber
@@ -49,30 +51,31 @@ def profiles(request):
             connection_status = form.cleaned_data['connection_status']
             rate_limit = form.cleaned_data['rate_limit']
 
-            try:
-                created_user = Subscriber.objects.get(user=imsi)
-            except:
+            if Subscriber.objects.filter(user=imsi).exists():
                 print('IMSI is not unique')
-                User.objects.create(
-                    username=imsi,
-                    email=email,
-                    password="temp",
-                )
-                user = User.objects.get(username=imsi)
-                roleNum = roleConversion(role)
-                connectNum = connectionConversion(connection_status)
-                Subscriber.objects.create(
-                    user=user,
-                    phonenumber=phone,
-                    display_name=first_name + " " + last_name,
-                    imsi=imsi,
-                    guti="guti_value" + str(random.randint(0, 100)),
-                    is_local=True, #how do we determine local or not local
-                    role=roleNum,
-                    connectivity_status=connectNum,
-                    last_time_online=timezone.now(),
-                    rate_limit_kbps=rate_limit,
-                )
+                # ToDo The validation that the IMSI is new should happen in the form itself
+                return django.http.HttpResponseServerError("IMSI FAIL")
+
+            User.objects.create(
+                username=imsi,
+                email=email,
+                password="temp",
+            )
+            user = User.objects.get(username=imsi)
+            roleNum = roleConversion(role)
+            connectNum = connectionConversion(connection_status)
+            Subscriber.objects.create(
+                user=user,
+                phonenumber=phone,
+                display_name=first_name + " " + last_name,
+                imsi=imsi,
+                guti="guti_value" + str(random.randint(0, 100)),
+                is_local=True, #how do we determine local or not local
+                role=roleNum,
+                connectivity_status=connectNum,
+                last_time_online=timezone.now(),
+                rate_limit_kbps=rate_limit,
+            )
         else:
             context['form'] = form
             print(form.errors)
