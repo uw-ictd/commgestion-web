@@ -62,8 +62,12 @@
                     <h2>Edit a Subscriber</h2>
                     <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
+                        {% for hidden_field in edit_form.hidden_fields %}
+                            {{ hidden_field.errors }}
+                            {{ hidden_field }}
+                        {% endfor %}
                         <div class="form-group">
-                            {% for field in edit_form %}
+                            {% for field in edit_form.visible_fields %}
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 {{ field }}
                                 {{ field.errors }}
@@ -87,8 +91,12 @@
                     <h2>Delete a Subscriber</h2>
                     <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
+                        {% for hidden_field in del_form.hidden_fields %}
+                            {{ hidden_field.errors }}
+                            {{ hidden_field }}
+                        {% endfor %}
                         <div class="form-group">
-                            {% for field in del_form %}
+                            {% for field in del_form.visible_fields %}
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 {{ field }}
                                 {{ field.errors }}
