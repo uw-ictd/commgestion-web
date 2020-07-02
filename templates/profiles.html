@@ -34,8 +34,8 @@
                     <form method="post" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
-                            {% for field in form %}
-                                <label>{{ field.label }}</label>
+                            {% for field in add_form %}
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 {{ field }}
                                 {{ field.errors }}
                                 <br/>
@@ -63,8 +63,8 @@
                     <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
-                            {% for field in form %}
-                                <label>{{ field.label }}</label>
+                            {% for field in edit_form %}
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 {{ field }}
                                 {{ field.errors }}
                                 <br/>
@@ -88,8 +88,8 @@
                     <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
-                            {% for field in form %}
-                                <label>{{ field.label }}</label>
+                            {% for field in del_form %}
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 {{ field }}
                                 {{ field.errors }}
                                 <br/>

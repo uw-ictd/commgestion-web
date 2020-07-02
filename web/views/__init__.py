@@ -10,7 +10,12 @@ import django.http
 from django.utils import timezone
 from django.db import transaction
 
-from web.forms import UserSearchTimeForm, AddSubscriberForm
+from web.forms import (
+    UserSearchTimeForm,
+    AddSubscriberForm,
+    EditSubscriberForm,
+    DeleteSubscriberForm,
+)
 from web.models import Subscriber
 
 from . import (_api, _network_stats, _network_users, _profiles, _public)
@@ -38,7 +43,9 @@ def network_stats(request):
 @user_passes_test(lambda u: u.is_superuser)
 def profiles(request):
     context = _profiles.generate_table()
-    context['form'] = AddSubscriberForm()
+    context['add_form'] = AddSubscriberForm()
+    context['edit_form'] = EditSubscriberForm()
+    context['del_form'] = DeleteSubscriberForm()
     if request.method == 'POST':
         form = AddSubscriberForm(request.POST)
         if form.is_valid():
@@ -73,7 +80,7 @@ def profiles(request):
                     rate_limit_kbps=rate_limit,
                 )
         else:
-            context['form'] = form
+            context['add_form'] = form
             print(form.errors)
             print('invalid')
 
