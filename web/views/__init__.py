@@ -10,7 +10,7 @@ import django.http
 from django.utils import timezone
 from django.db import transaction
 
-from web.forms import UserSearchTimeForm, ModalForm
+from web.forms import UserSearchTimeForm, AddSubscriberForm
 from web.models import Subscriber
 
 from . import (_api, _network_stats, _network_users, _profiles, _public)
@@ -38,9 +38,9 @@ def network_stats(request):
 @user_passes_test(lambda u: u.is_superuser)
 def profiles(request):
     context = _profiles.generate_table()
-    context['form'] = ModalForm()
+    context['form'] = AddSubscriberForm()
     if request.method == 'POST':
-        form = ModalForm(request.POST)
+        form = AddSubscriberForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -118,7 +118,7 @@ def network_users(request):
 @user_passes_test(lambda u: u.is_superuser)
 def addForm(request):
     if request.method == 'POST':
-        form = ModalForm(request.POST)
+        form = AddSubscriberForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']

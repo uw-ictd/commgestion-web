@@ -29,7 +29,7 @@ class UserSearchTimeForm(forms.Form):
 
 # edit form
 @parsleyfy
-class ModalEditForm(forms.Form):
+class EditSubscriberForm(forms.Form):
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
     CONN_STATUS = (('Online', 'Online'), ('Offline', 'Offline'), ('Blocked', 'Blocked'))
@@ -50,7 +50,7 @@ class ModalEditForm(forms.Form):
 
 # add form
 @parsleyfy
-class ModalForm(forms.Form):
+class AddSubscriberForm(forms.Form):
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
     CONN_STATUS = (
@@ -88,7 +88,7 @@ class ModalForm(forms.Form):
 
 # delete form
 @parsleyfy
-class ModalDeleteForm(forms.Form):
+class DeleteSubscriberForm(forms.Form):
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
     CONN_STATUS = (('Online', 'Online'), ('Offline', 'Offline'), ('Blocked', 'Blocked'))
