@@ -56,26 +56,27 @@ def profiles(request):
                 # ToDo The validation that the IMSI is new should happen in the form itself
                 return django.http.HttpResponseServerError("IMSI FAIL")
 
-            User.objects.create(
-                username=imsi,
-                email=email,
-                password="temp",
-            )
-            user = User.objects.get(username=imsi)
-            roleNum = roleConversion(role)
-            connectNum = connectionConversion(connection_status)
-            Subscriber.objects.create(
-                user=user,
-                phonenumber=phone,
-                display_name=first_name + " " + last_name,
-                imsi=imsi,
-                guti="guti_value" + str(random.randint(0, 100)),
-                is_local=True, #how do we determine local or not local
-                role=roleNum,
-                connectivity_status=connectNum,
-                last_time_online=timezone.now(),
-                rate_limit_kbps=rate_limit,
-            )
+            with transaction.atomic():
+                User.objects.create(
+                    username=imsi,
+                    email=email,
+                    password="temp",
+                )
+                user = User.objects.get(username=imsi)
+                roleNum = roleConversion(role)
+                connectNum = connectionConversion(connection_status)
+                Subscriber.objects.create(
+                    user=user,
+                    phonenumber=phone,
+                    display_name=first_name + " " + last_name,
+                    imsi=imsi,
+                    guti="guti_value" + str(random.randint(0, 100)),
+                    is_local=True, #how do we determine local or not local
+                    role=roleNum,
+                    connectivity_status=connectNum,
+                    last_time_online=timezone.now(),
+                    rate_limit_kbps=rate_limit,
+                )
         else:
             context['form'] = form
             print(form.errors)
