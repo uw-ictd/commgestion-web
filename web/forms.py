@@ -96,6 +96,8 @@ class AddSubscriberForm(forms.Form):
                 "The IMSI {} already exists".format(imsi)
             )
 
+        return imsi
+
 
 # delete form
 @parsleyfy
