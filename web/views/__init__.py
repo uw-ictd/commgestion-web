@@ -51,11 +51,6 @@ def profiles(request):
             connection_status = form.cleaned_data['connection_status']
             rate_limit = form.cleaned_data['rate_limit']
 
-            if Subscriber.objects.filter(user=imsi).exists():
-                print('IMSI is not unique')
-                # ToDo The validation that the IMSI is new should happen in the form itself
-                return django.http.HttpResponseServerError("IMSI FAIL")
-
             with transaction.atomic():
                 User.objects.create(
                     username=imsi,

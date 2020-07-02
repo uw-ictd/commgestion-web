@@ -86,6 +86,17 @@ class AddSubscriberForm(forms.Form):
     # guti = forms.RegexField(label="GUTI", help_text='5 digits ???? following IMSI value', regex=r'^[0-9]{5}$', strip=True)
     # resident_status = forms.ChoiceField(choices=LOCAL, label='Local Resident?')
 
+    def clean_imsi(self):
+        """Ensure the imsi provided meets application uniqueness constraints
+        """
+        imsi = self.cleaned_data["imsi"]
+
+        if User.objects.filter(username=imsi).exists():
+            raise forms.ValidationError(
+                "The IMSI {} already exists".format(imsi)
+            )
+
+
 # delete form
 @parsleyfy
 class DeleteSubscriberForm(forms.Form):
