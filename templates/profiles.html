@@ -17,11 +17,11 @@
         Add Subscriber
     </button>
 
-    <button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalEditForm" disabled="true">
+    <button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalEditForm" disabled>
         Edit
     </button>
 
-    <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalDeleteForm" disabled="true">
+    <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalDeleteForm" disabled>
         Delete
     </button>
 
@@ -60,7 +60,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Edit a Subscriber</h2>
-                    <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
+                    <form id="edit_form" role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         {% for hidden_field in edit_form.hidden_fields %}
                             {{ hidden_field.errors }}
@@ -89,7 +89,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Delete a Subscriber</h2>
-                    <form role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
+                    <form id="delete_form" role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
                         {% csrf_token %}
                         {% for hidden_field in del_form.hidden_fields %}
                             {{ hidden_field.errors }}
@@ -176,13 +176,25 @@
                     "url": "/static/i18n/Spanish.json"
                 }
             });
+            $('tr.selected').removeClass('selected'); //clear other selections
+            $('#edit').attr('disabled', true);
+            $('#delete').attr('disabled', true);
         });
         $(document).on('click', 'tr', function(e) {
-            $('tr.selected').removeClass('selected'); //clear other selections
-            $(this).addClass('selected'); //mark this row as selected
-            $('#edit').attr('disabled', false);
-            $('#delete').attr('disabled', false);
+            // Toggle the selection state
+            if ($(this).hasClass("selected")) {
+                $(this).removeClass('selected');
+                $('#edit').attr('disabled', true);
+                $('#delete').attr('disabled', true) ;
+            }
+            else {
+                $('tr.selected').removeClass('selected'); //clear other selections
+                $(this).addClass('selected');
+                $('#edit').attr('disabled', false);
+                $('#delete').attr('disabled', false);
+            }
         });
+
         $("#table_id").on('keyup', 'tr', function(e) {
             if(e.key === " ") {
                 $('tr.selected').removeClass('selected'); //clear other selections
@@ -191,6 +203,44 @@
                 $('#delete').attr('disabled', false);
             }
         });
+        $(document).on("keyup", function(e) {
+            if(e.key === "Escape") {
+                $('tr.selected').removeClass('selected'); //clear all selections
+                $('#edit').attr('disabled', true);
+                $('#delete').attr('disabled', true);
+            }
+        });
+    </script>
+
+    <script>
+    // This entire script section is quite hacky and brittle. It will break if
+    // the rows of the table are rearranged, and currently has issues mapping
+    // abstract values after translation back into form elements. A fix probably
+    // requires rethinking how we render the table, and possibly moving to a
+    // cleaner frontend/backend split where the table is rendered completely on
+    // the frontend so the frontend has access to the underlying data.
+        function fill_form_from_row(row, form) {
+            console.log("Filling form from row")
+            console.log(row)
+            console.log(form)
+            form.find("#id_imsi").val(row[3])
+            form.find("#id_first_name").val(row[2])
+            form.find("#id_last_name").val(row[2])
+            form.find("#id_is_local").val(row[5])
+            form.find("#id_role").val(row[6])
+            form.find("#id_connection_status").val(row[7])
+            form.find("#id_last_time_online").val(row[8])
+            form.find("#id_rate_limit").val(row[9])
+        }
+
+        function mapTable(e, form_id) {
+            let table = $("#table_id").DataTable();
+            let rowData = table.row(".selected").data()
+            fill_form_from_row(rowData, $("#"+form_id))
+        }
+
+        $("#edit").on("click", e => mapTable(e, "edit_form"))
+        $("#delete").on("click", e => mapTable(e, "delete_form"))
     </script>
 
     <script>
