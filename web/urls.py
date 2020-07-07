@@ -26,6 +26,9 @@ urlpatterns = [
     url(r'^network/stats/?$', views.network_stats, name='network_stats'),
     url(r'^profiles/?$', views.profiles, name='profiles'),
     url(r'^network/users/?$', views.network_users, name='network_users'),
+    url(r'^addform/?$', views.add_form, name='add_form'),
+    url(r'^editform/?$', views.edit_form, name='edit_form'),
+    url(r'^deleteform/?$', views.delete_form, name='delete_form'),
     path('', views.public_info, name='home')
 ]
 

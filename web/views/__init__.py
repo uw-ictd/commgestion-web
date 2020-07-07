@@ -24,13 +24,11 @@ from . import (_api, _network_stats, _network_users, _profiles, _public)
 # Redefine api as a publicly exportable top level object in the package.
 api = _api
 
-
 def public_info(request):
     return render(request,
                   'public_info.html',
                   context=_public.generate_context(),
                   )
-
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -49,35 +47,27 @@ def profiles(request):
     if request.method == 'POST':
         form = AddSubscriberForm(request.POST)
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-            imsi = form.cleaned_data['imsi']
-            role = form.cleaned_data['role']
-            connection_status = form.cleaned_data['connection_status']
-            rate_limit = form.cleaned_data['rate_limit']
-
             with transaction.atomic():
                 User.objects.create(
-                    username=imsi,
-                    email=email,
+                    username=form.cleaned_data['imsi'],
+                    email=form.cleaned_data['email'],
                     password="temp",
                 )
-                user = User.objects.get(username=imsi)
-                roleNum = roleConversion(role)
-                connectNum = connectionConversion(connection_status)
+                user = User.objects.get(username=form.cleaned_data['imsi'])
+                roleNum = roleConversion(form.cleaned_data['role'])
+                statusNum = connectionConversion(form.cleaned_data['connection_status'])
+
                 Subscriber.objects.create(
                     user=user,
-                    phonenumber=phone,
-                    display_name=first_name + " " + last_name,
-                    imsi=imsi,
+                    phonenumber=form.cleaned_data['phone'],
+                    display_name=form.cleaned_data['first_name'] + " " + form.cleaned_data['last_name'],
+                    imsi=form.cleaned_data['imsi'],
                     guti="guti_value" + str(random.randint(0, 100)),
                     is_local=True, #how do we determine local or not local
                     role=roleNum,
-                    connectivity_status=connectNum,
+                    connectivity_status=statusNum,
                     last_time_online=timezone.now(),
-                    rate_limit_kbps=rate_limit,
+                    rate_limit_kbps=form.cleaned_data['rate_limit'],
                 )
         else:
             context['add_form'] = form
@@ -92,12 +82,12 @@ def roleConversion(roleString):
     if roleString == 'User':
         return 2
 
-def connectionConversion(string):
-    if string == 'Online':
+def connectionConversion(connection):
+    if connection == 'Online':
         return 1
-    if string == 'Offline':
+    if connection == 'Offline':
         return 2
-    if string == 'Blocked':
+    if connection == 'Blocked':
         return 3
 
 @login_required
@@ -118,9 +108,10 @@ def network_users(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def addForm(request):
+def add_form(request):
     if request.method == 'POST':
         form = AddSubscriberForm(request.POST)
+
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -133,3 +124,16 @@ def addForm(request):
             rate_limit = form.cleaned_data['rate_limit']
             connection_status = form.cleaned_data['connection_status']
             context = network_users.lookup_user(imsi)
+        else:
+            print(form.errors)
+    return render(request, 'add_form.html', context=AddSubscriberForm())
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def edit_form(request):
+    return render(request, 'edit_form.html', context=EditSubscriberForm())
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def delete_form(request):
+    return render(request, 'delete_form.html', context=DeleteSubscriberForm())
