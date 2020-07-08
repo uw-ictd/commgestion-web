@@ -44,36 +44,6 @@ def profiles(request):
     context['add_form'] = AddSubscriberForm()
     context['edit_form'] = EditSubscriberForm()
     context['del_form'] = DeleteSubscriberForm()
-    if request.method == 'POST':
-        form = AddSubscriberForm(request.POST)
-        if form.is_valid():
-            with transaction.atomic():
-                User.objects.create(
-                    username=form.cleaned_data['imsi'],
-                    email=form.cleaned_data['email'],
-                    password="temp",
-                )
-                user = User.objects.get(username=form.cleaned_data['imsi'])
-                roleNum = roleConversion(form.cleaned_data['role'])
-                statusNum = connectionConversion(form.cleaned_data['connection_status'])
-
-                Subscriber.objects.create(
-                    user=user,
-                    phonenumber=form.cleaned_data['phone'],
-                    display_name=form.cleaned_data['first_name'] + " " + form.cleaned_data['last_name'],
-                    imsi=form.cleaned_data['imsi'],
-                    guti="guti_value" + str(random.randint(0, 100)),
-                    is_local=True, #how do we determine local or not local
-                    role=roleNum,
-                    connectivity_status=statusNum,
-                    last_time_online=timezone.now(),
-                    rate_limit_kbps=form.cleaned_data['rate_limit'],
-                )
-        else:
-            context['add_form'] = form
-            print(form.errors)
-            print('invalid')
-
     return render(request, 'profiles.html', context=context)
 
 def roleConversion(roleString):
@@ -111,29 +81,40 @@ def network_users(request):
 def add_form(request):
     if request.method == 'POST':
         form = AddSubscriberForm(request.POST)
-
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
-            imsi = form.cleaned_data['imsi']
-            # guti = form.cleaned_data['guti']
-            # phone = form.cleaned_data['phone']
-            # resident_status = form.cleaned_data['resident_status']
-            role = form.cleaned_data['role']
-            rate_limit = form.cleaned_data['rate_limit']
-            connection_status = form.cleaned_data['connection_status']
-            context = network_users.lookup_user(imsi)
+            with transaction.atomic():
+                User.objects.create(
+                    username=form.cleaned_data['imsi'],
+                    email=form.cleaned_data['email'],
+                    password="temp",
+                )
+                user = User.objects.get(username=form.cleaned_data['imsi'])
+                roleNum = roleConversion(form.cleaned_data['role'])
+                statusNum = connectionConversion(form.cleaned_data['connection_status'])
+
+                Subscriber.objects.create(
+                    user=user,
+                    phonenumber=form.cleaned_data['phone'],
+                    display_name=form.cleaned_data['first_name'] + " " + form.cleaned_data['last_name'],
+                    imsi=form.cleaned_data['imsi'],
+                    guti="guti_value" + str(random.randint(0, 100)),
+                    is_local=True, #how do we determine local or not local
+                    role=roleNum,
+                    connectivity_status=statusNum,
+                    last_time_online=timezone.now(),
+                    rate_limit_kbps=form.cleaned_data['rate_limit'],
+                )
         else:
             print(form.errors)
-    return render(request, 'add_form.html', context=AddSubscriberForm())
+            print('invalid')
+    return profiles(request)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def edit_form(request):
-    return render(request, 'edit_form.html', context=EditSubscriberForm())
+    return profiles(request)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def delete_form(request):
-    return render(request, 'delete_form.html', context=DeleteSubscriberForm())
+    return profiles(request)

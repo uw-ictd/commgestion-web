@@ -119,7 +119,7 @@ class DeleteSubscriberForm(forms.Form):
 
     def clean_first_name(self):
         name = self.cleaned_data['first_name']
-        return name;
+        return name
 
     def clean_last_name(self):
         lastName = self.cleaned_data['last_name']

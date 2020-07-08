@@ -31,7 +31,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Add a Subscriber</h2>
-                    <form method="post" action="{% url 'profiles' %}" data-parsley-validate>
+                    <form method="post" action="{% url 'add_form' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
                             {% for field in add_form %}
@@ -60,7 +60,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Edit a Subscriber</h2>
-                    <form id="edit_form" role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
+                    <form id="edit_form" role="form" method="POST" action="{% url 'edit_form' %}" data-parsley-validate>
                         {% csrf_token %}
                         {% for hidden_field in edit_form.hidden_fields %}
                             {{ hidden_field.errors }}
@@ -89,7 +89,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h2>Delete a Subscriber</h2>
-                    <form id="delete_form" role="form" method="POST" action="{% url 'profiles' %}" data-parsley-validate>
+                    <form id="delete_form" role="form" method="POST" action="{% url 'delete_form' %}" data-parsley-validate>
                         {% csrf_token %}
                         {% for hidden_field in del_form.hidden_fields %}
                             {{ hidden_field.errors }}
