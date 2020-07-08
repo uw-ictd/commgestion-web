@@ -40,10 +40,6 @@ class EditSubscriberForm(forms.Form):
     imsi = forms.RegexField(label="IMSI", help_text='10-digit number on SIM card', regex='[0-9]{10}', min_length=10, max_length=10, error_messages = {
         'required':"Please Enter 10 digit number"
     }, strip=True, widget=forms.HiddenInput())
-    # guti = forms.RegexField(label="GUTI", help_text='5 digits ???? following IMSI value', regex=r'^[0-9]{5}$', strip=True)
-    # phone = forms.RegexField(label="Phone Number", regex=r'^[0-9]{5}$', strip=True)
-    # resident_status = forms.ChoiceField(choices=LOCAL, label='Local Resident?')
-    # password = forms.CharField(widget = forms.PasswordInput())
     role = forms.ChoiceField(choices=ROLES)
     connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
     rate_limit = forms.DecimalField()
@@ -84,7 +80,6 @@ class AddSubscriberForm(forms.Form):
         strip=True,
     )
     # guti = forms.RegexField(label="GUTI", help_text='5 digits ???? following IMSI value', regex=r'^[0-9]{5}$', strip=True)
-    # resident_status = forms.ChoiceField(choices=LOCAL, label='Local Resident?')
 
     def clean_imsi(self):
         """Ensure the imsi provided meets application uniqueness constraints

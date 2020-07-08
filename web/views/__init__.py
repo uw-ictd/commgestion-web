@@ -1,12 +1,9 @@
 import random
-
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
 from datetime import timedelta
-
-import django.http
 from django.utils import timezone
 from django.db import transaction
 
@@ -112,6 +109,10 @@ def add_form(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def edit_form(request):
+    context = _profiles.generate_table()
+    context['add_form'] = AddSubscriberForm()
+    context['edit_form'] = EditSubscriberForm()
+    context['del_form'] = DeleteSubscriberForm()
     return profiles(request)
 
 @login_required

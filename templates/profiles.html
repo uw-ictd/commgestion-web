@@ -13,7 +13,7 @@
 {% block main %}
     <br/>
     <!-- Button trigger modal -->
-    <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalAddForm">
+    <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalAddForm" disabled>
         Add Subscriber
     </button>
 
@@ -179,19 +179,22 @@
             $('tr.selected').removeClass('selected'); //clear other selections
             $('#edit').attr('disabled', true);
             $('#delete').attr('disabled', true);
+            $('#add').attr('disabled', false);
         });
         $(document).on('click', 'tr', function(e) {
             // Toggle the selection state
             if ($(this).hasClass("selected")) {
                 $(this).removeClass('selected');
                 $('#edit').attr('disabled', true);
-                $('#delete').attr('disabled', true) ;
+                $('#delete').attr('disabled', true);
+                $('#add').attr('disabled', false);
             }
             else {
                 $('tr.selected').removeClass('selected'); //clear other selections
                 $(this).addClass('selected');
                 $('#edit').attr('disabled', false);
                 $('#delete').attr('disabled', false);
+                $('#add').attr('disabled', true);
             }
         });
 
