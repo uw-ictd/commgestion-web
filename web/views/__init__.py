@@ -109,10 +109,6 @@ def add_form(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def edit_form(request):
-    context = _profiles.generate_table()
-    context['add_form'] = AddSubscriberForm()
-    context['edit_form'] = EditSubscriberForm()
-    context['del_form'] = DeleteSubscriberForm()
     return profiles(request)
 
 @login_required
