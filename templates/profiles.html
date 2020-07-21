@@ -6,7 +6,7 @@
 {% block header_extra %}
     <script type="text/javascript" src="{% static 'js/parsley2.9.2.min.js' %}"></script>
 
-    <script src="{% static 'js/jquery.dataTables.min.js' %}" async></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css' %}">
 {% endblock %}
 
@@ -124,7 +124,7 @@
             <th>{% trans "GUTI" %}</th>
             <th>{% trans "Local" %}</th>
             <th>{% trans "Role" %}</th>
-            <th>{% trans "Connectivity Status" %}</th>
+            <th>{% trans "Connection Status" %}</th>
             <th>{% trans "Last Online" %}</th>
             <th>{% trans "Rate Limit Kbps" %}</th>
             </thead>
@@ -152,11 +152,9 @@
                     {% endif %}
 
                     {% if d.connectivity_status == 1 %}
-                        <td>{%trans "Connected" %}</td>
+                        <td>{%trans "Authorized" %}</td>
                     {% elif d.connectivity_status == 2 %}
-                        <td>{% trans "Not Connected" %}</td>
-                    {% else %}
-                        <td>{% trans "Deactivated" %}</td>
+                        <td>{% trans "Blocked" %}</td>
                     {% endif %}
 
                     <td>{{d.last_time_online}}</td>

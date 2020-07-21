@@ -19,9 +19,8 @@ class Subscriber(models.Model):
         RESEARCHER_ROLE = 3
 
     class ConnectionStatus:
-        ONLINE = 1
-        OFFLINE = 2
-        BLOCKED = 3
+        AUTHORIZED = 1
+        BLOCKED = 2
 
     ROLE_CHOICES = (
         (Role.ADMIN_ROLE, u'admin'),
@@ -30,8 +29,7 @@ class Subscriber(models.Model):
     )
 
     CONN_CHOICES = (
-        (ConnectionStatus.ONLINE, u'online'),
-        (ConnectionStatus.OFFLINE, u'offline'),
+        (ConnectionStatus.AUTHORIZED, u'authorized'),
         (ConnectionStatus.BLOCKED, u'blocked'),
     )
 

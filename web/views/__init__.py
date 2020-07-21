@@ -50,12 +50,10 @@ def roleConversion(roleString):
         return 2
 
 def connectionConversion(connection):
-    if connection == 'Online':
+    if connection == 'Authorized':
         return 1
-    if connection == 'Offline':
-        return 2
     if connection == 'Blocked':
-        return 3
+        return 2
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -109,9 +107,37 @@ def add_form(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def edit_form(request):
+    if request.method == 'POST':
+        form = EditSubscriberForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                prev_user = User.objects.get(username=form.cleaned_data['imsi'])
+                prev_subscriber = Subscriber.objects.get(user=prev_user)
+                prev_subscriber.phonenumber = form.cleaned_data['phone']
+                prev_subscriber.display_name = form.cleaned_data['first_name'] + " " + form.cleaned_data['last_name']
+                prev_subscriber.imsi = form.cleaned_data['imsi']
+                prev_subscriber.role = roleConversion(form.cleaned_data['role'])
+                prev_subscriber.connectivity_status = connectionConversion(form.cleaned_data['connection_status'])
+                prev_subscriber.rate_limit_kbps = form.cleaned_data['rate_limit']
+                prev_subscriber.last_time_online = timezone.now()
+                prev_subscriber.save()
+
+        else:
+            print(form.errors)
+            print('invalid')
     return profiles(request)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def delete_form(request):
+    if request.method == 'POST':
+        form = DeleteSubscriberForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                prev_user = User.objects.get(username=form.cleaned_data['imsi'])
+                Subscriber.objects.filter(user=prev_user).delete()
+                User.objects.filter(username=form.cleaned_data['imsi']).delete()
+        else:
+            print(form.errors)
+            print('invalid')
     return profiles(request)

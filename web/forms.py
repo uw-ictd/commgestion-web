@@ -32,32 +32,10 @@ class UserSearchTimeForm(forms.Form):
 class EditSubscriberForm(forms.Form):
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
-    CONN_STATUS = (('Online', 'Online'), ('Offline', 'Offline'), ('Blocked', 'Blocked'))
+    CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
 
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
-    email = forms.EmailField(label='Email Address')
-    imsi = forms.RegexField(label="IMSI", help_text='10-digit number on SIM card', regex='[0-9]{10}', min_length=10, max_length=10, error_messages = {
-        'required':"Please Enter 10 digit number"
-    }, strip=True, widget=forms.HiddenInput())
-    role = forms.ChoiceField(choices=ROLES)
-    connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
-    rate_limit = forms.DecimalField()
-
-# add form
-@parsleyfy
-class AddSubscriberForm(forms.Form):
-    ROLES = (('Admin', 'Admin'), ('User', 'User'))
-    LOCAL = (('Yes', 'Yes'), ('No', 'No'))
-    CONN_STATUS = (
-        ('Online', 'Online'),
-        ('Offline', 'Offline'),
-        ('Blocked', 'Blocked')
-    )
-
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
-    email = forms.EmailField(label='Email Address')
     imsi = forms.RegexField(
         label="IMSI",
         help_text='10-digit number on SIM card',
@@ -79,7 +57,37 @@ class AddSubscriberForm(forms.Form):
         min_length=4,
         strip=True,
     )
-    # guti = forms.RegexField(label="GUTI", help_text='5 digits ???? following IMSI value', regex=r'^[0-9]{5}$', strip=True)
+
+# add form
+@parsleyfy
+class AddSubscriberForm(forms.Form):
+    ROLES = (('Admin', 'Admin'), ('User', 'User'))
+    LOCAL = (('Yes', 'Yes'), ('No', 'No'))
+    CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
+
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
+    imsi = forms.RegexField(
+        label="IMSI",
+        help_text='10-digit number on SIM card',
+        regex='[0-9]*',
+        min_length=10,
+        max_length=10,
+        error_messages={'required': "Please Enter 10 digit number"},
+        strip=True,
+    )
+    role = forms.ChoiceField(choices=ROLES)
+    connection_status = forms.ChoiceField(
+        choices=CONN_STATUS,
+        label='Connection Status',
+    )
+    rate_limit = forms.DecimalField()
+    phone = forms.RegexField(
+        label="Phone Number",
+        regex=r'[0-9]*',
+        min_length=4,
+        strip=True,
+    )
 
     def clean_imsi(self):
         """Ensure the imsi provided meets application uniqueness constraints
@@ -99,12 +107,10 @@ class AddSubscriberForm(forms.Form):
 class DeleteSubscriberForm(forms.Form):
     ROLES = (('Admin', 'Admin'), ('User', 'User'))
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
-    CONN_STATUS = (('Online', 'Online'), ('Offline', 'Offline'), ('Blocked', 'Blocked'))
+    CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
 
     first_name = forms.CharField(label='First Name')
-
     last_name = forms.CharField(label='Last Name')
-    email = forms.EmailField(label='Email Address')
     imsi = forms.RegexField(label="IMSI", help_text='10-digit number on SIM card', regex='[0-9]{10}', min_length=10, max_length=10, error_messages = {
         'required':"Please Enter 10 digit number"
     }, strip=True, widget=forms.HiddenInput())
