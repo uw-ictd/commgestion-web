@@ -89,7 +89,7 @@ def add_subscribers(subscriber_total=10):
             guti=guti_value,
             is_local=True if i % 2 == 0 else False,
             role=Subscriber.Role.USER_ROLE,
-            connectivity_status=Subscriber.ConnectionStatus.ONLINE,
+            connectivity_status=Subscriber.ConnectionStatus.AUTHORIZED,
             last_time_online=timezone.now(),
             rate_limit_kbps=100,
         )
