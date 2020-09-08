@@ -15,7 +15,7 @@ from web.forms import (
 )
 from web.models import Subscriber
 
-from . import (_api, _network_stats, _network_users, _profiles, _public)
+from . import (_api, _network_stats, _network_users, _subscribers, _public)
 
 
 # Redefine api as a publicly exportable top level object in the package.
@@ -36,12 +36,12 @@ def network_stats(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def profiles(request):
-    context = _profiles.generate_table()
+def subscribers(request):
+    context = _subscribers.generate_table()
     context['add_form'] = AddSubscriberForm()
     context['edit_form'] = EditSubscriberForm()
     context['del_form'] = DeleteSubscriberForm()
-    return render(request, 'profiles.html', context=context)
+    return render(request, 'subscribers.html', context=context)
 
 def roleConversion(roleString):
     if roleString == 'Admin':
@@ -105,7 +105,7 @@ def add_form(request):
         else:
             print(form.errors)
             print('invalid')
-    return profiles(request)
+    return subscribers(request)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -127,7 +127,7 @@ def edit_form(request):
         else:
             print(form.errors)
             print('invalid')
-    return profiles(request)
+    return subscribers(request)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -142,4 +142,4 @@ def delete_form(request):
         else:
             print(form.errors)
             print('invalid')
-    return profiles(request)
+    return subscribers(request)
