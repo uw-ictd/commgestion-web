@@ -66,13 +66,12 @@ def add_subscribers(subscriber_total=10):
     imsi_format = "123456789{}"
     email_format = "person{}@email.com"
     password_format = "password{}"
-    guti_format = "guti_value{}"
 
     for i in range(subscriber_total):
         imsi_value = imsi_format.format(i)
         email_value = email_format.format(i)
         password_value = password_format.format(i)
-        guti_value = guti_format.format(i)
+
         User.objects.create_user(
             username=imsi_value,
             email=email_value,
@@ -83,18 +82,21 @@ def add_subscribers(subscriber_total=10):
 
         Subscriber.objects.create(
             user=created_user,
-            phonenumber=imsi_value,
+            msisdn="713202{}".format(i),
             display_name=email_value.split('@')[0],
             imsi=imsi_value,
-            guti=guti_value,
             is_local=True if i % 2 == 0 else False,
             role=Subscriber.Role.USER_ROLE,
-            connectivity_status=Subscriber.ConnectionStatus.AUTHORIZED,
+            authorization_status=Subscriber.ConnectionStatus.AUTHORIZED,
             last_time_online=timezone.now(),
             rate_limit_kbps=100,
+            equipment="equipment name {}".format(i),
+            created=timezone.now(),
+            subscription_date=timezone.now(),
+            subscription_status=Subscriber.SubscriptionStatusKinds.PAID,
         )
 
-        created_subscriber = Subscriber.objects.get(phonenumber=imsi_value)
+        created_subscriber = Subscriber.objects.get(imsi=imsi_value)
 
         for j in range(30):
             SubscriberUsage.objects.create(

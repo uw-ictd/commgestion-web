@@ -22,6 +22,10 @@ class Subscriber(models.Model):
         AUTHORIZED = 1
         BLOCKED = 2
 
+    class SubscriptionStatusKinds:
+        PAID = 1
+        UNPAID = 2
+
     ROLE_CHOICES = (
         (Role.ADMIN_ROLE, u'admin'),
         (Role.USER_ROLE, u'user'),
@@ -33,18 +37,26 @@ class Subscriber(models.Model):
         (ConnectionStatus.BLOCKED, u'blocked'),
     )
 
+    SUBSCRIPTION_STATUS_CHOICES = (
+        (SubscriptionStatusKinds.PAID, 'paid'),
+        (SubscriptionStatusKinds.UNPAID, 'unpaid'),
+    )
+
     objects = SubscriberManager()
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phonenumber = models.CharField(max_length=50)
+    msisdn = models.CharField(max_length=50)
     display_name = models.CharField(max_length=100)
     imsi = models.CharField(max_length=50)
-    guti = models.CharField(max_length=50)
     is_local = models.BooleanField()
     role = models.IntegerField(choices=ROLE_CHOICES)  # TODO: Check if this can be replaced from auth.groups in User
-    connectivity_status = models.IntegerField(choices=CONN_CHOICES)
+    authorization_status = models.IntegerField(choices=CONN_CHOICES)
     last_time_online = models.DateTimeField()
     rate_limit_kbps = models.IntegerField()
+    equipment = models.CharField(max_length=50)
+    created = models.DateTimeField()
+    subscription_date = models.DateTimeField()
+    subscription_status = models.IntegerField(choices=SUBSCRIPTION_STATUS_CHOICES)
 
     def __str__(self):
         return "Subscriber: {}".format(self.imsi)

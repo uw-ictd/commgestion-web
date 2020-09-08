@@ -36,13 +36,13 @@ class SubscriberModelTest(TestCase):
 
         # Validating the Subscriber information.
         self.assertEqual(created_subscriber.user, created_user)
-        self.assertEqual(created_subscriber.phonenumber, IMSI_VALUE)
+        self.assertEqual(created_subscriber.msisdn, IMSI_VALUE)
         self.assertEqual(created_subscriber.display_name, 'person')
         self.assertEqual(created_subscriber.imsi, IMSI_VALUE)
         self.assertEqual(created_subscriber.guti, GUTI_VALUE)
         self.assertTrue(created_subscriber.is_local)
         self.assertEqual(created_subscriber.role, Subscriber.Role.USER_ROLE)
-        self.assertEqual(created_subscriber.connectivity_status, Subscriber.ConnectionStatus.ONLINE)
+        self.assertEqual(created_subscriber.authorization_status, Subscriber.ConnectionStatus.ONLINE)
         self.assertEqual(created_subscriber.last_time_online, INSERT_TIMESTAMP)
         self.assertEqual(created_subscriber.rate_limit_kbps, 100)
 

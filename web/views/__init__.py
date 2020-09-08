@@ -80,24 +80,27 @@ def add_form(request):
             with transaction.atomic():
                 User.objects.create(
                     username=form.cleaned_data['imsi'],
-                    email=form.cleaned_data['email'],
+                    email="",
                     password="temp",
                 )
                 user = User.objects.get(username=form.cleaned_data['imsi'])
-                roleNum = roleConversion(form.cleaned_data['role'])
-                statusNum = connectionConversion(form.cleaned_data['connection_status'])
+                roleNum = Subscriber.Role.USER_ROLE
+                statusNum = connectionConversion(form.cleaned_data['authorization_status'])
 
                 Subscriber.objects.create(
                     user=user,
-                    phonenumber=form.cleaned_data['phone'],
-                    display_name=form.cleaned_data['first_name'] + " " + form.cleaned_data['last_name'],
+                    msisdn=form.cleaned_data['msisdn'],
+                    display_name=form.cleaned_data['name'],
                     imsi=form.cleaned_data['imsi'],
-                    guti="guti_value" + str(random.randint(0, 100)),
                     is_local=True, #how do we determine local or not local
                     role=roleNum,
-                    connectivity_status=statusNum,
+                    authorization_status=statusNum,
                     last_time_online=timezone.now(),
                     rate_limit_kbps=form.cleaned_data['rate_limit'],
+                    equipment="unknown",
+                    created=timezone.now(),
+                    subscription_date=timezone.now(),
+                    subscription_status=Subscriber.SubscriptionStatusKinds.PAID,
                 )
         else:
             print(form.errors)
@@ -113,11 +116,10 @@ def edit_form(request):
             with transaction.atomic():
                 prev_user = User.objects.get(username=form.cleaned_data['imsi'])
                 prev_subscriber = Subscriber.objects.get(user=prev_user)
-                prev_subscriber.phonenumber = form.cleaned_data['phone']
-                prev_subscriber.display_name = form.cleaned_data['first_name'] + " " + form.cleaned_data['last_name']
+                prev_subscriber.msisdn = form.cleaned_data['msisdn']
+                prev_subscriber.display_name = form.cleaned_data['name']
                 prev_subscriber.imsi = form.cleaned_data['imsi']
-                prev_subscriber.role = roleConversion(form.cleaned_data['role'])
-                prev_subscriber.connectivity_status = connectionConversion(form.cleaned_data['connection_status'])
+                prev_subscriber.authorization_status = connectionConversion(form.cleaned_data['authorization_status'])
                 prev_subscriber.rate_limit_kbps = form.cleaned_data['rate_limit']
                 prev_subscriber.last_time_online = timezone.now()
                 prev_subscriber.save()

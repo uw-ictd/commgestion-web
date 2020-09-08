@@ -117,47 +117,41 @@
         <table id="table_id" class="table table-striped table-bordered" cellspacing="1" width="100%">
 
             <thead>
-            <th>{% trans "User" %}</th>
-            <th>{% trans "Phone Number" %}</th>
-            <th>{% trans "Display Name" %}</th>
-            <th>{% trans "IMSI" %}</th>
-            <th>{% trans "GUTI" %}</th>
-            <th>{% trans "Local" %}</th>
-            <th>{% trans "Role" %}</th>
-            <th>{% trans "Connection Status" %}</th>
+            <th>{% trans "Activation Date" %}</th>
             <th>{% trans "Last Online" %}</th>
+            <th>{% trans "Subscription Date" %}</th>
+            <th>{% trans "Subscription Status" %}</th>
+            <th>{% trans "Authorization Status" %}</th>
+            <th>{% trans "Phone Number" %}</th>
+            <th>{% trans "IMSI" %}</th>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Location" %}</th>
             <th>{% trans "Rate Limit Kbps" %}</th>
             </thead>
             <tbody>
             {% for d in data %}
                 <tr role="button", tabindex="0">
-                    <td>{{d.user}}</td>
-                    <td>{{d.phonenumber}}</td>
-                    <td>{{d.display_name}}</td>
-                    <td>{{d.imsi}}</td>
-                    <td>{{d.guti}}</td>
+                    <td>{{d.created}}</td>
+                    <td>{{d.last_time_online}}</td>
+                    <td>{{d.subscription_date}}</td>
+                    <td>{{d.subscription_status}}</td>
 
-                    {% if d.is_local == True%}
-                        <td>{% trans "Yes" %}</td>
-                    {% else %}
-                        <td>{% trans "No" %}</td>
-                    {% endif %}
-
-                    {%if d.role == 1 %}
-                        <td>{% trans "Admin" %}</td>
-                    {%elif d.role == 2 %}
-                        <td>{% trans "User" %}</td>
-                    {%else%}
-                        <td>{% trans "Researcher" %}</td>
-                    {% endif %}
-
-                    {% if d.connectivity_status == 1 %}
+                    {% if d.authorization_status == 1 %}
                         <td>{%trans "Authorized" %}</td>
-                    {% elif d.connectivity_status == 2 %}
+                    {% elif d.authorization_status == 2 %}
                         <td>{% trans "Blocked" %}</td>
                     {% endif %}
 
-                    <td>{{d.last_time_online}}</td>
+                    <td>{{d.msisdn}}</td>
+                    <td>{{d.imsi}}</td>
+                    <td>{{d.display_name}}</td>
+
+                    {% if d.is_local == True%}
+                        <td>{% trans "Local" %}</td>
+                    {% else %}
+                        <td>{% trans "Roaming" %}</td>
+                    {% endif %}
+
                     <td>{{d.rate_limit_kbps}}</td>
                 </tr>
             {% endfor %}
@@ -224,14 +218,12 @@
             console.log("Filling form from row")
             console.log(row)
             console.log(form)
-            form.find("#id_imsi").val(row[3])
-            form.find("#id_first_name").val(row[2])
-            form.find("#id_last_name").val(row[2])
-            form.find("#id_is_local").val(row[5])
-            form.find("#id_role").val(row[6])
-            form.find("#id_connection_status").val(row[7])
-            form.find("#id_last_time_online").val(row[8])
-            form.find("#id_rate_limit").val(row[9])
+            form.find("#id_imsi").val(row[6]);
+            form.find("#id_name").val(row[7]);
+            form.find("#id_is_local").val(row[9]);
+            form.find("#id_authorization_status").val(row[4]);
+            form.find("#id_rate_limit").val(row[9]);
+            form.find("#id_msisdn").val(row[5]);
         }
 
         function mapTable(e, form_id) {

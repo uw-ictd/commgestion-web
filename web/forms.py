@@ -34,8 +34,7 @@ class EditSubscriberForm(forms.Form):
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
     CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
 
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
+    name = forms.CharField(label='Name')
     imsi = forms.RegexField(
         label="IMSI",
         help_text='10-digit number on SIM card',
@@ -45,13 +44,12 @@ class EditSubscriberForm(forms.Form):
         error_messages={'required': "Please Enter 10 digit number"},
         strip=True,
     )
-    role = forms.ChoiceField(choices=ROLES)
-    connection_status = forms.ChoiceField(
+    authorization_status = forms.ChoiceField(
         choices=CONN_STATUS,
         label='Connection Status',
     )
     rate_limit = forms.DecimalField()
-    phone = forms.RegexField(
+    msisdn = forms.RegexField(
         label="Phone Number",
         regex=r'[0-9]*',
         min_length=4,
@@ -65,8 +63,7 @@ class AddSubscriberForm(forms.Form):
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
     CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
 
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
+    name = forms.CharField(label='Name')
     imsi = forms.RegexField(
         label="IMSI",
         help_text='10-digit number on SIM card',
@@ -76,13 +73,12 @@ class AddSubscriberForm(forms.Form):
         error_messages={'required': "Please Enter 10 digit number"},
         strip=True,
     )
-    role = forms.ChoiceField(choices=ROLES)
-    connection_status = forms.ChoiceField(
+    authorization_status = forms.ChoiceField(
         choices=CONN_STATUS,
         label='Connection Status',
     )
     rate_limit = forms.DecimalField()
-    phone = forms.RegexField(
+    msisdn = forms.RegexField(
         label="Phone Number",
         regex=r'[0-9]*',
         min_length=4,
@@ -109,8 +105,7 @@ class DeleteSubscriberForm(forms.Form):
     LOCAL = (('Yes', 'Yes'), ('No', 'No'))
     CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
 
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
+    name = forms.CharField(label='Name')
     imsi = forms.RegexField(label="IMSI", help_text='10-digit number on SIM card', regex='[0-9]{10}', min_length=10, max_length=10, error_messages = {
         'required':"Please Enter 10 digit number"
     }, strip=True, widget=forms.HiddenInput())
@@ -118,10 +113,6 @@ class DeleteSubscriberForm(forms.Form):
     connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
     rate_limit = forms.DecimalField()
 
-    def clean_first_name(self):
-        name = self.cleaned_data['first_name']
+    def clean_name(self):
+        name = self.cleaned_data['name']
         return name
-
-    def clean_last_name(self):
-        lastName = self.cleaned_data['last_name']
-        return lastName

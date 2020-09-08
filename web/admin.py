@@ -17,8 +17,8 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(Subscriber)
 class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ('user', 'phonenumber', 'display_name', 'imsi', 'guti', 'is_local', 'role', 'connectivity_status',
-                    'last_time_online', 'rate_limit_kbps')
+    list_display = ('user', 'msisdn', 'display_name', 'imsi', 'is_local', 'role', 'authorization_status',
+                    'last_time_online', 'rate_limit_kbps', 'equipment', 'created', 'subscription_date', 'subscription_status')
 
 
 @admin.register(UserDefinedHost)
