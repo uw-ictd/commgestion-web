@@ -55,6 +55,17 @@ class EditSubscriberForm(forms.Form):
         min_length=4,
         strip=True,
     )
+    def clean_imsi(self):
+        """Ensure the imsi provided meets application uniqueness constraints
+        """
+        imsi = self.cleaned_data["imsi"]
+
+        if not User.objects.filter(username=imsi).exists():
+            raise forms.ValidationError(
+                "The IMSI {} was not found".format(imsi)
+            )
+
+        return imsi
 
 # add form
 @parsleyfy
@@ -116,3 +127,15 @@ class DeleteSubscriberForm(forms.Form):
     def clean_name(self):
         name = self.cleaned_data['name']
         return name
+
+    def clean_imsi(self):
+        """Ensure the imsi provided meets application uniqueness constraints
+        """
+        imsi = self.cleaned_data["imsi"]
+
+        if not User.objects.filter(username=imsi).exists():
+            raise forms.ValidationError(
+                "The IMSI {} was not found".format(imsi)
+            )
+
+        return imsi
