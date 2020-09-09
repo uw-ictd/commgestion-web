@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-17 19:37+0000\n"
+"POT-Creation-Date: 2020-09-09 19:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commgestion/settings.py:143
+#: commgestion/settings.py:144
 msgid "English"
 msgstr ""
 
-#: commgestion/settings.py:144
+#: commgestion/settings.py:145
 msgid "Spanish"
+msgstr ""
+
+#: templates/graphViews/publicLayout.html:9
+msgid "No Subscriber / Usage Data available."
+msgstr ""
+
+#: templates/graphViews/publicLayout.html:10
+msgid "Please add network data feed into the database."
 msgstr ""
 
 #: templates/navbar.html:10
@@ -42,7 +50,7 @@ msgid "Usage"
 msgstr ""
 
 #: templates/navbar.html:22
-msgid "Profiles"
+msgid "Subscribers"
 msgstr ""
 
 #: templates/navbar.html:33
@@ -53,134 +61,153 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: templates/profiles.html:21 templates/profiles.html:50
-msgid "User"
+#: templates/subscribers.html:34 templates/subscribers.html:55
+msgid "Add Subscriber"
 msgstr ""
 
-#: templates/profiles.html:22
-msgid "Phone Number"
+#: templates/subscribers.html:38
+msgid "Edit"
 msgstr ""
 
-#: templates/profiles.html:23
-msgid "Display Name"
+#: templates/subscribers.html:42
+msgid "Delete"
 msgstr ""
 
-#: templates/profiles.html:24
-msgid "IMSI"
+#: templates/subscribers.html:46
+msgid "Deselect"
 msgstr ""
 
-#: templates/profiles.html:25
-msgid "GUTI"
+#: templates/subscribers.html:84
+msgid "Edit Subscriber"
 msgstr ""
 
-#: templates/profiles.html:26 web/network_stats_view.py:56
-msgid "Local"
+#: templates/subscribers.html:114
+msgid "Delete Subscriber"
 msgstr ""
 
-#: templates/profiles.html:27
-msgid "Role"
+#: templates/subscribers.html:144
+msgid "Activation Date"
 msgstr ""
 
-#: templates/profiles.html:28
-msgid "Connectivity Status"
-msgstr ""
-
-#: templates/profiles.html:29
+#: templates/subscribers.html:145
 msgid "Last Online"
 msgstr ""
 
-#: templates/profiles.html:30
-msgid "Rate Limit Kpbs"
+#: templates/subscribers.html:146
+msgid "Subscription Date"
 msgstr ""
 
-#: templates/profiles.html:42
-msgid "Yes"
+#: templates/subscribers.html:147
+msgid "Subscription Status"
 msgstr ""
 
-#: templates/profiles.html:44
-msgid "No"
+#: templates/subscribers.html:148
+msgid "Authorization Status"
 msgstr ""
 
-#: templates/profiles.html:48
-msgid "Admin"
+#: templates/subscribers.html:149
+msgid "Phone Number"
 msgstr ""
 
-#: templates/profiles.html:52
-msgid "Researcher"
+#: templates/subscribers.html:150
+msgid "IMSI"
 msgstr ""
 
-#: templates/profiles.html:56
-msgid "Connected"
+#: templates/subscribers.html:151
+msgid "Name"
 msgstr ""
 
-#: templates/profiles.html:58
-msgid "Not Connected"
+#: templates/subscribers.html:152
+msgid "Location"
 msgstr ""
 
-#: templates/profiles.html:60
-msgid "Deactivated"
+#: templates/subscribers.html:153
+msgid "Rate Limit Kbps"
 msgstr ""
 
-#: web/network_stats_view.py:8
+#: templates/subscribers.html:164
+msgid "Authorized"
+msgstr ""
+
+#: templates/subscribers.html:166
+msgid "Blocked"
+msgstr ""
+
+#: templates/subscribers.html:174 web/views/_network_stats.py:56
+msgid "Local"
+msgstr ""
+
+#: templates/subscribers.html:176
+msgid "Roaming"
+msgstr ""
+
+#: web/urls.py:40
+msgid "Community Cellular Login"
+msgstr ""
+
+#: web/views/_network_stats.py:9
 msgid "Data Use (Throughput) vs. Time"
 msgstr ""
 
-#: web/network_stats_view.py:9
+#: web/views/_network_stats.py:10
 msgid "Data Use (Throughput) per Application"
 msgstr ""
 
-#: web/network_stats_view.py:10
+#: web/views/_network_stats.py:11
 msgid "Local Users and Non-Local Users"
 msgstr ""
 
-#: web/network_stats_view.py:11
+#: web/views/_network_stats.py:12
 msgid "Local Content and Non-Local"
 msgstr ""
 
-#: web/network_stats_view.py:13 web/network_stats_view.py:14
+#: web/views/_network_stats.py:14 web/views/_network_stats.py:15
 msgid "Throughput"
 msgstr ""
 
-#: web/network_stats_view.py:36
+#: web/views/_network_stats.py:36
 msgctxt "people from a place"
 msgid "Locals"
 msgstr ""
 
-#: web/network_stats_view.py:43
+#: web/views/_network_stats.py:43
 msgctxt "people from outside a place"
 msgid "Others"
 msgstr ""
 
-#: web/network_stats_view.py:63
+#: web/views/_network_stats.py:63
 msgid "External"
 msgstr ""
 
-#: web/network_users_view.py:25
+#: web/views/_network_users.py:24
 msgid "Use of community data"
 msgstr ""
 
-#: web/network_users_view.py:26
-msgid ""
-"No Data available between the chosen dates.<br>Please search for a different "
-"time."
+#: web/views/_network_users.py:31
+msgid "between"
 msgstr ""
 
-#: web/network_users_view.py:61
+#: web/views/_network_users.py:33
+msgid "and"
+msgstr ""
+
+#: web/views/_network_users.py:85 web/views/_network_users.py:87
+#: web/views/_network_users.py:90
 msgid "Other (Merged)"
 msgstr ""
 
-#: web/public_view.py:12
+#: web/views/_network_users.py:94
+msgid "No Data available between the chosen dates."
+msgstr ""
+
+#: web/views/_network_users.py:95
+msgid "Please search for a different time."
+msgstr ""
+
+#: web/views/_public.py:11
 msgid "Current network usage"
 msgstr ""
 
-#: web/public_view.py:13
-msgid "Total Throughput {}"
-msgstr ""
-
-#: web/public_view.py:14
-msgid " KBps"
-msgstr ""
-
-#: web/urls.py:36
-msgid "Community Cellular Login"
+#: web/views/_public.py:12
+msgid "Total Throughput"
 msgstr ""

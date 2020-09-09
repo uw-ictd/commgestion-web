@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-17 19:37+0000\n"
+"POT-Creation-Date: 2020-09-09 19:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Matt Johnson <matt9j@cs.uw.edu>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,13 +16,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commgestion/settings.py:143
+#: commgestion/settings.py:144
 msgid "English"
 msgstr "Ingles"
 
-#: commgestion/settings.py:144
+#: commgestion/settings.py:145
 msgid "Spanish"
 msgstr "Catalan/Español"
+
+#: templates/graphViews/publicLayout.html:9
+msgid "No Subscriber / Usage Data available."
+msgstr "La información del uso no está disponible."
+
+#: templates/graphViews/publicLayout.html:10
+msgid "Please add network data feed into the database."
+msgstr "Pide al administrador configurar este portal."
 
 #: templates/navbar.html:10
 msgid "Public"
@@ -41,8 +49,8 @@ msgid "Usage"
 msgstr "Utilización"
 
 #: templates/navbar.html:22
-msgid "Profiles"
-msgstr "Perfiles"
+msgid "Subscribers"
+msgstr "Usuarios Suscritos"
 
 #: templates/navbar.html:33
 msgid "Logout"
@@ -52,139 +60,196 @@ msgstr "Cerrar sesión"
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/profiles.html:21 templates/profiles.html:50
-msgid "User"
-msgstr "Usuario"
+#: templates/subscribers.html:34 templates/subscribers.html:55
+msgid "Add Subscriber"
+msgstr "Dar de Alta"
 
-#: templates/profiles.html:22
-msgid "Phone Number"
-msgstr "Número de teléfono"
+#: templates/subscribers.html:38
+msgid "Edit"
+msgstr "Editar"
 
-#: templates/profiles.html:23
-msgid "Display Name"
-msgstr "Nombre para mostrar"
+#: templates/subscribers.html:42
+msgid "Delete"
+msgstr "Eliminar"
 
-#: templates/profiles.html:24
-msgid "IMSI"
-msgstr "ISMI"
+#: templates/subscribers.html:46
+msgid "Deselect"
+msgstr "Deseleccionar"
 
-#: templates/profiles.html:25
-msgid "GUTI"
-msgstr "GUTI"
+#: templates/subscribers.html:84
+msgid "Edit Subscriber"
+msgstr "Editar Usuario Suscrito"
 
-#: templates/profiles.html:26 web/network_stats_view.py:56
-msgid "Local"
-msgstr "Local"
+#: templates/subscribers.html:114
+msgid "Delete Subscriber"
+msgstr "Eliminar Usuario Suscrito"
 
-#: templates/profiles.html:27
-msgid "Role"
-msgstr "Tipo de usuario"
+#: templates/subscribers.html:144
+msgid "Activation Date"
+msgstr "Fecha de Activación"
 
-#: templates/profiles.html:28
-msgid "Connectivity Status"
-msgstr "Estado de conectividad"
-
-#: templates/profiles.html:29
+#: templates/subscribers.html:145
 msgid "Last Online"
 msgstr "Ultima vez conectado"
 
-#: templates/profiles.html:30
-msgid "Rate Limit Kpbs"
+#: templates/subscribers.html:146
+msgid "Subscription Date"
+msgstr "Fecha de Suscripción"
+
+#: templates/subscribers.html:147
+msgid "Subscription Status"
+msgstr "Estado de la Suscripción"
+
+#: templates/subscribers.html:148
+msgid "Authorization Status"
+msgstr "Autorización"
+
+#: templates/subscribers.html:149
+msgid "Phone Number"
+msgstr "Número de teléfono"
+
+#: templates/subscribers.html:150
+msgid "IMSI"
+msgstr "ISMI"
+
+#: templates/subscribers.html:151
+msgid "Name"
+msgstr "Nombre"
+
+#: templates/subscribers.html:152
+msgid "Location"
+msgstr "Ubicación"
+
+#: templates/subscribers.html:153
+#| msgid "Rate Limit Kpbs"
+msgid "Rate Limit Kbps"
 msgstr "Limitación de velocidad (kbps)"
 
-#: templates/profiles.html:42
-msgid "Yes"
-msgstr "Sí"
+#: templates/subscribers.html:164
+msgid "Authorized"
+msgstr "Autorizado"
 
-#: templates/profiles.html:44
-msgid "No"
-msgstr "No"
+#: templates/subscribers.html:166
+msgid "Blocked"
+msgstr "Bloqueado"
 
-#: templates/profiles.html:48
-msgid "Admin"
-msgstr "Administrador(a)"
+#: templates/subscribers.html:174 web/views/_network_stats.py:56
+msgid "Local"
+msgstr "Local"
 
-#: templates/profiles.html:52
-msgid "Researcher"
-msgstr "Universidad"
+#: templates/subscribers.html:176
+msgid "Roaming"
+msgstr ""
 
-#: templates/profiles.html:56
-msgid "Connected"
-msgstr "Conectado(a)"
+#: web/urls.py:40
+msgid "Community Cellular Login"
+msgstr "Iniciar sesión para aministrar la red comunitaria"
 
-#: templates/profiles.html:58
-msgid "Not Connected"
-msgstr "Desconectado(a)"
-
-#: templates/profiles.html:60
-msgid "Deactivated"
-msgstr "Desactivado(a)"
-
-#: web/network_stats_view.py:8
+#: web/views/_network_stats.py:9
 msgid "Data Use (Throughput) vs. Time"
 msgstr "Uso de datos versus tiempo"
 
-#: web/network_stats_view.py:9
+#: web/views/_network_stats.py:10
 msgid "Data Use (Throughput) per Application"
 msgstr "Uso de datos por aplicación"
 
-#: web/network_stats_view.py:10
+#: web/views/_network_stats.py:11
 msgid "Local Users and Non-Local Users"
 msgstr "Usuarios locales versus extrañeros"
 
-#: web/network_stats_view.py:11
+#: web/views/_network_stats.py:12
 msgid "Local Content and Non-Local"
 msgstr "Contenido local versus externo"
 
-#: web/network_stats_view.py:13 web/network_stats_view.py:14
+#: web/views/_network_stats.py:14 web/views/_network_stats.py:15
 msgid "Throughput"
 msgstr "Rendimiento"
 
-#: web/network_stats_view.py:36
+#: web/views/_network_stats.py:36
 msgctxt "people from a place"
 msgid "Locals"
 msgstr "Locales"
 
-#: web/network_stats_view.py:43
+#: web/views/_network_stats.py:43
 msgctxt "people from outside a place"
 msgid "Others"
 msgstr "Otros"
 
-#: web/network_stats_view.py:63
+#: web/views/_network_stats.py:63
 msgid "External"
 msgstr "Externo"
 
-#: web/network_users_view.py:25
+#: web/views/_network_users.py:24
 msgid "Use of community data"
 msgstr "Uso de datos comunitarios"
 
-#: web/network_users_view.py:26
-msgid ""
-"No Data available between the chosen dates.<br>Please search for a different "
-"time."
-msgstr ""
+#: web/views/_network_users.py:31
+msgid "between"
+msgstr "entre"
 
-#: web/network_users_view.py:61
+#: web/views/_network_users.py:33
+msgid "and"
+msgstr "y"
+
+#: web/views/_network_users.py:85 web/views/_network_users.py:87
+#: web/views/_network_users.py:90
 msgid "Other (Merged)"
 msgstr "Otros (combinado)"
 
-#: web/public_view.py:12
+#: web/views/_network_users.py:94
+msgid "No Data available between the chosen dates."
+msgstr "Ningún record fue encontrado entre estas fechas"
+
+#: web/views/_network_users.py:95
+msgid "Please search for a different time."
+msgstr "Por favor seleccionar otro periodo de tiempo."
+
+#: web/views/_public.py:11
 msgid "Current network usage"
 msgstr "Uso actual"
 
-#: web/public_view.py:13
-#, fuzzy
-#| msgid "Throughput"
-msgid "Total Throughput {}"
-msgstr "Rendimiento"
+#: web/views/_public.py:12
+msgid "Total Throughput"
+msgstr "Rendimiento Total"
 
-#: web/public_view.py:14
-msgid " KBps"
-msgstr ""
+#~ msgid "Profiles"
+#~ msgstr "Perfiles"
 
-#: web/urls.py:36
-msgid "Community Cellular Login"
-msgstr "Iniciar sesión para aministrar la red comunitaria"
+#~ msgid "User"
+#~ msgstr "Usuario"
+
+#~ msgid "Display Name"
+#~ msgstr "Nombre para mostrar"
+
+#~ msgid "GUTI"
+#~ msgstr "GUTI"
+
+#~ msgid "Role"
+#~ msgstr "Tipo de usuario"
+
+#~ msgid "Connectivity Status"
+#~ msgstr "Estado de conectividad"
+
+#~ msgid "Yes"
+#~ msgstr "Sí"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#~ msgid "Admin"
+#~ msgstr "Administrador(a)"
+
+#~ msgid "Researcher"
+#~ msgstr "Universidad"
+
+#~ msgid "Connected"
+#~ msgstr "Conectado(a)"
+
+#~ msgid "Not Connected"
+#~ msgstr "Desconectado(a)"
+
+#~ msgid "Deactivated"
+#~ msgstr "Desactivado(a)"
 
 #~ msgid "Sum(throughput)"
 #~ msgstr "Cantidad de datos"
