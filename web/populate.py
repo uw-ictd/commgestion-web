@@ -63,7 +63,7 @@ def add_subscribers(subscriber_total=10):
 
     SubscriberUsage.objects.all().delete()
 
-    imsi_format = "123456789{}"
+    imsi_format = "91099{:010d}"
     email_format = "person{}@email.com"
     password_format = "password{}"
 

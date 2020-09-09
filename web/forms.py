@@ -37,11 +37,11 @@ class EditSubscriberForm(forms.Form):
     name = forms.CharField(label='Name')
     imsi = forms.RegexField(
         label="IMSI",
-        help_text='10-digit number on SIM card',
+        help_text='15-digit number on SIM card',
         regex='[0-9]*',
-        min_length=10,
-        max_length=10,
-        error_messages={'required': "Please Enter 10 digit number"},
+        min_length=15,
+        max_length=15,
+        error_messages={'required': "Please Enter 15 digit number"},
         strip=True,
     )
     authorization_status = forms.ChoiceField(
@@ -66,11 +66,11 @@ class AddSubscriberForm(forms.Form):
     name = forms.CharField(label='Name')
     imsi = forms.RegexField(
         label="IMSI",
-        help_text='10-digit number on SIM card',
+        help_text='15-digit number on SIM card',
         regex='[0-9]*',
-        min_length=10,
-        max_length=10,
-        error_messages={'required': "Please Enter 10 digit number"},
+        min_length=15,
+        max_length=15,
+        error_messages={'required': "Please Enter 15 digit number"},
         strip=True,
     )
     authorization_status = forms.ChoiceField(
@@ -106,8 +106,8 @@ class DeleteSubscriberForm(forms.Form):
     CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
 
     name = forms.CharField(label='Name')
-    imsi = forms.RegexField(label="IMSI", help_text='10-digit number on SIM card', regex='[0-9]{10}', min_length=10, max_length=10, error_messages = {
-        'required':"Please Enter 10 digit number"
+    imsi = forms.RegexField(label="IMSI", help_text='15-digit number on SIM card', regex='[0-9]{15}', min_length=15, max_length=15, error_messages = {
+        'required':"Please Enter 15 digit number"
     }, strip=True, widget=forms.HiddenInput())
     role = forms.ChoiceField(choices=ROLES)
     connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
