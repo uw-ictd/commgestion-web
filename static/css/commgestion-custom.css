@@ -19,3 +19,8 @@ div.button-container {
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
 }
+
+div.form-field {
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -53,9 +53,11 @@
                         {% csrf_token %}
                         <div class="form-group">
                             {% for field in add_form %}
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}<br/>
-                                {{ field.errors }}
+                                <div class="form-field">
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field }}
+                                    {{ field.errors }}
+                                </div>
                             {% endfor %}
                             {% if form.errors %}
                                 <p>All the errors in the form are below</p>
@@ -84,9 +86,11 @@
                         {% endfor %}
                         <div class="form-group">
                             {% for field in edit_form.visible_fields %}
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}<br/>
-                                {{ field.errors }}
+                                <div class="form-field">
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field }}
+                                    {{ field.errors }}
+                                </div>
                             {% endfor %}
                         </div>
                         <div>
@@ -112,9 +116,11 @@
                         {% endfor %}
                         <div class="form-group">
                             {% for field in del_form.visible_fields %}
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}<br/>
-                                {{ field.errors }}
+                                <div class="form-field">
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field }}
+                                    {{ field.errors }}
+                                </div>
                             {% endfor %}
                         </div>
                         <div>
