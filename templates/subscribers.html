@@ -11,8 +11,25 @@
 {% endblock %}
 
 {% block main %}
-    <br/>
+    {% if status is not None %}
+        {% if status.outcome == "success" %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+        {% elif status.outcome == "partial" %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+        {% elif status.outcome == "failure" %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+        {% else %}
+            <div class="alert alert-primary alert-dismissible" role="alert">
+        {% endif %}
+                {{ status.message | escape }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+    {% endif %}
+
     <!-- Button trigger modal -->
+    <div class="button-container">
     <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalAddForm" disabled>
         Add Subscriber
     </button>
@@ -24,6 +41,7 @@
     <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalDeleteForm" disabled>
         Delete
     </button>
+    </div>
 
     <!-- modal add form -->
     <div id="ModalAddForm" class="modal fade">
@@ -36,15 +54,13 @@
                         <div class="form-group">
                             {% for field in add_form %}
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}
+                                {{ field }}<br/>
                                 {{ field.errors }}
-                                <br/>
                             {% endfor %}
                             {% if form.errors %}
                                 <p>All the errors in the form are below</p>
                                 {{ form.errors }}
                                 <br/>
-
                             {% endif %}
                         </div>
                         <input type="submit" class="btn btn-success" value="Submit">
@@ -69,9 +85,8 @@
                         <div class="form-group">
                             {% for field in edit_form.visible_fields %}
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}
+                                {{ field }}<br/>
                                 {{ field.errors }}
-                                <br/>
                             {% endfor %}
                         </div>
                         <div>
@@ -98,9 +113,8 @@
                         <div class="form-group">
                             {% for field in del_form.visible_fields %}
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}
+                                {{ field }}<br/>
                                 {{ field.errors }}
-                                <br/>
                             {% endfor %}
                         </div>
                         <div>
@@ -242,5 +256,19 @@
             window.history.replaceState( null, null, window.location.href );
         }
     </script>
+
+    {% if active_form is not None %}
+    <script>
+        $(window).on('load',function(){
+            $('#{{ active_form }}').modal('show');
+        });
+        // Reload the page after an active form modal is dismissed to clear
+        // statically generated form errors and allow a clean reselection of a
+        // new row on deselect.
+        $('#{{ active_form }}').on('hide.bs.modal', _ => {
+            location.reload();
+        })
+    </script>
+    {% endif %}
 {% endblock %}
 

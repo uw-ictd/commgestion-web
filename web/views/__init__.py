@@ -1,6 +1,6 @@
 import random
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
 from datetime import timedelta
@@ -36,11 +36,19 @@ def network_stats(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def subscribers(request):
+def subscribers(request,
+                status=None,
+                add_form_state=AddSubscriberForm(),
+                edit_form_state=EditSubscriberForm(),
+                del_form_state=DeleteSubscriberForm(),
+                active_form=None,
+                ):
     context = _subscribers.generate_table()
-    context['add_form'] = AddSubscriberForm()
-    context['edit_form'] = EditSubscriberForm()
-    context['del_form'] = DeleteSubscriberForm()
+    context['add_form'] = add_form_state
+    context['edit_form'] = edit_form_state
+    context['del_form'] = del_form_state
+    context['status'] = status
+    context['active_form'] = active_form
     return render(request, 'subscribers.html', context=context)
 
 def roleConversion(roleString):
@@ -77,9 +85,10 @@ def add_form(request):
     if request.method == 'POST':
         form = AddSubscriberForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data['imsi']
             with transaction.atomic():
                 User.objects.create(
-                    username=form.cleaned_data['imsi'],
+                    username=username,
                     email="",
                     password="temp",
                 )
@@ -102,10 +111,24 @@ def add_form(request):
                     subscription_date=timezone.now(),
                     subscription_status=Subscriber.SubscriptionStatusKinds.PAID,
                 )
+
+            return subscribers(
+                request,
+                status={
+                    "outcome": "success",
+                    "message": "Successfully added user {}".format(username),
+                    },
+                )
         else:
-            print(form.errors)
-            print('invalid')
-    return subscribers(request)
+            return subscribers(
+                request,
+                add_form_state=form,
+                active_form="ModalAddForm",
+                )
+
+    else:
+        return redirect('subscribers')
+
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -113,8 +136,9 @@ def edit_form(request):
     if request.method == 'POST':
         form = EditSubscriberForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data['imsi']
             with transaction.atomic():
-                prev_user = User.objects.get(username=form.cleaned_data['imsi'])
+                prev_user = User.objects.get(username=username)
                 prev_subscriber = Subscriber.objects.get(user=prev_user)
                 prev_subscriber.msisdn = form.cleaned_data['msisdn']
                 prev_subscriber.display_name = form.cleaned_data['name']
@@ -123,11 +147,22 @@ def edit_form(request):
                 prev_subscriber.rate_limit_kbps = form.cleaned_data['rate_limit']
                 prev_subscriber.last_time_online = timezone.now()
                 prev_subscriber.save()
-
+            return subscribers(
+                request,
+                status={
+                    "outcome": "success",
+                    "message": "Successfully edited user {}".format(username),
+                    },
+                )
         else:
-            print(form.errors)
-            print('invalid')
-    return subscribers(request)
+            return subscribers(
+                request,
+                edit_form_state=form,
+                active_form="ModalEditForm",
+                )
+    else:
+        return redirect('subscribers')
+
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -135,11 +170,23 @@ def delete_form(request):
     if request.method == 'POST':
         form = DeleteSubscriberForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data['imsi']
             with transaction.atomic():
-                prev_user = User.objects.get(username=form.cleaned_data['imsi'])
+                prev_user = User.objects.get(username=username)
                 Subscriber.objects.filter(user=prev_user).delete()
-                User.objects.filter(username=form.cleaned_data['imsi']).delete()
+                User.objects.filter(username=username).delete()
+            return subscribers(
+                request,
+                status={
+                    "outcome": "success",
+                    "message": "Successfully deleted user {}".format(username),
+                },
+            )
         else:
-            print(form.errors)
-            print('invalid')
-    return subscribers(request)
+            return subscribers(
+                request,
+                del_form_state=form,
+                active_form="ModalDeleteForm",
+                )
+    else:
+        return redirect("subscribers")

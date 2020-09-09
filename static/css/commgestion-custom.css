@@ -1,0 +1,21 @@
+ul.errorlist, ul.parsley-errors-list {
+  list-style-type:none;
+  margin-bottom: 0.75em;
+  padding-left:1em;
+}
+
+ul.errorlist li, ul.parsley-errors-list li {
+  background-color: #f55959;
+  margin-top: 0.3em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+
+nav.navbar {
+  margin-bottom: 0.5rem;
+}
+
+div.button-container {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
