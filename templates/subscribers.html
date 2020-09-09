@@ -31,19 +31,19 @@
     <!-- Button trigger modal -->
     <div class="button-container">
     <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalAddForm" disabled>
-        Add Subscriber
+        {% trans "Add Subscriber" %}
     </button>
 
     <button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalEditForm" disabled>
-        Edit
+        {% trans "Edit" %}
     </button>
 
     <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalDeleteForm" disabled>
-        Delete
+        {% trans "Delete" %}
     </button>
 
     <button type="button" id="deselect" class="btn btn-primary btn-md ml-3" hidden>
-        Deselect
+        {% trans "Deselect" %}
     </button>
     </div>
 
@@ -52,7 +52,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h2>Add a Subscriber</h2>
+                    <h2>{% trans "Add Subscriber" %}</h2>
                     <form method="post" action="{% url 'add_form' %}" data-parsley-validate>
                         {% csrf_token %}
                         <div class="form-group">
@@ -81,7 +81,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h2>Edit a Subscriber</h2>
+                    <h2>{% trans "Edit Subscriber" %}</h2>
                     <form id="edit_form" role="form" method="POST" action="{% url 'edit_form' %}" data-parsley-validate>
                         {% csrf_token %}
                         {% for hidden_field in edit_form.hidden_fields %}
@@ -111,7 +111,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h2>Delete a Subscriber</h2>
+                    <h2>{% trans "Delete Subscriber" %}</h2>
                     <form id="delete_form" role="form" method="POST" action="{% url 'delete_form' %}" data-parsley-validate>
                         {% csrf_token %}
                         {% for hidden_field in del_form.hidden_fields %}
