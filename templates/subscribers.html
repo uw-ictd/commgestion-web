@@ -41,6 +41,10 @@
     <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalDeleteForm" disabled>
         Delete
     </button>
+
+    <button type="button" id="deselect" class="btn btn-primary btn-md ml-3" hidden>
+        Deselect
+    </button>
     </div>
 
     <!-- modal add form -->
@@ -182,6 +186,8 @@
 
 {% block body_end %}
     <script>
+    // This script section handles row selection and button visibility based on
+    // the selection state.
         $(document).ready(function(){
             $("#table_id").DataTable({
                 "language": {
@@ -191,6 +197,7 @@
             $('tr.selected').removeClass('selected'); //clear other selections
             $('#edit').attr('disabled', true);
             $('#delete').attr('disabled', true);
+            $('#deselect').attr('hidden', true);
             $('#add').attr('disabled', false);
         });
         $(document).on('click', 'tr', function(e) {
@@ -199,6 +206,7 @@
                 $(this).removeClass('selected');
                 $('#edit').attr('disabled', true);
                 $('#delete').attr('disabled', true);
+                $('#deselect').attr('hidden', true);
                 $('#add').attr('disabled', false);
             }
             else {
@@ -206,6 +214,7 @@
                 $(this).addClass('selected');
                 $('#edit').attr('disabled', false);
                 $('#delete').attr('disabled', false);
+                $('#deselect').attr('hidden', false);
                 $('#add').attr('disabled', true);
             }
         });
@@ -216,6 +225,8 @@
                 $(this).addClass('selected'); //mark this row as selected
                 $('#edit').attr('disabled', false);
                 $('#delete').attr('disabled', false);
+                $('#deselect').attr('hidden', false);
+                $('#add').attr('disabled', true);
             }
         });
         $(document).on("keyup", function(e) {
@@ -223,7 +234,16 @@
                 $('tr.selected').removeClass('selected'); //clear all selections
                 $('#edit').attr('disabled', true);
                 $('#delete').attr('disabled', true);
+                $('#deselect').attr('hidden', true);
+                $('#add').attr('disabled', false);
             }
+        });
+        $('#deselect').on("click", function(e) {
+            $('tr.selected').removeClass('selected'); //clear all selections
+            $('#edit').attr('disabled', true);
+            $('#delete').attr('disabled', true);
+            $('#deselect').attr('hidden', true);
+            $('#add').attr('disabled', false);
         });
     </script>
 
