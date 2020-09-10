@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 19:06+0000\n"
+"POT-Creation-Date: 2020-09-10 18:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,14 @@ msgstr ""
 
 #: templates/graphViews/publicLayout.html:10
 msgid "Please add network data feed into the database."
+msgstr ""
+
+#: templates/graphViews/publicLayout.html:18
+msgid "Download Utilization"
+msgstr ""
+
+#: templates/graphViews/publicLayout.html:22
+msgid "Upload Utilization"
 msgstr ""
 
 #: templates/navbar.html:10
@@ -162,6 +170,7 @@ msgid "Local Content and Non-Local"
 msgstr ""
 
 #: web/views/_network_stats.py:14 web/views/_network_stats.py:15
+#: web/views/_public.py:12
 msgid "Throughput"
 msgstr ""
 
@@ -206,8 +215,4 @@ msgstr ""
 
 #: web/views/_public.py:11
 msgid "Current network usage"
-msgstr ""
-
-#: web/views/_public.py:12
-msgid "Total Throughput"
 msgstr ""

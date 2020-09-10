@@ -24,10 +24,12 @@ function createGuageChart(container, nominal_capacity_mbits, title) {
             plotBackgroundColor: null,
             plotBackgroundImage: null,
             plotBorderWidth: 0,
-            plotShadow: false
+            plotShadow: false,
+            margin: [0, 0, 0, 0],
+            spacing: [0, 0, 0, 0]
         },
         title: {
-            text: gaugeGraphTitle
+            text: null
         },
         credits: {
             enabled: false
@@ -70,6 +72,7 @@ function createGuageChart(container, nominal_capacity_mbits, title) {
             min: bounds['green'][0],
             max: bounds['red'][1],
 
+            minorTicks: false,
             minorTickInterval: 'auto',
             minorTickWidth: 1,
             minorTickLength: 10,
@@ -104,7 +107,7 @@ function createGuageChart(container, nominal_capacity_mbits, title) {
         },
 
         series: [{
-            name: 'Current network use',
+            name: augmented_title,
             data: needleValue,
             tooltip: {
                 valueDecimals: 3,

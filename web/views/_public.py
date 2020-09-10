@@ -9,5 +9,5 @@ def generate_context():
 
     return {
         'title': json.dumps(str(_('Current network usage'))),
-        'metric_title': json.dumps(str(_('Total Throughput'))),
+        'metric_title': json.dumps(str(_('Throughput'))),
     }

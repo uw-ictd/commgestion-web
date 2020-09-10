@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 19:06+0000\n"
+"POT-Creation-Date: 2020-09-10 18:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Matt Johnson <matt9j@cs.uw.edu>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,14 @@ msgstr "La información del uso no está disponible."
 #: templates/graphViews/publicLayout.html:10
 msgid "Please add network data feed into the database."
 msgstr "Pide al administrador configurar este portal."
+
+#: templates/graphViews/publicLayout.html:18
+msgid "Download Utilization"
+msgstr "Utilización de Descarga"
+
+#: templates/graphViews/publicLayout.html:22
+msgid "Upload Utilization"
+msgstr "Utilización de Carga"
 
 #: templates/navbar.html:10
 msgid "Public"
@@ -121,7 +129,6 @@ msgid "Location"
 msgstr "Ubicación"
 
 #: templates/subscribers.html:153
-#| msgid "Rate Limit Kpbs"
 msgid "Rate Limit Kbps"
 msgstr "Limitación de velocidad (kbps)"
 
@@ -162,6 +169,7 @@ msgid "Local Content and Non-Local"
 msgstr "Contenido local versus externo"
 
 #: web/views/_network_stats.py:14 web/views/_network_stats.py:15
+#: web/views/_public.py:12
 msgid "Throughput"
 msgstr "Rendimiento"
 
@@ -208,9 +216,8 @@ msgstr "Por favor seleccionar otro periodo de tiempo."
 msgid "Current network usage"
 msgstr "Uso actual"
 
-#: web/views/_public.py:12
-msgid "Total Throughput"
-msgstr "Rendimiento Total"
+#~ msgid "Total Throughput"
+#~ msgstr "Rendimiento Total"
 
 #~ msgid "Profiles"
 #~ msgstr "Perfiles"
