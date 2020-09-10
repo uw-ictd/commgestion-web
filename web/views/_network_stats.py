@@ -70,7 +70,7 @@ def get_graph4_data():
 def generate_test_data():
     """ Generate fake data for the network statistics page
     """
-    qs_agg = BackhaulUsage.objects.values('timestamp').annotate(thrpt = Sum('down_bytes'))
+    qs_agg = BackhaulUsage.objects.values('timestamp').annotate(thrpt = Sum('down_bytes')).order_by('timestamp')
     # thr_dict = qs_agg.values('thrpt').distinct()
     # thrrr = [x['thrpt'] for x in thr_dict]
     g1_data = []
