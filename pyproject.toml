@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "commgestion-web"
+version = "0.0.1"
+description = "A community-centric network management tool with just enough information."
+authors = ["Matt Johnson <matt9j@cs.washington.edu>"]
+license = "MPL-2"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+Django = "^3.2"
+psycopg2 = "^2.8.6"
+django-tables2 = "^2.3.4"
+cbor2 = "^5.2.0"
+tomlkit = "^0.7.0"
+django-parsley = "^0.7"
+
+[tool.poetry.dev-dependencies]
+requests = "^2.25.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
