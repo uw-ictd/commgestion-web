@@ -2,3 +2,6 @@
 __pycache__
 *.sqlite3
 *.mo
+
+# The poetry virtual environment
+.venv
