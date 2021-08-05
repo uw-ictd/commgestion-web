@@ -19,8 +19,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('', include('web.urls')),
-    path('admin/', admin.site.urls),
-    path('i18n/', include('django.conf.urls.i18n')),
-    path('telemetry/', include('traffic_logger.urls')),
+    path("", include("web.urls")),
+    path("admin/", admin.site.urls),
+    path("i18n/", include("django.conf.urls.i18n")),
+    path("telemetry/", include("traffic_logger.urls")),
 ] + static(settings.STATIC_URL)

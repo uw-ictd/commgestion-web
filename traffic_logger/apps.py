@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class TrafficLoggerConfig(AppConfig):
-    name = 'traffic_logger'
+    name = "traffic_logger"

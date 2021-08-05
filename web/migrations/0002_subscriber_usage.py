@@ -9,33 +9,70 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('web', '0001_initial'),
+        ("web", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Subscriber',
+            name="Subscriber",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('phonenumber', models.CharField(max_length=50)),
-                ('display_name', models.CharField(max_length=100)),
-                ('imsi', models.CharField(max_length=50)),
-                ('guti', models.CharField(max_length=50)),
-                ('is_local', models.BooleanField()),
-                ('role', models.IntegerField(choices=[(1, 'admin'), (2, 'user'), (3, 'researcher')])),
-                ('connectivity_status', models.IntegerField(choices=[(1, 'online'), (2, 'offline'), (3, 'blocked')])),
-                ('last_time_online', models.DateTimeField()),
-                ('rate_limit_kbps', models.IntegerField()),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("phonenumber", models.CharField(max_length=50)),
+                ("display_name", models.CharField(max_length=100)),
+                ("imsi", models.CharField(max_length=50)),
+                ("guti", models.CharField(max_length=50)),
+                ("is_local", models.BooleanField()),
+                (
+                    "role",
+                    models.IntegerField(
+                        choices=[(1, "admin"), (2, "user"), (3, "researcher")]
+                    ),
+                ),
+                (
+                    "connectivity_status",
+                    models.IntegerField(
+                        choices=[(1, "online"), (2, "offline"), (3, "blocked")]
+                    ),
+                ),
+                ("last_time_online", models.DateTimeField()),
+                ("rate_limit_kbps", models.IntegerField()),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Usage',
+            name="Usage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('throughput', models.FloatField()),
-                ('timestamp', models.DateTimeField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web.Subscriber')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("throughput", models.FloatField()),
+                ("timestamp", models.DateTimeField()),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="web.Subscriber"
+                    ),
+                ),
             ],
         ),
     ]

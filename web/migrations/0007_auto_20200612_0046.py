@@ -6,48 +6,48 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web', '0006_auto_20200612_0038'),
+        ("web", "0006_auto_20200612_0038"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='backhaulusage',
-            old_name='down_kbytes',
-            new_name='down_bytes',
+            model_name="backhaulusage",
+            old_name="down_kbytes",
+            new_name="down_bytes",
         ),
         migrations.RenameField(
-            model_name='backhaulusage',
-            old_name='up_kbytes',
-            new_name='up_bytes',
+            model_name="backhaulusage",
+            old_name="up_kbytes",
+            new_name="up_bytes",
         ),
         migrations.RenameField(
-            model_name='hostusage',
-            old_name='down_kbytes',
-            new_name='down_bytes',
+            model_name="hostusage",
+            old_name="down_kbytes",
+            new_name="down_bytes",
         ),
         migrations.RenameField(
-            model_name='hostusage',
-            old_name='up_kbytes',
-            new_name='up_bytes',
+            model_name="hostusage",
+            old_name="up_kbytes",
+            new_name="up_bytes",
         ),
         migrations.RenameField(
-            model_name='ranusage',
-            old_name='down_kbytes',
-            new_name='down_bytes',
+            model_name="ranusage",
+            old_name="down_kbytes",
+            new_name="down_bytes",
         ),
         migrations.RenameField(
-            model_name='ranusage',
-            old_name='up_kbytes',
-            new_name='up_bytes',
+            model_name="ranusage",
+            old_name="up_kbytes",
+            new_name="up_bytes",
         ),
         migrations.RenameField(
-            model_name='subscriberusage',
-            old_name='down_kbytes',
-            new_name='down_bytes',
+            model_name="subscriberusage",
+            old_name="down_kbytes",
+            new_name="down_bytes",
         ),
         migrations.RenameField(
-            model_name='subscriberusage',
-            old_name='up_kbytes',
-            new_name='up_bytes',
+            model_name="subscriberusage",
+            old_name="up_kbytes",
+            new_name="up_bytes",
         ),
     ]

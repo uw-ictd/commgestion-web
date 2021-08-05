@@ -18,11 +18,10 @@ class UsageGenerator(object):
 
     Tracks usage as an integer rather than a float
     """
-    def __init__(self,
-                 baseline_usage,
-                 max_step_variation,
-                 clamp_min=None,
-                 clamp_max=None):
+
+    def __init__(
+        self, baseline_usage, max_step_variation, clamp_min=None, clamp_max=None
+    ):
         self._current_usage = baseline_usage
         self._variation = max_step_variation
         self._clamp_min = clamp_min
@@ -34,9 +33,7 @@ class UsageGenerator(object):
         :return the sample after this step has been taken
         """
         # Take a step in the random walk
-        self._current_usage += int(
-            self._variation * (random.random() - 0.5) * 2
-        )
+        self._current_usage += int(self._variation * (random.random() - 0.5) * 2)
 
         # Enforce min/max clamps
         if self._clamp_min is not None:
@@ -58,10 +55,10 @@ def send_backhaul_usage_report(uplink_generator, downlink_generator):
     timestamp = datetime.datetime.now(datetime.timezone.utc)
 
     backhaul_usage_payload = {
-        'down_bytes': down_bytes,
-        'up_bytes': up_bytes,
-        'begin_timestamp': timestamp,
-        'end_timestamp': timestamp,
+        "down_bytes": down_bytes,
+        "up_bytes": up_bytes,
+        "begin_timestamp": timestamp,
+        "end_timestamp": timestamp,
     }
 
     marshalled_payload = cbor2.dumps(backhaul_usage_payload)
@@ -70,10 +67,11 @@ def send_backhaul_usage_report(uplink_generator, downlink_generator):
     url = "http://localhost:8000/telemetry/backhaul"
 
     try:
-        response = requests.post(url,
-                                 headers=headers,
-                                 data=marshalled_payload,
-                                 )
+        response = requests.post(
+            url,
+            headers=headers,
+            data=marshalled_payload,
+        )
         print("POST", url, response)
     except requests.exceptions.ConnectionError as e:
         print("POST", url, "Connection error:", e)
@@ -85,10 +83,10 @@ def send_ran_usage_report(uplink_generator, downlink_generator):
     timestamp = datetime.datetime.now(datetime.timezone.utc)
 
     ran_usage_payload = {
-        'down_bytes': down_bytes,
-        'up_bytes': up_bytes,
-        'begin_timestamp': timestamp,
-        'end_timestamp': timestamp,
+        "down_bytes": down_bytes,
+        "up_bytes": up_bytes,
+        "begin_timestamp": timestamp,
+        "end_timestamp": timestamp,
     }
 
     marshalled_payload = cbor2.dumps(ran_usage_payload)
@@ -96,10 +94,11 @@ def send_ran_usage_report(uplink_generator, downlink_generator):
     headers = {"content-type": "application/cbor"}
     url = "http://localhost:8000/telemetry/ran"
     try:
-        response = requests.post(url,
-                                 headers=headers,
-                                 data=marshalled_payload,
-                                 )
+        response = requests.post(
+            url,
+            headers=headers,
+            data=marshalled_payload,
+        )
         print("POST", url, response)
     except requests.exceptions.ConnectionError as e:
         print("POST", url, "Connection error:", e)
@@ -111,6 +110,7 @@ class ThreadedRepeater(threading.Thread):
     Note: The interval creeps forward by the function execution time and
     should not be used for precise timing.
     """
+
     def __init__(self, function, repeat_interval_s, run_first=False):
         super().__init__()
         self._stop_trigger = threading.Event()
@@ -119,8 +119,7 @@ class ThreadedRepeater(threading.Thread):
         self._run_first = run_first
 
     def run(self):
-        """Run method overriding Thread::run to call the function repeatedly
-        """
+        """Run method overriding Thread::run to call the function repeatedly"""
         if self._run_first:
             self._function()
         while not self._stop_trigger.wait(self._interval_s):
@@ -132,16 +131,16 @@ class ThreadedRepeater(threading.Thread):
 
 if __name__ == "__main__":
     uplink_usage_generator = UsageGenerator(
-        baseline_usage=5 * (1000**2),
-        max_step_variation=100 * (1000**1),
+        baseline_usage=5 * (1000 ** 2),
+        max_step_variation=100 * (1000 ** 1),
         clamp_min=0,
-        clamp_max=15 * (1000**2),
+        clamp_max=15 * (1000 ** 2),
     )
     downlink_usage_generator = UsageGenerator(
-        baseline_usage=10 * (1000**2),
-        max_step_variation=100 * (1000**1),
+        baseline_usage=10 * (1000 ** 2),
+        max_step_variation=100 * (1000 ** 1),
         clamp_min=0,
-        clamp_max=15 * (1000**2),
+        clamp_max=15 * (1000 ** 2),
     )
     backhaul_sender = ThreadedRepeater(
         lambda: send_backhaul_usage_report(
@@ -152,16 +151,16 @@ if __name__ == "__main__":
     )
 
     ran_uplink_usage_generator = UsageGenerator(
-        baseline_usage=6 * (1000**2),
-        max_step_variation=100 * (1000**1),
+        baseline_usage=6 * (1000 ** 2),
+        max_step_variation=100 * (1000 ** 1),
         clamp_min=0,
-        clamp_max=15 * (1000**2),
+        clamp_max=15 * (1000 ** 2),
     )
     ran_downlink_usage_generator = UsageGenerator(
-        baseline_usage=11 * (1000**2),
-        max_step_variation=100 * (1000**1),
+        baseline_usage=11 * (1000 ** 2),
+        max_step_variation=100 * (1000 ** 1),
         clamp_min=0,
-        clamp_max=15 * (1000**2),
+        clamp_max=15 * (1000 ** 2),
     )
     ran_sender = ThreadedRepeater(
         lambda: send_ran_usage_report(

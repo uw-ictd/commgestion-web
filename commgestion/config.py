@@ -14,8 +14,7 @@ log = logging.getLogger(__name__)
 
 
 def parse_from_file(filepath):
-    """Load a TOML formatted configuration file and parse commgestion parameters
-    """
+    """Load a TOML formatted configuration file and parse commgestion parameters"""
     config = {}
     with open(filepath) as f:
         raw_config = tomlkit.parse(f.read())
@@ -23,13 +22,13 @@ def parse_from_file(filepath):
     try:
         config["debug"] = bool(raw_config["commgestion"]["debug"])
     except KeyError:
-        log.info("\"debug\" config not defined, defaulting to false")
+        log.info('"debug" config not defined, defaulting to false')
         config["debug"] = False
 
     try:
         config["secret_key"] = str(raw_config["commgestion"]["secret_key"])
     except (KeyError, TypeError) as e:
-        log.error("\"secret_key\" is required and must be a string!")
+        log.error('"secret_key" is required and must be a string!')
         raise e
 
     try:
@@ -51,20 +50,22 @@ def _parse_database_config(raw_db_config):
     try:
         kind = raw_db_config["kind"]
     except KeyError as e:
-        log.error("The database \"kind\" must be specified")
+        log.error('The database "kind" must be specified')
         raise e
 
     if kind == "sqlite3":
         try:
             path = raw_db_config["path"]
         except KeyError:
-            log.info("sqlite db \"path\" is not specified, using default")
+            log.info('sqlite db "path" is not specified, using default')
             path = "db.sqlite3"
 
-        db_config = {"default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": "./db.sqlite3",
-        }}
+        db_config = {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": "./db.sqlite3",
+            }
+        }
 
         return db_config
     elif kind == "postgres":
@@ -78,14 +79,16 @@ def _parse_database_config(raw_db_config):
             log.error("Postgres db configuration parameter is missing!")
             raise e
 
-        db_config = {"default": {
-            "ENGINE": "django.db.backends.postgresql",
-            'NAME': database,
-            'USER': username,
-            'PASSWORD': password,
-            'HOST': host,
-            'PORT': port,
-        }}
+        db_config = {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": database,
+                "USER": username,
+                "PASSWORD": password,
+                "HOST": host,
+                "PORT": port,
+            }
+        }
 
         return db_config
 

@@ -12,7 +12,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not settings.DEBUG:
-            raise CommandError("Not overwriting production data! Not in a debug config!")
+            raise CommandError(
+                "Not overwriting production data! Not in a debug config!"
+            )
 
         self.stdout.write("Beginning database population...")
         populate.clear_and_add_defaults()

@@ -2,7 +2,7 @@ import datetime
 import json
 from django import http
 
-from web.models import (BackhaulUsage, RanUsage)
+from web.models import BackhaulUsage, RanUsage
 
 
 def datetime_string_converter(obj):
@@ -12,7 +12,7 @@ def datetime_string_converter(obj):
 
 def public_utilization(request):
     if request.method != "GET":
-        return http.HttpResponseNotAllowed(['GET'], "Read only")
+        return http.HttpResponseNotAllowed(["GET"], "Read only")
 
     response = {}
 
@@ -50,6 +50,4 @@ def public_utilization(request):
             "timestamp": latest_ran_usage.timestamp,
         }
 
-    return http.HttpResponse(
-        json.dumps(response, default=datetime_string_converter)
-    )
+    return http.HttpResponse(json.dumps(response, default=datetime_string_converter))

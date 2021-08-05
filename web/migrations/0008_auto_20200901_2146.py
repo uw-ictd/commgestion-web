@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web', '0007_auto_20200612_0046'),
+        ("web", "0007_auto_20200612_0046"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='subscriber',
-            name='connectivity_status',
-            field=models.IntegerField(choices=[(1, 'authorized'), (2, 'blocked')]),
+            model_name="subscriber",
+            name="connectivity_status",
+            field=models.IntegerField(choices=[(1, "authorized"), (2, "blocked")]),
         ),
     ]

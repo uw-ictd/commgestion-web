@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web', '0003_auto_20200227_2212'),
+        ("web", "0003_auto_20200227_2212"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='application',
-            name='host',
+            model_name="application",
+            name="host",
             field=models.CharField(max_length=255, unique=True),
         ),
         migrations.AlterField(
-            model_name='hostmapping',
-            name='captured_host',
+            model_name="hostmapping",
+            name="captured_host",
             field=models.CharField(max_length=255),
         ),
     ]

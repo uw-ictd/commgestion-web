@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web', '0002_subscriber_usage'),
+        ("web", "0002_subscriber_usage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='application',
-            name='host',
+            model_name="application",
+            name="host",
             field=models.CharField(max_length=50, unique=True),
         ),
     ]

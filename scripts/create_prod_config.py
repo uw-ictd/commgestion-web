@@ -31,7 +31,7 @@ def create_config_tree():
         else:
             break
 
-    database_host = input("postgres host [\"localhost\"]:")
+    database_host = input('postgres host ["localhost"]:')
     if database_host == "":
         database_host = "localhost"
 
@@ -50,19 +50,21 @@ def create_config_tree():
     print("Warning: db password will be written unencrypted to local disk")
     database_password = getpass.getpass("postgres password:")
 
-    config = {"commgestion": {
-        "debug": False,
-        "secret_key": secret_key,
-        "allowed_hosts": allowed_hosts,
-        "db": {
-            "kind": "postgres",
-            "database": database_name,
-            "username": database_username,
-            "password": database_password,
-            "host": database_host,
-            "port": database_port,
-        },
-    }}
+    config = {
+        "commgestion": {
+            "debug": False,
+            "secret_key": secret_key,
+            "allowed_hosts": allowed_hosts,
+            "db": {
+                "kind": "postgres",
+                "database": database_name,
+                "username": database_username,
+                "password": database_password,
+                "host": database_host,
+                "port": database_port,
+            },
+        }
+    }
 
     return config
 
@@ -81,25 +83,30 @@ if __name__ == "__main__":
         # The directory already exists.
         pass
 
-    if os.path.exists(os.path.join(
-            "/", "etc", "commgestion", "config.toml")):
+    if os.path.exists(os.path.join("/", "etc", "commgestion", "config.toml")):
         overwrite = input("overwrite existing config? y/[n]")
         if overwrite.lower() != "y":
             print("Will not overwrite existing configuration!")
-            print("The generated file has been left in the local directory at "
-                  "\"config-prod.toml\"")
+            print(
+                "The generated file has been left in the local directory at "
+                '"config-prod.toml"'
+            )
             raise FileExistsError("existing configuration")
 
     try:
-        shutil.move("config-prod.toml",
-                    os.path.join("/", "etc", "commgestion", "config.toml"))
+        shutil.move(
+            "config-prod.toml", os.path.join("/", "etc", "commgestion", "config.toml")
+        )
     except PermissionError as e:
         print("Insufficient permissions to move the config file!")
-        print("The generatedfile has been left in the local directory at "
-              "\"config-prod.toml\"")
-        print("Please move this file to /etc/commgestion/config.toml, "
-              "perhaps with sudo :D")
+        print(
+            "The generatedfile has been left in the local directory at "
+            '"config-prod.toml"'
+        )
+        print(
+            "Please move this file to /etc/commgestion/config.toml, "
+            "perhaps with sudo :D"
+        )
         raise e
 
-    print("configuration generated and deployed to "
-          "/etc/commgestion/config.toml")
+    print("configuration generated and deployed to " "/etc/commgestion/config.toml")

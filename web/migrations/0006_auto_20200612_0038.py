@@ -6,48 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web', '0005_auto_20200611_1957'),
+        ("web", "0005_auto_20200611_1957"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='backhaulusage',
-            name='down_kbytes',
+            model_name="backhaulusage",
+            name="down_kbytes",
             field=models.BigIntegerField(),
         ),
         migrations.AlterField(
-            model_name='backhaulusage',
-            name='up_kbytes',
+            model_name="backhaulusage",
+            name="up_kbytes",
             field=models.BigIntegerField(),
         ),
         migrations.AlterField(
-            model_name='hostusage',
-            name='down_kbytes',
+            model_name="hostusage",
+            name="down_kbytes",
             field=models.BigIntegerField(),
         ),
         migrations.AlterField(
-            model_name='hostusage',
-            name='up_kbytes',
+            model_name="hostusage",
+            name="up_kbytes",
             field=models.BigIntegerField(),
         ),
         migrations.AlterField(
-            model_name='ranusage',
-            name='down_kbytes',
+            model_name="ranusage",
+            name="down_kbytes",
             field=models.BigIntegerField(),
         ),
         migrations.AlterField(
-            model_name='ranusage',
-            name='up_kbytes',
+            model_name="ranusage",
+            name="up_kbytes",
             field=models.BigIntegerField(),
         ),
         migrations.AlterField(
-            model_name='subscriberusage',
-            name='down_kbytes',
+            model_name="subscriberusage",
+            name="down_kbytes",
             field=models.BigIntegerField(),
         ),
         migrations.AlterField(
-            model_name='subscriberusage',
-            name='up_kbytes',
+            model_name="subscriberusage",
+            name="up_kbytes",
             field=models.BigIntegerField(),
         ),
     ]

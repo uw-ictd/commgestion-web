@@ -8,41 +8,45 @@ from django.utils.timezone import utc
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web', '0008_auto_20200901_2146'),
+        ("web", "0008_auto_20200901_2146"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='subscriber',
-            old_name='phonenumber',
-            new_name='msisdn',
+            model_name="subscriber",
+            old_name="phonenumber",
+            new_name="msisdn",
         ),
         migrations.RemoveField(
-            model_name='subscriber',
-            name='guti',
+            model_name="subscriber",
+            name="guti",
         ),
         migrations.AddField(
-            model_name='subscriber',
-            name='created',
-            field=models.DateTimeField(default=datetime.datetime(2020, 9, 8, 20, 13, 57, 507450, tzinfo=utc)),
+            model_name="subscriber",
+            name="created",
+            field=models.DateTimeField(
+                default=datetime.datetime(2020, 9, 8, 20, 13, 57, 507450, tzinfo=utc)
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='subscriber',
-            name='equipment',
-            field=models.CharField(default='unknown', max_length=50),
+            model_name="subscriber",
+            name="equipment",
+            field=models.CharField(default="unknown", max_length=50),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='subscriber',
-            name='subscription_date',
-            field=models.DateTimeField(default=datetime.datetime(2020, 9, 8, 20, 14, 35, 132820, tzinfo=utc)),
+            model_name="subscriber",
+            name="subscription_date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2020, 9, 8, 20, 14, 35, 132820, tzinfo=utc)
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='subscriber',
-            name='subscription_status',
-            field=models.IntegerField(choices=[(1, 'paid'), (2, 'unpaid')], default=1),
+            model_name="subscriber",
+            name="subscription_status",
+            field=models.IntegerField(choices=[(1, "paid"), (2, "unpaid")], default=1),
             preserve_default=False,
         ),
     ]

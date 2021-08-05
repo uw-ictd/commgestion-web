@@ -8,103 +8,104 @@ from web.models import Subscriber
 
 class UserSearchTimeForm(forms.Form):
     from_date = forms.DateField(
-        input_formats=['%d/%m/%Y'],
-        widget=forms.DateInput(attrs={
-            'id': "datepicker-from",
-            'placeholder': 'Start Date',
-            'class': 'form-control',
-            'aria-describedby': 'From Date Field',
-        }),
+        input_formats=["%d/%m/%Y"],
+        widget=forms.DateInput(
+            attrs={
+                "id": "datepicker-from",
+                "placeholder": "Start Date",
+                "class": "form-control",
+                "aria-describedby": "From Date Field",
+            }
+        ),
     )
 
     to_date = forms.DateField(
-        input_formats=['%d/%m/%Y'],
-        widget=forms.DateInput(attrs={
-            'id': "datepicker-to",
-            'placeholder': 'End Date',
-            'class': 'form-control',
-            'aria-describedby': 'To Date Field',
-        })
+        input_formats=["%d/%m/%Y"],
+        widget=forms.DateInput(
+            attrs={
+                "id": "datepicker-to",
+                "placeholder": "End Date",
+                "class": "form-control",
+                "aria-describedby": "To Date Field",
+            }
+        ),
     )
+
 
 # edit form
 @parsleyfy
 class EditSubscriberForm(forms.Form):
-    ROLES = (('Admin', 'Admin'), ('User', 'User'))
-    LOCAL = (('Yes', 'Yes'), ('No', 'No'))
-    CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
+    ROLES = (("Admin", "Admin"), ("User", "User"))
+    LOCAL = (("Yes", "Yes"), ("No", "No"))
+    CONN_STATUS = (("Authorized", "Authorized"), ("Blocked", "Blocked"))
 
-    name = forms.CharField(label='Name')
+    name = forms.CharField(label="Name")
     imsi = forms.RegexField(
         label="IMSI",
-        help_text='15-digit number on SIM card',
-        regex='[0-9]*',
+        help_text="15-digit number on SIM card",
+        regex="[0-9]*",
         min_length=15,
         max_length=15,
-        error_messages={'required': "Please Enter 15 digit number"},
+        error_messages={"required": "Please Enter 15 digit number"},
         strip=True,
     )
     authorization_status = forms.ChoiceField(
         choices=CONN_STATUS,
-        label='Connection Status',
+        label="Connection Status",
     )
     rate_limit = forms.DecimalField()
     msisdn = forms.RegexField(
         label="Phone Number",
-        regex=r'[0-9]*',
+        regex=r"[0-9]*",
         min_length=4,
         strip=True,
     )
+
     def clean_imsi(self):
-        """Ensure the imsi provided meets application uniqueness constraints
-        """
+        """Ensure the imsi provided meets application uniqueness constraints"""
         imsi = self.cleaned_data["imsi"]
 
         if not User.objects.filter(username=imsi).exists():
-            raise forms.ValidationError(
-                "The IMSI {} was not found".format(imsi)
-            )
+            raise forms.ValidationError("The IMSI {} was not found".format(imsi))
 
         return imsi
+
 
 # add form
 @parsleyfy
 class AddSubscriberForm(forms.Form):
-    ROLES = (('Admin', 'Admin'), ('User', 'User'))
-    LOCAL = (('Yes', 'Yes'), ('No', 'No'))
-    CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
+    ROLES = (("Admin", "Admin"), ("User", "User"))
+    LOCAL = (("Yes", "Yes"), ("No", "No"))
+    CONN_STATUS = (("Authorized", "Authorized"), ("Blocked", "Blocked"))
 
-    name = forms.CharField(label='Name')
+    name = forms.CharField(label="Name")
     imsi = forms.RegexField(
         label="IMSI",
-        help_text='15-digit number on SIM card',
-        regex='[0-9]*',
+        help_text="15-digit number on SIM card",
+        regex="[0-9]*",
         min_length=15,
         max_length=15,
-        error_messages={'required': "Please Enter 15 digit number"},
+        error_messages={"required": "Please Enter 15 digit number"},
         strip=True,
     )
     authorization_status = forms.ChoiceField(
         choices=CONN_STATUS,
-        label='Connection Status',
+        label="Connection Status",
     )
     rate_limit = forms.DecimalField()
     msisdn = forms.RegexField(
         label="Phone Number",
-        regex=r'[0-9]*',
+        regex=r"[0-9]*",
         min_length=4,
         strip=True,
     )
 
     def clean_imsi(self):
-        """Ensure the imsi provided meets application uniqueness constraints
-        """
+        """Ensure the imsi provided meets application uniqueness constraints"""
         imsi = self.cleaned_data["imsi"]
 
         if User.objects.filter(username=imsi).exists():
-            raise forms.ValidationError(
-                "The IMSI {} already exists".format(imsi)
-            )
+            raise forms.ValidationError("The IMSI {} already exists".format(imsi))
 
         return imsi
 
@@ -112,30 +113,36 @@ class AddSubscriberForm(forms.Form):
 # delete form
 @parsleyfy
 class DeleteSubscriberForm(forms.Form):
-    ROLES = (('Admin', 'Admin'), ('User', 'User'))
-    LOCAL = (('Yes', 'Yes'), ('No', 'No'))
-    CONN_STATUS = (('Authorized', 'Authorized'), ('Blocked', 'Blocked'))
+    ROLES = (("Admin", "Admin"), ("User", "User"))
+    LOCAL = (("Yes", "Yes"), ("No", "No"))
+    CONN_STATUS = (("Authorized", "Authorized"), ("Blocked", "Blocked"))
 
-    name = forms.CharField(label='Name')
-    imsi = forms.RegexField(label="IMSI", help_text='15-digit number on SIM card', regex='[0-9]{15}', min_length=15, max_length=15, error_messages = {
-        'required':"Please Enter 15 digit number"
-    }, strip=True, widget=forms.HiddenInput())
+    name = forms.CharField(label="Name")
+    imsi = forms.RegexField(
+        label="IMSI",
+        help_text="15-digit number on SIM card",
+        regex="[0-9]{15}",
+        min_length=15,
+        max_length=15,
+        error_messages={"required": "Please Enter 15 digit number"},
+        strip=True,
+        widget=forms.HiddenInput(),
+    )
     role = forms.ChoiceField(choices=ROLES)
-    connection_status = forms.ChoiceField(choices=CONN_STATUS, label='Connection Status')
+    connection_status = forms.ChoiceField(
+        choices=CONN_STATUS, label="Connection Status"
+    )
     rate_limit = forms.DecimalField()
 
     def clean_name(self):
-        name = self.cleaned_data['name']
+        name = self.cleaned_data["name"]
         return name
 
     def clean_imsi(self):
-        """Ensure the imsi provided meets application uniqueness constraints
-        """
+        """Ensure the imsi provided meets application uniqueness constraints"""
         imsi = self.cleaned_data["imsi"]
 
         if not User.objects.filter(username=imsi).exists():
-            raise forms.ValidationError(
-                "The IMSI {} was not found".format(imsi)
-            )
+            raise forms.ValidationError("The IMSI {} was not found".format(imsi))
 
         return imsi

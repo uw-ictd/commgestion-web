@@ -6,7 +6,7 @@ from web.models import HostUsage
 
 class HostUsageModelTest(TestCase):
     def test_host_usage_creation(self):
-        host_name = 'https://google.com/'
+        host_name = "https://google.com/"
         HostUsage.objects.create(
             host=host_name,
             up_bytes=1000,
