@@ -1,19 +1,13 @@
-{% extends "_layout.html" %}
-{% load static %}
-
-{% block header_extra %}
-    <script src="{% static 'js/highcharts.js' %}"></script>
-    <script src="{% static 'js/modules/no-data-to-display.js' %}"></script>
-    <script src="{% static 'js/modules/series-label.js' %}"></script>
-    <script src="{% static 'js/modules/highcharts-more.js' %}"></script>
-{% endblock %}
-
-{% block main %}
-    {% include "graphViews/publicLayout.html" %}
-    <script>
-        var gaugeGraphTitle = {{ title | safe }};
-        var metricTitle = {{metric_title | safe}};
-        var api_endpoint = "{% url 'public_utilization_api' %}";
-    </script>
-    <script src="{% static 'js/data/gauge.js' %}"></script>
+{% extends "_layout.html" %} {% load static %} {% block header_extra %}
+<script src="{% static 'js/highcharts.js' %}"></script>
+<script src="{% static 'js/modules/no-data-to-display.js' %}"></script>
+<script src="{% static 'js/modules/series-label.js' %}"></script>
+<script src="{% static 'js/modules/highcharts-more.js' %}"></script>
+{% endblock %} {% block main %} {% include "graphViews/publicLayout.html" %}
+<script>
+  var gaugeGraphTitle = {{ title | safe }};
+  var metricTitle = {{metric_title | safe}};
+  var api_endpoint = "{% url 'public_utilization_api' %}";
+</script>
+<script src="{% static 'js/data/gauge.js' %}"></script>
 {% endblock %}

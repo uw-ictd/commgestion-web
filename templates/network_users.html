@@ -1,52 +1,49 @@
-{% extends "_layout.html" %}
-{% load static %}
-
-{% block header_extra %}
-    <script src="{% static 'js/highcharts.js' %}"></script>
-    <script src="{% static 'js/modules/no-data-to-display.js' %}"></script>
-    <script src="{% static 'js/modules/series-label.js' %}"></script>
-    <script src="{% static 'js/modules/exporting.js' %}" async></script>
-{% endblock %}
-
-{% block main %} 
-{% include "graphViews/usuarioLayout.html" %}
-    <script> 
-        var dataFromServer = {{data | safe}};
-        var drillDownInfo = {{ drilldown | safe }};
-        var usagePieTitle = {{ title | safe }};
-        var noDataErrorMessage = {{ errorMessage | safe }}
-    </script>
-    <link rel="stylesheet" type="text/css" href="{% static "css/lightpick.css" %}">
-    <script src="{% static 'js/moment.min.js' %}"></script>
-    <script src="{% static 'js/lightpick.js' %}"></script>
-    <script src="{% static 'js/modules/drilldown.js' %}"></script>
-    <script src="{% static 'js/modules/accessibility.js' %}"></script>
-    <script src="{% static 'js/data/usuarioPie.js' %}"></script>
-    <div align="row">
-        <div class="col-4 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12 offset-sm-0 offset-md-4 offset-lg-4 offset-xl-4">
-            <form method="post" action="{% url 'network_users' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                {% for field in form %}
-                        <label for="{{ field.label }}">{{ field.label }}</label>
-                        {{ field }}
-                {% endfor %}
-                </div>
-                <input type="submit" class="btn btn-success" value="Submit">
-            </form>
-        </div>
-    </div>
-    <script>
-    var picker = new Lightpick({
-        field: document.getElementById("datepicker-from"),
-        secondField: document.getElementById("datepicker-to"),
-        singleDate: false,
-        onSelect: function(date){
-            document.getElementById("datepicker").innerHTML = date.format('Do MMMM YYYY');
-            console.log(date.format('Do MMMM YYYY'));
-        }
-    });
-    </script>
-
+{% extends "_layout.html" %} {% load static %} {% block header_extra %}
+<script src="{% static 'js/highcharts.js' %}"></script>
+<script src="{% static 'js/modules/no-data-to-display.js' %}"></script>
+<script src="{% static 'js/modules/series-label.js' %}"></script>
+<script src="{% static 'js/modules/exporting.js' %}" async></script>
+{% endblock %} {% block main %} {% include "graphViews/usuarioLayout.html" %}
+<script>
+  var dataFromServer = {{data | safe}};
+  var drillDownInfo = {{ drilldown | safe }};
+  var usagePieTitle = {{ title | safe }};
+  var noDataErrorMessage = {{ errorMessage | safe }}
+</script>
+<link rel="stylesheet" type="text/css" href="{% static "css/lightpick.css" %}">
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/lightpick.js' %}"></script>
+<script src="{% static 'js/modules/drilldown.js' %}"></script>
+<script src="{% static 'js/modules/accessibility.js' %}"></script>
+<script src="{% static 'js/data/usuarioPie.js' %}"></script>
+<div align="row">
+  <div
+    class="
+      col-4 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xs-12
+      offset-sm-0 offset-md-4 offset-lg-4 offset-xl-4
+    "
+  >
+    <form method="post" action="{% url 'network_users' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        {% for field in form %}
+        <label for="{{ field.label }}">{{ field.label }}</label>
+        {{ field }} {% endfor %}
+      </div>
+      <input type="submit" class="btn btn-success" value="Submit" />
+    </form>
+  </div>
+</div>
+<script>
+  var picker = new Lightpick({
+    field: document.getElementById("datepicker-from"),
+    secondField: document.getElementById("datepicker-to"),
+    singleDate: false,
+    onSelect: function (date) {
+      document.getElementById("datepicker").innerHTML = date.format("Do MMMM YYYY");
+      console.log(date.format("Do MMMM YYYY"));
+    },
+  });
+</script>
 
 {% endblock %}

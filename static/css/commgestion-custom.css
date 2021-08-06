@@ -1,10 +1,12 @@
-ul.errorlist, ul.parsley-errors-list {
-  list-style-type:none;
+ul.errorlist,
+ul.parsley-errors-list {
+  list-style-type: none;
   margin-bottom: 0.75em;
-  padding-left:1em;
+  padding-left: 1em;
 }
 
-ul.errorlist li, ul.parsley-errors-list li {
+ul.errorlist li,
+ul.parsley-errors-list li {
   background-color: #f55959;
   margin-top: 0.3em;
   padding: 0.5em;

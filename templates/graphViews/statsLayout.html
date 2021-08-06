@@ -1,21 +1,21 @@
 <!--radio buttons-->
 
-				<!--	<form method="post" action="/network/stats" class="form-control form-control-sm" id="lineGraphUnit">-->
-				<!--			<input type="radio" id="KBps" name="units" value="KBps">-->
-				<!--			<label for="KBps"  style="font-size:11px">KiloBytes per seconds (KBps)</label>-->
-				<!--			<input type="radio" id=Mbps" name="units" value="Mbps">-->
-				<!--			<label for="Mbps"  style="font-size:11px">Megabits per second (Mbps)</label>-->
-				<!--			<input type="radio" id="MBps" name="units" value="MBps">-->
-				<!--			<label for="MBps"  style="font-size:11px">MegaBytes per second (MBps)</label>-->
-				<!--		</form>-->
-				<!--	<form method="post" action="/network/stats" class="form-control form-control-sm" id="barChartUnit">-->
-				<!--		<input type="radio" id="KBps" name="units" value="KBps">-->
-				<!--		<label for="KBps"  style="font-size:11px">KiloBytes per seconds (KBps)</label>-->
-				<!--		<input type="radio" id=Mbps" name="units" value="Mbps">-->
-				<!--		<label for="Mbps"  style="font-size:11px">Megabits per second (Mbps)</label>-->
-				<!--		<input type="radio" id="MBps" name="units" value="MBps">-->
-				<!--		<label for="MBps" style="font-size:11px">MegaBytes per second (MBps)</label>-->
-				<!--	</form>-->
+<!--	<form method="post" action="/network/stats" class="form-control form-control-sm" id="lineGraphUnit">-->
+<!--			<input type="radio" id="KBps" name="units" value="KBps">-->
+<!--			<label for="KBps"  style="font-size:11px">KiloBytes per seconds (KBps)</label>-->
+<!--			<input type="radio" id=Mbps" name="units" value="Mbps">-->
+<!--			<label for="Mbps"  style="font-size:11px">Megabits per second (Mbps)</label>-->
+<!--			<input type="radio" id="MBps" name="units" value="MBps">-->
+<!--			<label for="MBps"  style="font-size:11px">MegaBytes per second (MBps)</label>-->
+<!--		</form>-->
+<!--	<form method="post" action="/network/stats" class="form-control form-control-sm" id="barChartUnit">-->
+<!--		<input type="radio" id="KBps" name="units" value="KBps">-->
+<!--		<label for="KBps"  style="font-size:11px">KiloBytes per seconds (KBps)</label>-->
+<!--		<input type="radio" id=Mbps" name="units" value="Mbps">-->
+<!--		<label for="Mbps"  style="font-size:11px">Megabits per second (Mbps)</label>-->
+<!--		<input type="radio" id="MBps" name="units" value="MBps">-->
+<!--		<label for="MBps" style="font-size:11px">MegaBytes per second (MBps)</label>-->
+<!--	</form>-->
 
 <!--<div class="col-4 col-md-4 col-lg-4 col-sm-12 col-xl-4 align-content-center">-->
 <!--	<div class="form-group align-content-center" >-->
@@ -36,19 +36,19 @@
 
 {% for item in rows %}
 <div class="row">
-	{% for rowName in item %}
-	<div class = "col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
-		{% if forloop.parentloop.counter == 1 %}
-		<div class = "col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
-			<select class="form-control-sm" id="{{rowName}}-unit">
-				<option value="KBps">KiloBytes per second (KBps)</option>
-				<option value="Mbps">Megabits per second (Mbps)</option>
-				<option value="MBps">MegaBytes per second (MBps)</option>
-			</select>
-		</div>
-		{% endif %}
-		<div id={{rowName}}></div>
-	</div>
-	{% endfor %}
+  {% for rowName in item %}
+  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+    {% if forloop.parentloop.counter == 1 %}
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+      <select class="form-control-sm" id="{{rowName}}-unit">
+        <option value="KBps">KiloBytes per second (KBps)</option>
+        <option value="Mbps">Megabits per second (Mbps)</option>
+        <option value="MBps">MegaBytes per second (MBps)</option>
+      </select>
+    </div>
+    {% endif %}
+    <div id="{{rowName}}"></div>
+  </div>
+  {% endfor %}
 </div>
 {% endfor %}

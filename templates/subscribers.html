@@ -1,146 +1,170 @@
-{% extends "_layout.html" %}
+{% extends "_layout.html" %} {% load static %} {% load i18n %} {% block header_extra %}
+<script type="text/javascript" src="{% static 'js/parsley2.9.2.min.js' %}"></script>
 
-{% load static %}
-{% load i18n %}
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css' %}" />
+{% endblock %} {% block main %} {% if status is not None %} {% if status.outcome == "success" %}
+<div class="alert alert-success alert-dismissible" role="alert">
+  {% elif status.outcome == "partial" %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    {% elif status.outcome == "failure" %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      {% else %}
+      <div class="alert alert-primary alert-dismissible" role="alert">
+        {% endif %} {{ status.message | escape }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
 
-{% block header_extra %}
-    <script type="text/javascript" src="{% static 'js/parsley2.9.2.min.js' %}"></script>
+      <!-- Button trigger modal -->
+      <div class="button-container">
+        <button
+          type="button"
+          id="add"
+          class="btn btn-primary btn-md"
+          data-toggle="modal"
+          data-target="#ModalAddForm"
+          disabled
+        >
+          {% trans "Add Subscriber" %}
+        </button>
 
-    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css' %}">
-{% endblock %}
+        <button
+          type="button"
+          id="edit"
+          class="btn btn-primary btn-md"
+          data-toggle="modal"
+          data-target="#ModalEditForm"
+          disabled
+        >
+          {% trans "Edit" %}
+        </button>
 
-{% block main %}
-    {% if status is not None %}
-        {% if status.outcome == "success" %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-        {% elif status.outcome == "partial" %}
-            <div class="alert alert-warning alert-dismissible" role="alert">
-        {% elif status.outcome == "failure" %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
-        {% else %}
-            <div class="alert alert-primary alert-dismissible" role="alert">
-        {% endif %}
-                {{ status.message | escape }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-    {% endif %}
+        <button
+          type="button"
+          id="delete"
+          class="btn btn-primary btn-md"
+          data-toggle="modal"
+          data-target="#ModalDeleteForm"
+          disabled
+        >
+          {% trans "Delete" %}
+        </button>
 
-    <!-- Button trigger modal -->
-    <div class="button-container">
-    <button type="button" id="add" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalAddForm" disabled>
-        {% trans "Add Subscriber" %}
-    </button>
+        <button type="button" id="deselect" class="btn btn-primary btn-md ml-3" hidden>
+          {% trans "Deselect" %}
+        </button>
+      </div>
 
-    <button type="button" id="edit" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalEditForm" disabled>
-        {% trans "Edit" %}
-    </button>
-
-    <button type="button" id="delete" class="btn btn-primary btn-md" data-toggle="modal" data-target="#ModalDeleteForm" disabled>
-        {% trans "Delete" %}
-    </button>
-
-    <button type="button" id="deselect" class="btn btn-primary btn-md ml-3" hidden>
-        {% trans "Deselect" %}
-    </button>
-    </div>
-
-    <!-- modal add form -->
-    <div id="ModalAddForm" class="modal fade">
+      <!-- modal add form -->
+      <div id="ModalAddForm" class="modal fade">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h2>{% trans "Add Subscriber" %}</h2>
-                    <form method="post" action="{% url 'add_form' %}" data-parsley-validate>
-                        {% csrf_token %}
-                        <div class="form-group">
-                            {% for field in add_form %}
-                                <div class="form-field">
-                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    {{ field }}
-                                    {{ field.errors }}
-                                </div>
-                            {% endfor %}
-                            {% if form.errors %}
-                                <p>All the errors in the form are below</p>
-                                {{ form.errors }}
-                                <br/>
-                            {% endif %}
-                        </div>
-                        <input type="submit" class="btn btn-success" value="Submit">
-                    </form>
+          <div class="modal-content">
+            <div class="modal-body">
+              <h2>{% trans "Add Subscriber" %}</h2>
+              <form method="post" action="{% url 'add_form' %}" data-parsley-validate>
+                {% csrf_token %}
+                <div class="form-group">
+                  {% for field in add_form %}
+                  <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }} {{ field.errors }}
+                  </div>
+                  {% endfor %} {% if form.errors %}
+                  <p>All the errors in the form are below</p>
+                  {{ form.errors }}
+                  <br />
+                  {% endif %}
                 </div>
+                <input type="submit" class="btn btn-success" value="Submit" />
+              </form>
             </div>
+          </div>
         </div>
-    </div><!-- end of modal addform div -->
+      </div>
+      <!-- end of modal addform div -->
 
-    <!-- modal edit form -->
-    <div id="ModalEditForm" class="modal fade">
+      <!-- modal edit form -->
+      <div id="ModalEditForm" class="modal fade">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h2>{% trans "Edit Subscriber" %}</h2>
-                    <form id="edit_form" role="form" method="POST" action="{% url 'edit_form' %}" data-parsley-validate>
-                        {% csrf_token %}
-                        {% for hidden_field in edit_form.hidden_fields %}
-                            {{ hidden_field.errors }}
-                            {{ hidden_field }}
-                        {% endfor %}
-                        <div class="form-group">
-                            {% for field in edit_form.visible_fields %}
-                                <div class="form-field">
-                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    {{ field }}
-                                    {{ field.errors }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div>
-                            <input type="submit" class="btn btn-success" value="Update">
-                        </div>
-                    </form>
+          <div class="modal-content">
+            <div class="modal-body">
+              <h2>{% trans "Edit Subscriber" %}</h2>
+              <form
+                id="edit_form"
+                role="form"
+                method="POST"
+                action="{% url 'edit_form' %}"
+                data-parsley-validate
+              >
+                {% csrf_token %} {% for hidden_field in edit_form.hidden_fields %} {{
+                hidden_field.errors }} {{ hidden_field }} {% endfor %}
+                <div class="form-group">
+                  {% for field in edit_form.visible_fields %}
+                  <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }} {{ field.errors }}
+                  </div>
+                  {% endfor %}
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                <div>
+                  <input type="submit" class="btn btn-success" value="Update" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
-    <!-- modal delete form -->
-    <div id="ModalDeleteForm" class="modal fade">
+      <!-- modal delete form -->
+      <div id="ModalDeleteForm" class="modal fade">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h2>{% trans "Delete Subscriber" %}</h2>
-                    <form id="delete_form" role="form" method="POST" action="{% url 'delete_form' %}" data-parsley-validate>
-                        {% csrf_token %}
-                        {% for hidden_field in del_form.hidden_fields %}
-                            {{ hidden_field.errors }}
-                            {{ hidden_field }}
-                        {% endfor %}
-                        <div class="form-group">
-                            {% for field in del_form.visible_fields %}
-                                <div class="form-field">
-                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    {{ field }}
-                                    {{ field.errors }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div>
-                            <input type="submit" class="btn btn-success" value="Delete">
-                        </div>
-                    </form>
+          <div class="modal-content">
+            <div class="modal-body">
+              <h2>{% trans "Delete Subscriber" %}</h2>
+              <form
+                id="delete_form"
+                role="form"
+                method="POST"
+                action="{% url 'delete_form' %}"
+                data-parsley-validate
+              >
+                {% csrf_token %} {% for hidden_field in del_form.hidden_fields %} {{
+                hidden_field.errors }} {{ hidden_field }} {% endfor %}
+                <div class="form-group">
+                  {% for field in del_form.visible_fields %}
+                  <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }} {{ field.errors }}
+                  </div>
+                  {% endfor %}
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                <div>
+                  <input type="submit" class="btn btn-success" value="Delete" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
-    <!-- user profile table -->
-    <div style="width:90%; margin:0 auto;">
-        <table id="table_id" class="table table-striped table-bordered" cellspacing="1" width="100%">
-
-            <thead>
+      <!-- user profile table -->
+      <div style="width: 90%; margin: 0 auto">
+        <table
+          id="table_id"
+          class="table table-striped table-bordered"
+          cellspacing="1"
+          width="100%"
+        >
+          <thead>
             <th>{% trans "Activation Date" %}</th>
             <th>{% trans "Last Online" %}</th>
             <th>{% trans "Subscription Date" %}</th>
@@ -151,150 +175,148 @@
             <th>{% trans "Name" %}</th>
             <th>{% trans "Location" %}</th>
             <th>{% trans "Rate Limit Kbps" %}</th>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             {% for d in data %}
-                <tr role="button", tabindex="0">
-                    <td>{{d.created}}</td>
-                    <td>{{d.last_time_online}}</td>
-                    <td>{{d.subscription_date}}</td>
-                    <td>{{d.subscription_status}}</td>
+            <tr role="button" , tabindex="0">
+              <td>{{d.created}}</td>
+              <td>{{d.last_time_online}}</td>
+              <td>{{d.subscription_date}}</td>
+              <td>{{d.subscription_status}}</td>
 
-                    {% if d.authorization_status == 1 %}
-                        <td>{%trans "Authorized" %}</td>
-                    {% elif d.authorization_status == 2 %}
-                        <td>{% trans "Blocked" %}</td>
-                    {% endif %}
+              {% if d.authorization_status == 1 %}
+              <td>{%trans "Authorized" %}</td>
+              {% elif d.authorization_status == 2 %}
+              <td>{% trans "Blocked" %}</td>
+              {% endif %}
 
-                    <td>{{d.msisdn}}</td>
-                    <td>{{d.imsi}}</td>
-                    <td>{{d.display_name}}</td>
+              <td>{{d.msisdn}}</td>
+              <td>{{d.imsi}}</td>
+              <td>{{d.display_name}}</td>
 
-                    {% if d.is_local == True%}
-                        <td>{% trans "Local" %}</td>
-                    {% else %}
-                        <td>{% trans "Roaming" %}</td>
-                    {% endif %}
+              {% if d.is_local == True%}
+              <td>{% trans "Local" %}</td>
+              {% else %}
+              <td>{% trans "Roaming" %}</td>
+              {% endif %}
 
-                    <td>{{d.rate_limit_kbps}}</td>
-                </tr>
+              <td>{{d.rate_limit_kbps}}</td>
+            </tr>
             {% endfor %}
-            </tbody>
+          </tbody>
         </table>
-    </div>
-{% endblock %}
-
-{% block body_end %}
-    <script>
-    // This script section handles row selection and button visibility based on
-    // the selection state.
-        $(document).ready(function(){
-            $("#table_id").DataTable({
-                "language": {
-                    "url": "/static/i18n/Spanish.json"
-                }
-            });
-            $('tr.selected').removeClass('selected'); //clear other selections
-            $('#edit').attr('disabled', true);
-            $('#delete').attr('disabled', true);
-            $('#deselect').attr('hidden', true);
-            $('#add').attr('disabled', false);
+      </div>
+      {% endblock %} {% block body_end %}
+      <script>
+        // This script section handles row selection and button visibility based on
+        // the selection state.
+        $(document).ready(function () {
+          $("#table_id").DataTable({
+            language: {
+              url: "/static/i18n/Spanish.json",
+            },
+          });
+          $("tr.selected").removeClass("selected"); //clear other selections
+          $("#edit").attr("disabled", true);
+          $("#delete").attr("disabled", true);
+          $("#deselect").attr("hidden", true);
+          $("#add").attr("disabled", false);
         });
-        $(document).on('click', 'tr', function(e) {
-            // Toggle the selection state
-            if ($(this).hasClass("selected")) {
-                $(this).removeClass('selected');
-                $('#edit').attr('disabled', true);
-                $('#delete').attr('disabled', true);
-                $('#deselect').attr('hidden', true);
-                $('#add').attr('disabled', false);
-            }
-            else {
-                $('tr.selected').removeClass('selected'); //clear other selections
-                $(this).addClass('selected');
-                $('#edit').attr('disabled', false);
-                $('#delete').attr('disabled', false);
-                $('#deselect').attr('hidden', false);
-                $('#add').attr('disabled', true);
-            }
+        $(document).on("click", "tr", function (e) {
+          // Toggle the selection state
+          if ($(this).hasClass("selected")) {
+            $(this).removeClass("selected");
+            $("#edit").attr("disabled", true);
+            $("#delete").attr("disabled", true);
+            $("#deselect").attr("hidden", true);
+            $("#add").attr("disabled", false);
+          } else {
+            $("tr.selected").removeClass("selected"); //clear other selections
+            $(this).addClass("selected");
+            $("#edit").attr("disabled", false);
+            $("#delete").attr("disabled", false);
+            $("#deselect").attr("hidden", false);
+            $("#add").attr("disabled", true);
+          }
         });
 
-        $("#table_id").on('keyup', 'tr', function(e) {
-            if(e.key === " ") {
-                $('tr.selected').removeClass('selected'); //clear other selections
-                $(this).addClass('selected'); //mark this row as selected
-                $('#edit').attr('disabled', false);
-                $('#delete').attr('disabled', false);
-                $('#deselect').attr('hidden', false);
-                $('#add').attr('disabled', true);
-            }
+        $("#table_id").on("keyup", "tr", function (e) {
+          if (e.key === " ") {
+            $("tr.selected").removeClass("selected"); //clear other selections
+            $(this).addClass("selected"); //mark this row as selected
+            $("#edit").attr("disabled", false);
+            $("#delete").attr("disabled", false);
+            $("#deselect").attr("hidden", false);
+            $("#add").attr("disabled", true);
+          }
         });
-        $(document).on("keyup", function(e) {
-            if(e.key === "Escape") {
-                $('tr.selected').removeClass('selected'); //clear all selections
-                $('#edit').attr('disabled', true);
-                $('#delete').attr('disabled', true);
-                $('#deselect').attr('hidden', true);
-                $('#add').attr('disabled', false);
-            }
+        $(document).on("keyup", function (e) {
+          if (e.key === "Escape") {
+            $("tr.selected").removeClass("selected"); //clear all selections
+            $("#edit").attr("disabled", true);
+            $("#delete").attr("disabled", true);
+            $("#deselect").attr("hidden", true);
+            $("#add").attr("disabled", false);
+          }
         });
-        $('#deselect').on("click", function(e) {
-            $('tr.selected').removeClass('selected'); //clear all selections
-            $('#edit').attr('disabled', true);
-            $('#delete').attr('disabled', true);
-            $('#deselect').attr('hidden', true);
-            $('#add').attr('disabled', false);
+        $("#deselect").on("click", function (e) {
+          $("tr.selected").removeClass("selected"); //clear all selections
+          $("#edit").attr("disabled", true);
+          $("#delete").attr("disabled", true);
+          $("#deselect").attr("hidden", true);
+          $("#add").attr("disabled", false);
         });
-    </script>
+      </script>
 
-    <script>
-    // This entire script section is quite hacky and brittle. It will break if
-    // the rows of the table are rearranged, and currently has issues mapping
-    // abstract values after translation back into form elements. A fix probably
-    // requires rethinking how we render the table, and possibly moving to a
-    // cleaner frontend/backend split where the table is rendered completely on
-    // the frontend so the frontend has access to the underlying data.
+      <script>
+        // This entire script section is quite hacky and brittle. It will break if
+        // the rows of the table are rearranged, and currently has issues mapping
+        // abstract values after translation back into form elements. A fix probably
+        // requires rethinking how we render the table, and possibly moving to a
+        // cleaner frontend/backend split where the table is rendered completely on
+        // the frontend so the frontend has access to the underlying data.
         function fill_form_from_row(row, form) {
-            console.log("Filling form from row")
-            console.log(row)
-            console.log(form)
-            form.find("#id_imsi").val(row[6]);
-            form.find("#id_name").val(row[7]);
-            form.find("#id_is_local").val(row[9]);
-            form.find("#id_authorization_status").val(row[4]);
-            form.find("#id_rate_limit").val(row[9]);
-            form.find("#id_msisdn").val(row[5]);
+          console.log("Filling form from row");
+          console.log(row);
+          console.log(form);
+          form.find("#id_imsi").val(row[6]);
+          form.find("#id_name").val(row[7]);
+          form.find("#id_is_local").val(row[9]);
+          form.find("#id_authorization_status").val(row[4]);
+          form.find("#id_rate_limit").val(row[9]);
+          form.find("#id_msisdn").val(row[5]);
         }
 
         function mapTable(e, form_id) {
-            let table = $("#table_id").DataTable();
-            let rowData = table.row(".selected").data()
-            fill_form_from_row(rowData, $("#"+form_id))
+          let table = $("#table_id").DataTable();
+          let rowData = table.row(".selected").data();
+          fill_form_from_row(rowData, $("#" + form_id));
         }
 
-        $("#edit").on("click", e => mapTable(e, "edit_form"))
-        $("#delete").on("click", e => mapTable(e, "delete_form"))
-    </script>
+        $("#edit").on("click", (e) => mapTable(e, "edit_form"));
+        $("#delete").on("click", (e) => mapTable(e, "delete_form"));
+      </script>
 
-    <script>
-    // Rewrite history to not resubmit the page after a post action
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
+      <script>
+        // Rewrite history to not resubmit the page after a post action
+        if (window.history.replaceState) {
+          window.history.replaceState(null, null, window.location.href);
         }
-    </script>
+      </script>
 
-    {% if active_form is not None %}
-    <script>
-        $(window).on('load',function(){
-            $('#{{ active_form }}').modal('show');
+      {% if active_form is not None %}
+      <script>
+        $(window).on("load", function () {
+          $("#{{ active_form }}").modal("show");
         });
         // Reload the page after an active form modal is dismissed to clear
         // statically generated form errors and allow a clean reselection of a
         // new row on deselect.
-        $('#{{ active_form }}').on('hide.bs.modal', _ => {
-            location.reload();
-        })
-    </script>
-    {% endif %}
-{% endblock %}
-
+        $("#{{ active_form }}").on("hide.bs.modal", (_) => {
+          location.reload();
+        });
+      </script>
+      {% endif %} {% endblock %}
+    </div>
+  </div>
+</div>

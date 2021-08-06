@@ -1,48 +1,43 @@
-{% extends "_layout.html" %}
-{% load static %}
+{% extends "_layout.html" %} {% load static %} {% block header_extra %}
+<script src="{% static 'js/highcharts.js' %}"></script>
+<script src="{% static 'js/modules/no-data-to-display.js' %}"></script>
+<script src="{% static 'js/modules/series-label.js' %}"></script>
+<script src="{% static 'js/modules/exporting.js' %}" async></script>
+{% endblock %} {% block main %}
+<style>
+  .highcharts-container {
+    width: 100% !important;
+  }
 
-{% block header_extra %}
-    <script src="{% static 'js/highcharts.js' %}"></script>
-    <script src="{% static 'js/modules/no-data-to-display.js' %}"></script>
-    <script src="{% static 'js/modules/series-label.js' %}"></script>
-    <script src="{% static 'js/modules/exporting.js' %}" async></script>
-{% endblock %}
+  .highcharts-root {
+    width: 100% !important;
+  }
+</style>
 
-{% block main %}
-    <style>
-    .highcharts-container{
-      width: 100% !important;
-    }
+{% include "graphViews/statsLayout.html" %}
+<script>
+  var dataFromServer = {{dataSets | safe}};
+  function lookUpData(graphid) {
+      return JSON.parse(dataFromServer[graphid]);
+  }
+  var graphTitles = {{titleSet | safe}};
 
-    .highcharts-root{
-      width: 100% !important;
-    }
-    </style>
+  function lookUpTitle(graphid){
+      return JSON.parse(graphTitles[graphid]);
+  }
 
-    {% include "graphViews/statsLayout.html" %}
-    <script>
-        var dataFromServer = {{dataSets | safe}};
-        function lookUpData(graphid) {
-            return JSON.parse(dataFromServer[graphid]);
-        }
-        var graphTitles = {{titleSet | safe}};
+  var axisText = {{axisLabels | safe}};
+  function lookUpAxisLabel(graphid){
+      return JSON.parse(axisText[graphid]);
+  }
 
-        function lookUpTitle(graphid){
-            return JSON.parse(graphTitles[graphid]);
-        }
+  setInterval(function () {
+    window.dispatchEvent(new Event('resize'));
+  }, 1000);
+</script>
 
-        var axisText = {{axisLabels | safe}};
-        function lookUpAxisLabel(graphid){
-            return JSON.parse(axisText[graphid]);
-        }
-
-        setInterval(function () {
-          window.dispatchEvent(new Event('resize'));
-        }, 1000);
-    </script>
-
-    <script src="{% static 'js/data/lineGraph.js' %}" defer></script>
-    <script src="{% static 'js/data/barChart.js' %}"></script>
-    <script src="{% static 'js/data/usoLocalesPie.js' %}"></script>
-    <script src="{% static 'js/data/localContentPie.js' %}"></script>
+<script src="{% static 'js/data/lineGraph.js' %}" defer></script>
+<script src="{% static 'js/data/barChart.js' %}"></script>
+<script src="{% static 'js/data/usoLocalesPie.js' %}"></script>
+<script src="{% static 'js/data/localContentPie.js' %}"></script>
 {% endblock %}

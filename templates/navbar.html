@@ -1,42 +1,51 @@
 {% load i18n %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    {% if user.is_authenticated %}
-        <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarDefinedCollapseData"
-                aria-controls="navbarDefinedCollapseData" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    {% endif %}
+  {% if user.is_authenticated %}
+  <button
+    class="navbar-toggler mr-auto"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarDefinedCollapseData"
+    aria-controls="navbarDefinedCollapseData"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  {% endif %}
 
-    <a class="navbar-brand" href="{% url 'home' %}">{% trans "Public" %}</a>
+  <a class="navbar-brand" href="{% url 'home' %}">{% trans "Public" %}</a>
 
-    {% if user.is_authenticated %}
-        <div class="collapse navbar-collapse order-2" id="navbarDefinedCollapseData">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item {% if 'stats' in request.get_full_path %} active {% endif %}">
-                    <a class="nav-link" href="{% url 'network_stats' %}">{% trans "Stats" %}<span class="sr-only">{% trans "(current)" %}</span></a>
-                </li>
-                <li class="nav-item {% if 'users' in request.get_full_path %} active {% endif %}">
-                    <a class="nav-link" href="{% url 'network_users' %}">{% trans "Usage" %}</a>
-                </li>
-                <li class="nav-item {% if 'subscribers' in request.get_full_path %} active {% endif %}">
-                    <a class="nav-link" href="{% url 'subscribers' %}">{% trans "Subscribers" %}</a>
-                </li>
-            </ul>
-        </div>
-    {% endif %}
+  {% if user.is_authenticated %}
+  <div class="collapse navbar-collapse order-2" id="navbarDefinedCollapseData">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item {% if 'stats' in request.get_full_path %} active {% endif %}">
+        <a class="nav-link" href="{% url 'network_stats' %}"
+          >{% trans "Stats" %}<span class="sr-only">{% trans "(current)" %}</span></a
+        >
+      </li>
+      <li class="nav-item {% if 'users' in request.get_full_path %} active {% endif %}">
+        <a class="nav-link" href="{% url 'network_users' %}">{% trans "Usage" %}</a>
+      </li>
+      <li class="nav-item {% if 'subscribers' in request.get_full_path %} active {% endif %}">
+        <a class="nav-link" href="{% url 'subscribers' %}">{% trans "Subscribers" %}</a>
+      </li>
+    </ul>
+  </div>
+  {% endif %}
 
-    <div class="navbar-expand order-1 order-md-3 ml-auto">
-        <ul class="navbar-nav">
-            {% if user.is_authenticated %}
-                <span class="navbar-text">{{user.get_username}}:</span>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">{% trans "Logout"%}</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a href="{% url 'login' %}" class="nav-link">{% trans "Login" %}</a>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
+  <div class="navbar-expand order-1 order-md-3 ml-auto">
+    <ul class="navbar-nav">
+      {% if user.is_authenticated %}
+      <span class="navbar-text">{{user.get_username}}:</span>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">{% trans "Logout"%}</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a href="{% url 'login' %}" class="nav-link">{% trans "Login" %}</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
 </nav>

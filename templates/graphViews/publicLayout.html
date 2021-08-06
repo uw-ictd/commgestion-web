@@ -1,27 +1,24 @@
 {% load i18n %}
 
-
-
 <div class="container-fluid">
-    <div id="warning-container" style="display: none;">
-        <div class="row justify-content-center">
-            <div class="col-6 alert alert-danger align-content-center text-center">
-                {% trans "No Subscriber / Usage Data available." %}
-                {% trans "Please add network data feed into the database." %}
-            </div>
-
-        </div>
+  <div id="warning-container" style="display: none">
+    <div class="row justify-content-center">
+      <div class="col-6 alert alert-danger align-content-center text-center">
+        {% trans "No Subscriber / Usage Data available." %} {% trans "Please add network data feed
+        into the database." %}
+      </div>
     </div>
-    <div id="gauge-container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 align-content-center mb-4">
-                <h3 class="text-center mb-0">{% trans "Download Utilization" %}</h3>
-                <div id="dl-gauge"></div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 align-content-center mb-4">
-                <h3 class="text-center mb-0">{% trans "Upload Utilization" %}</h3>
-                <div id="ul-gauge"></div>
-            </div>
-        </div>
+  </div>
+  <div id="gauge-container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 align-content-center mb-4">
+        <h3 class="text-center mb-0">{% trans "Download Utilization" %}</h3>
+        <div id="dl-gauge"></div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 align-content-center mb-4">
+        <h3 class="text-center mb-0">{% trans "Upload Utilization" %}</h3>
+        <div id="ul-gauge"></div>
+      </div>
     </div>
- </div>
+  </div>
+</div>
